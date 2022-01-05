@@ -57,7 +57,7 @@ export default defineComponent({
   right: 10px;
   bottom: 10px;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   box-sizing: border-box;
 }
 button.close-btn {
