@@ -1,8 +1,8 @@
 <template>
   <div>
     <input type='text' v-model="string" />
-    <button @click="rotate">회전</button>
-    <button @click="modalShow">alret</button>
+    <button @click="rotate">제출</button>
+    <button @click="modalShow">알림</button>
     <p>{{ string }}</p>
     <alert-modal ref="modal" :content="modalContent" />
   </div>
