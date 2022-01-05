@@ -1,4 +1,4 @@
-import { shallowMount } from '@vue/test-utils';
+import { shallowMount, mount } from '@vue/test-utils';
 import RotateString from '@/components/RotateString.vue';
 
 describe('RotateString.vue', () => {
@@ -32,5 +32,22 @@ describe('RotateString.vue', () => {
     await button.trigger('click');
     await button.trigger('click');
     expect(wrapper.text()).toContain('abcde');
+  });
+  test('모달 값 유효성 테스트', async () => {
+    const propsString = 'abcde';
+    const wrapper = mount(RotateString, {
+      props: { propsString },
+    });
+    const { vm } = wrapper;
+    vm.rotate();
+    vm.rotate();
+    vm.modalShow();
+    vm.modalShow();
+    vm.modalShow();
+    vm.modalShow();
+    expect(vm.modalContent).toEqual([
+      '문자열: cdeab',
+      '버튼을 누른 횟수: 4',
+    ]);
   });
 });
