@@ -4,7 +4,7 @@
       {{ text }}
     </p>
     <footer>
-      <button class="close-btn" @click="cancel">닫기</button>
+      <button class="close-btn" @click="close">닫기</button>
     </footer>
   </Modal>
 </template>
@@ -28,11 +28,11 @@ export default defineComponent({
       modal.value.open();
     };
 
-    const cancel = () => {
+    const close = () => {
       modal.value.close();
     };
     return {
-      modal, show, cancel,
+      modal, show, close,
     };
   },
 });
