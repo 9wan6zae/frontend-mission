@@ -1,8 +1,8 @@
 <template>
   <div>
-    <input type='text' v-model="string" />
-    <button @click="rotate">제출</button>
-    <button @click="modalShow">알림</button>
+    <input type='text' v-model="string" data-test="input" />
+    <button @click="rotate" data-test="submit">제출</button>
+    <button @click="modalShow" data-test="alert">알림</button>
     <p>{{ string }}</p>
     <alert-modal ref="modal" :content="modalContent" />
   </div>
@@ -43,11 +43,8 @@ const useModal = (string) => {
 export default defineComponent({
   components: { AlertModal },
   name: 'RotateString',
-  props: {
-    propsString: String,
-  },
-  setup(props) {
-    const { string, rotate } = useRotate(props.propsString);
+  setup() {
+    const { string, rotate } = useRotate();
     const { modal, modalContent, modalShow } = useModal(string);
 
     return {
