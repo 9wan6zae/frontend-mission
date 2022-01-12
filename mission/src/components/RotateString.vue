@@ -3,7 +3,7 @@
     <input type='text' v-model="string" data-test="input" />
     <button @click="rotate" data-test="submit">제출</button>
     <button @click="modalShow" data-test="alert">알림</button>
-    <p>{{ string }}</p>
+    <p data-test="string">{{ string }}</p>
     <alert-modal ref="modal" :content="modalContent" />
   </div>
 </template>
