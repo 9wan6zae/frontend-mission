@@ -1,6 +1,24 @@
 import { shallowMount, mount } from '@vue/test-utils';
 import RotateString from '@/components/RotateString.vue';
 
+describe('redering test', () => {
+  const wrapper = shallowMount(RotateString);
+  it('renders an input', () => {
+    expect(wrapper.find('input[data-test="input"]').exists()).toBe(true);
+  });
+
+  it('renders a submit button', () => {
+    expect(wrapper.find('button[data-test="submit"]').exists()).toBe(true);
+  });
+
+  it('renders a alert button', () => {
+    expect(wrapper.find('button[data-test="alert"]').exists()).toBe(true);
+  });
+
+  it('renders a paragraph to display the string', () => {
+    expect(wrapper.find('p[data-test="string"]').exists()).toBe(true);
+  });
+});
 describe('RotateString.vue', () => {
   test('버튼 클릭시 문자열 회전되는지 확인한다.', async () => {
     const wrapper = shallowMount(RotateString);
