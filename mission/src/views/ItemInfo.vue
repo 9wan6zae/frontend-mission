@@ -20,6 +20,10 @@
       </span>
     </div>
   </section>
+  <section class="content-container">
+    <p class="title">상품정보</p>
+    <span data-test="product-info" v-html="itemInfo.productInfo"></span>
+  </section>
 </div>
 </template>
 
@@ -31,6 +35,10 @@ export default {
       itemInfo: {
         originalPrice: 2000,
         salesPrice: 1000,
+        productInfo: `
+          <h1>Heading</h1>
+          <p>test</p>
+        `,
       },
     };
   },
@@ -100,5 +108,15 @@ main {
   font-size: 18px;
   text-decoration-line: line-through;
   color: var(--lightgray);
+}
+
+.content-container {
+  padding: 30px 20px 0px 20px;
+}
+
+.content-container .title {
+  font-weight: 600;
+  font-size: 20px;
+  margin-bottom: 10px;
 }
 </style>
