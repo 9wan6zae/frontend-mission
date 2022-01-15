@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import ItemInfoPage from '@/views/ItemInfo.vue';
+import message from '@/data/message';
 
 describe('ItemInfoPage', () => {
   it('redners ItemInfoPage', () => {
@@ -101,5 +102,167 @@ describe('Product Info Section', () => {
     });
 
     expect(wrapper.find('[data-test="product-info"]').text()).toContain('Heading');
+  });
+});
+
+describe('Review Section', () => {
+  const wrapper = mount(ItemInfoPage);
+
+  describe('renders tag for reveiw section', () => {
+    const nickname = 'test';
+    const reviewDate = '2021-12-12';
+    const title = '매우 만족';
+    const content = 'content';
+    const reviewImg = 'https://s3.ap-northeast-2.amazonaws.com/elasticbeanstalk-ap-northeast-2-176213403491/media/magazine_img/magazine_313/97-1.jpg';
+    beforeEach(async () => {
+      await wrapper.setData({
+        itemInfo: {
+          reviews: [
+            {
+              nickname,
+              reviewDate,
+              title,
+              content,
+              reviewImg,
+            },
+          ],
+        },
+      });
+    });
+
+    it('renders nickname', () => {
+      expect(wrapper.find('[data-test="nickname"]').exists()).toBeTruthy();
+    });
+
+    it('displays nickname from data', async () => {
+      expect(wrapper.find('[data-test="nickname"]').text()).toEqual(nickname);
+    });
+
+    it('renders review-date', () => {
+      expect(wrapper.find('[data-test="review-date"]').exists()).toBeTruthy();
+    });
+
+    it('displays review-date from data', async () => {
+      expect(wrapper.find('[data-test="review-date"]').text()).toEqual(reviewDate);
+    });
+
+    it('renders review-title', () => {
+      expect(wrapper.find('[data-test="review-title"]').exists()).toBeTruthy();
+    });
+
+    it('displays review-title from data', async () => {
+      expect(wrapper.find('[data-test="review-title"]').text()).toEqual(title);
+    });
+
+    it('renders review-content', () => {
+      expect(wrapper.find('[data-test="review-content"]').exists()).toBeTruthy();
+    });
+
+    it('displays review-content from data', async () => {
+      expect(wrapper.find('[data-test="review-content"]').text()).toEqual(content);
+    });
+
+    it('renders review-img', () => {
+      expect(wrapper.find('[data-test="review-img"]').exists()).toBeTruthy();
+    });
+
+    it('displays review-img from data', async () => {
+      expect(wrapper.find('[data-test="review-img"]').attributes().src).toEqual(reviewImg);
+    });
+  });
+
+  it('renders N when there are N reviews', async () => {
+    const reviews = [
+      {
+        nickname: 'test',
+        createdAt: '2021-12-12',
+        title: '매우 만족',
+        content: 'content',
+      },
+      {
+        nickname: 'test',
+        createdAt: '2021-12-12',
+        title: '매우 만족',
+        content: 'content',
+      },
+      {
+        nickname: 'test',
+        createdAt: '2021-12-12',
+        title: '매우 만족',
+        content: 'content',
+      },
+    ];
+    await wrapper.setData({
+      itemInfo: {
+        reviews,
+      },
+    });
+
+    expect(wrapper.findAll('[data-test="review-wrapper"]').length).toBe(reviews.length);
+  });
+
+  it('renders a custom message when there is no review', async () => {
+    await wrapper.setData({
+      itemInfo: {
+        reviews: [],
+      },
+    });
+
+    expect(wrapper.find('[data-test="review-section"]').text()).toContain(message.notReview);
+  });
+
+  it('renders a review-img when there is an image', async () => {
+    const reviewImg = 'https://s3.ap-northeast-2.amazonaws.com/elasticbeanstalk-ap-northeast-2-176213403491/media/magazine_img/magazine_313/97-1.jpg';
+    await wrapper.setData({
+      itemInfo: {
+        reviews: [
+          {
+            nickname: 'test',
+            createdAt: '2021-12-12',
+            title: '매우 만족',
+            content: 'content',
+            reviewImg,
+          },
+        ],
+      },
+    });
+
+    expect(wrapper.find('[data-test="review-img"]').exists()).toBeTruthy();
+  });
+
+  it('displays review-img from data', async () => {
+    const reviewImg = 'https://s3.ap-northeast-2.amazonaws.com/elasticbeanstalk-ap-northeast-2-176213403491/media/magazine_img/magazine_313/97-1.jpg';
+    await wrapper.setData({
+      itemInfo: {
+        reviews: [
+          {
+            nickname: 'test',
+            createdAt: '2021-12-12',
+            title: '매우 만족',
+            content: 'content',
+            reviewImg,
+          },
+        ],
+      },
+    });
+
+    expect(wrapper.find('[data-test="review-img"]').attributes().src).toEqual(reviewImg);
+  });
+
+  it('hides a review-img when there is no an image', async () => {
+    await wrapper.setData({
+      itemInfo: {
+        reviews: [
+          {
+            nickname: 'test',
+            createdAt: '2021-12-12',
+            title: '매우 만족',
+            content: 'content',
+          },
+        ],
+      },
+    });
+
+    expect(wrapper.find('[data-test="review-img"]').exists()).toBeFalsy();
   });
 });
