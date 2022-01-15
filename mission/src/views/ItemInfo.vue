@@ -24,10 +24,45 @@
     <p class="title">상품정보</p>
     <span data-test="product-info" v-html="itemInfo.productInfo"></span>
   </section>
+  <section class="content-container" data-test="review-section">
+    <p class="title">리뷰</p>
+    <div v-if="itemInfo.reviews && itemInfo.reviews.length > 0">
+      <div
+        class="review-wrapper box-shadow"
+        v-for="(review, i) in itemInfo.reviews"
+        :key="i"
+        data-test="review-wrapper"
+      >
+        <div>
+          <header>
+            <span class="nickname" data-test="nickname">{{review.nickname}}</span>
+            <time
+              class="review-date"
+              data-test="review-date"
+              :datetime="review.reviewDate"
+            >
+              {{review.reviewDate}}
+            </time>
+          </header>
+          <strong class="review-title" data-test="review-title">{{review.title}}</strong>
+          <p class="review-content" data-test="review-content">{{review.content}}</p>
+        </div>
+        <img
+          v-if="review.reviewImg"
+          class="review-img"
+          :src="review.reviewImg"
+          data-test="review-img"
+        />
+      </div>
+    </div>
+    <p v-else>{{notReviewMessage}}</p>
+  </section>
 </div>
 </template>
 
 <script>
+import message from '@/data/message';
+
 export default {
   name: 'ItemInfoPage',
   data() {
@@ -39,6 +74,14 @@ export default {
           <h1>Heading</h1>
           <p>test</p>
         `,
+        reviews: [
+          {
+            nickname: 'test',
+            reviewDate: '2021-12-12',
+            title: '매우 만족',
+            content: 'contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent',
+          },
+        ],
       },
     };
   },
@@ -59,6 +102,9 @@ export default {
     },
     isShowDiscountRate() {
       return this.itemInfo.originalPrice !== this.itemInfo.salesPrice;
+    },
+    notReviewMessage() {
+      return message.notReview;
     },
   },
 };
@@ -118,5 +164,57 @@ main {
   font-weight: 600;
   font-size: 20px;
   margin-bottom: 10px;
+}
+
+.review-wrapper {
+  width: 100%;
+  height: 120px;
+  background: #fff;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.review-wrapper header {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 6px;
+}
+
+.review-wrapper header .nickname {
+  font-weight: normal;
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.review-wrapper header .review-date {
+  font-weight: normal;
+  font-size: 14px;
+  color: var(--darkgray)
+}
+
+.review-wrapper .review-title {
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.review-wrapper .review-content {
+  font-weight: normal;
+  font-size: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+}
+
+.review-wrapper .review-img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
 }
 </style>
