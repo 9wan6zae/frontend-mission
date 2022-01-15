@@ -221,7 +221,6 @@ describe('ItemInfoPage', () => {
 
       it('returns to the original style by double clicking', async () => {
         const button = wrapper.find('[data-test="favorite-btn"]');
-        console.log(button.attributes().icon);
 
         await button.trigger('click');
         await button.trigger('click');
