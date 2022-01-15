@@ -57,6 +57,9 @@
     </div>
     <p v-else>{{notReviewMessage}}</p>
   </section>
+  <div class="floating-action-btn box-shadow flex-center" data-test="floating-action-btn">
+    <p data-test="floating-action-btn-content">{{floatingActionBtnText}}</p>
+  </div>
 </div>
 </template>
 
@@ -105,6 +108,9 @@ export default {
     },
     notReviewMessage() {
       return message.notReview;
+    },
+    floatingActionBtnText() {
+      return `${this.salesPrice} 구매`;
     },
   },
 };
@@ -216,5 +222,24 @@ main {
   width: 100px;
   height: 100px;
   object-fit: contain;
+}
+
+.floating-action-btn {
+  cursor: pointer;
+  position: fixed;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  height: 60px;
+  border-radius: 10px;
+  background: var(--emphasis);
+  border: none;
+  outline: none;
+}
+
+.floating-action-btn p {
+  color: #fff;
+  font-weight: 600;
+  font-size: 24px;
 }
 </style>
