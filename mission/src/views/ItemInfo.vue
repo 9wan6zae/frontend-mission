@@ -71,7 +71,7 @@
       >
         <div>
           <header>
-            <span class="nickname" data-test="nickname">{{review.nickname}}</span>
+            <span class="nickname" data-test="nickname">{{hideNickname(review.nickname)}}</span>
             <time
               class="review-date"
               data-test="review-date"
@@ -108,6 +108,8 @@ export default {
     return {
       isFavorite: false,
       itemInfo: {
+        sellerName: 'test',
+        tags: ['10대', '20대'],
         originalPrice: 2000,
         salesPrice: 1000,
         productInfo: `
@@ -116,7 +118,7 @@ export default {
         `,
         reviews: [
           {
-            nickname: 'test',
+            nickname: 'test123',
             reviewDate: '2021-12-12',
             title: '매우 만족',
             content: 'contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent',
@@ -131,6 +133,10 @@ export default {
     },
     toggleIsFavorite() {
       this.isFavorite = !this.isFavorite;
+    },
+    hideNickname(nickname) {
+      const nicknameLength = nickname.length;
+      return `${nickname.slice(0, 2)}${('*').repeat(nicknameLength - 2)}`;
     },
   },
   computed: {

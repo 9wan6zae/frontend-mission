@@ -230,7 +230,7 @@ describe('Review Section', () => {
   const wrapper = mount(ItemInfoPage);
 
   describe('renders tag for reveiw section', () => {
-    const nickname = 'test';
+    const nickname = 'test123';
     const reviewDate = '2021-12-12';
     const title = '매우 만족';
     const content = 'content';
@@ -256,7 +256,10 @@ describe('Review Section', () => {
     });
 
     it('displays nickname from data', async () => {
-      expect(wrapper.find('[data-test="nickname"]').text()).toEqual(nickname);
+      const nicknameLength = nickname.length;
+      const modifiedNickname = `${nickname.slice(0, 2)}${('*').repeat(nicknameLength - 2)}`;
+
+      expect(wrapper.find('[data-test="nickname"]').text()).toEqual(modifiedNickname);
     });
 
     it('renders review-date', () => {
