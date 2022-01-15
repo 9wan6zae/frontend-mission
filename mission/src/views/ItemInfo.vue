@@ -1,134 +1,136 @@
 <template>
 <div id='item-info-page'>
-  <section class="product-img-wrapper">
-    <div v-if="itemInfo.productImg" class="carousel">
-      <div class="carousel__content" data-test="carousel-content">
-        <div class="carousel__item" v-for="(img, i) in itemInfo.productImg" :key="i">
-          <img
-            class="product-img" :src="img"
-            data-test="product-img"
-          />
+  <main>
+    <section class="product-img-wrapper">
+      <div v-if="itemInfo.productImg" class="carousel">
+        <div class="carousel__content" data-test="carousel-content">
+          <div class="carousel__item" v-for="(img, i) in itemInfo.productImg" :key="i">
+            <img
+              class="product-img" :src="img"
+              data-test="product-img"
+            />
+          </div>
         </div>
-      </div>
-      <font-awesome-icon
-        v-show="slideIndex !== 0"
-        class="floating-arrow-btn"
-        icon="arrow-circle-left"
-        size="lg"
-        :style="{
-          color: '#fff'
-        }"
-        @click="prev"
-        data-test="prev-btn"
-      />
+        <font-awesome-icon
+          v-show="slideIndex !== 0"
+          class="floating-arrow-btn"
+          icon="arrow-circle-left"
+          size="lg"
+          :style="{
+            color: '#fff'
+          }"
+          @click="prev"
+          data-test="prev-btn"
+        />
 
+        <font-awesome-icon
+          v-show="slideIndex !== itemInfo.productImg.length - 1"
+          class="floating-arrow-btn"
+          icon="arrow-circle-right"
+          size="lg"
+          :style="{
+            color: '#fff',
+            right: 0,
+          }"
+          @click="next"
+          data-test="next-btn"
+        />
+      </div>
+    </section>
+    <section class="seller-info-wrapper pa0-20 flex-align-center">
+      <img
+        v-if="itemInfo.profileImg"
+        class="profile-img"
+        :src="itemInfo.profileImg"
+        data-test="profile-img"
+      />
+      <img
+        v-else
+        class="profile-img"
+        src="@/assets/svg/defaultProfileImg.svg"
+        data-test="default-profile-img"
+      />
+      <section class="seller-info">
+        <p class="seller-name" data-test="seller-name">{{itemInfo.sellerName}}</p>
+        <div style="height: 22px">
+          <span
+            class="seller-tag"
+            v-for="(tag, i) in itemInfo.tags"
+            :key="i"
+            data-test="seller-tag"
+          >
+            #{{ tag }}
+          </span>
+        </div>
+      </section>
       <font-awesome-icon
-        v-show="slideIndex !== itemInfo.productImg.length - 1"
-        class="floating-arrow-btn"
-        icon="arrow-circle-right"
+        data-test="favorite-btn"
+        @click="toggleIsFavorite"
+        :icon="isFavorite ? ['fas', 'star'] : ['far', 'star']"
         size="lg"
         :style="{
-          color: '#fff',
-          right: 0,
+          color: 'var(--emphasis)'
         }"
-        @click="next"
-        data-test="next-btn"
       />
-    </div>
-  </section>
-  <section class="seller-info-wrapper pa0-20 flex-align-center">
-    <img
-      v-if="itemInfo.profileImg"
-      class="profile-img"
-      :src="itemInfo.profileImg"
-      data-test="profile-img"
-    />
-    <img
-      v-else
-      class="profile-img"
-      src="@/assets/svg/defaultProfileImg.svg"
-      data-test="default-profile-img"
-    />
-    <section class="seller-info">
-      <p class="seller-name" data-test="seller-name">{{itemInfo.sellerName}}</p>
-      <div style="height: 22px">
+    </section>
+    <section class="price-wrapper pa0-20 flex-col flex-justify-center">
+      <p class="product-name" data-test="product-name">{{itemInfo.productName}}</p>
+      <div class="flex-align-center">
         <span
-          class="seller-tag"
-          v-for="(tag, i) in itemInfo.tags"
-          :key="i"
-          data-test="seller-tag"
+          v-if="isShowDiscountRate"
+          class="discount-rate"
+          data-test="discount-rate"
         >
-          #{{ tag }}
+          {{ discountRate }}
+        </span>
+        <span class="sales-price" data-test="sales-price">{{ salesPrice }}</span>
+        <span
+          v-if="isShowDiscountRate"
+          class="original-price"
+          data-test="original-price"
+        >
+          {{ originalPrice }}
         </span>
       </div>
     </section>
-    <font-awesome-icon
-      data-test="favorite-btn"
-      @click="toggleIsFavorite"
-      :icon="isFavorite ? ['fas', 'star'] : ['far', 'star']"
-      size="lg"
-      :style="{
-        color: 'var(--emphasis)'
-      }"
-    />
-  </section>
-  <section class="price-wrapper pa0-20 flex-col flex-justify-center">
-    <p class="product-name" data-test="product-name">{{itemInfo.productName}}</p>
-    <div class="flex-align-center">
-      <span
-        v-if="isShowDiscountRate"
-        class="discount-rate"
-        data-test="discount-rate"
-      >
-        {{ discountRate }}
-      </span>
-      <span class="sales-price" data-test="sales-price">{{ salesPrice }}</span>
-      <span
-        v-if="isShowDiscountRate"
-        class="original-price"
-        data-test="original-price"
-      >
-        {{ originalPrice }}
-      </span>
-    </div>
-  </section>
-  <section class="content-container">
-    <p class="title">상품정보</p>
-    <span data-test="product-info" v-html="itemInfo.productInfo"></span>
-  </section>
-  <section class="content-container" data-test="review-section">
-    <p class="title">리뷰</p>
-    <div v-if="itemInfo.reviews && itemInfo.reviews.length > 0">
-      <div
-        class="review-wrapper box-shadow"
-        v-for="(review, i) in itemInfo.reviews"
-        :key="i"
-        data-test="review-wrapper"
-      >
-        <div>
-          <header>
-            <span class="nickname" data-test="nickname">{{hideNickname(review.nickname)}}</span>
-            <time
-              class="review-date"
-              data-test="review-date"
-              :datetime="review.reviewDate"
-            >
-              {{review.reviewDate}}
-            </time>
-          </header>
-          <strong class="review-title" data-test="review-title">{{review.title}}</strong>
-          <p class="review-content" data-test="review-content">{{review.content}}</p>
+    <section class="content-container">
+      <p class="title">상품정보</p>
+      <span data-test="product-info" v-html="itemInfo.productInfo"></span>
+    </section>
+    <section class="content-container" data-test="review-section">
+      <p class="title">리뷰</p>
+      <div v-if="itemInfo.reviews && itemInfo.reviews.length > 0">
+        <div
+          class="review-wrapper box-shadow"
+          v-for="(review, i) in itemInfo.reviews"
+          :key="i"
+          data-test="review-wrapper"
+        >
+          <div>
+            <header>
+              <span class="nickname" data-test="nickname">{{hideNickname(review.nickname)}}</span>
+              <time
+                class="review-date"
+                data-test="review-date"
+                :datetime="review.reviewDate"
+              >
+                {{review.reviewDate}}
+              </time>
+            </header>
+            <strong class="review-title" data-test="review-title">{{review.title}}</strong>
+            <p class="review-content" data-test="review-content">{{review.content}}</p>
+          </div>
+          <img
+            v-if="review.reviewImg"
+            class="review-img"
+            :src="review.reviewImg"
+            data-test="review-img"
+          />
         </div>
-        <img
-          v-if="review.reviewImg"
-          class="review-img"
-          :src="review.reviewImg"
-          data-test="review-img"
-        />
       </div>
-    </div>
-    <p v-else>{{notReviewMessage}}</p>
-  </section>
+      <p v-else>{{notReviewMessage}}</p>
+    </section>
+  </main>
   <div class="floating-action-btn box-shadow flex-center" data-test="floating-action-btn">
     <p data-test="floating-action-btn-content">{{floatingActionBtnText}}</p>
   </div>
