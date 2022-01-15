@@ -266,3 +266,23 @@ describe('Review Section', () => {
     expect(wrapper.find('[data-test="review-img"]').exists()).toBeFalsy();
   });
 });
+
+describe('Floating Action Button', () => {
+  const wrapper = mount(ItemInfoPage);
+  it('renders floating-action-btn', () => {
+    expect(wrapper.find('[data-test="floating-action-btn"]').exists()).toBeTruthy();
+  });
+
+  it('shows sales-price in floating-action-btn', async () => {
+    const originalPrice = 2000;
+    const salesPrice = 1000;
+    await wrapper.setData({
+      itemInfo: {
+        originalPrice,
+        salesPrice,
+      },
+    });
+
+    expect(wrapper.find('[data-test="floating-action-btn"]').text()).toContain(salesPrice.toLocaleString('ko-KR'));
+  });
+});
