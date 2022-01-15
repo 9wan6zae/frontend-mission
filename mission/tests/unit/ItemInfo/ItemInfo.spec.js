@@ -88,3 +88,18 @@ describe('Price Section', () => {
     });
   });
 });
+
+describe('Product Info Section', () => {
+  it('shows the entered string in product-info', async () => {
+    const wrapper = mount(ItemInfoPage);
+    await wrapper.setData({
+      itemInfo: {
+        productInfo: `
+          <h1>Heading</h1>
+        `,
+      },
+    });
+
+    expect(wrapper.find('[data-test="product-info"]').text()).toContain('Heading');
+  });
+});
