@@ -66,9 +66,11 @@ describe('ItemInfoPage', () => {
         beforeEach(async () => {
           await wrapper.setData({
             slideIndex: 0,
-            productImg: [
-              'testImg',
-            ],
+            itemInfo: {
+              productImg: [
+                'testImg',
+              ],
+            },
           });
         });
         it('hides prev-btn', async () => {
@@ -82,11 +84,13 @@ describe('ItemInfoPage', () => {
         beforeEach(async () => {
           await wrapper.setData({
             slideIndex: 0,
-            productImg: [
-              'testImg',
-              'testImg',
-              'testImg',
-            ],
+            itemInfo: {
+              productImg: [
+                'testImg',
+                'testImg',
+                'testImg',
+              ],
+            },
           });
         });
         it('hides prev-btn when it is the first image', async () => {
