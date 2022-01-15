@@ -10,6 +10,103 @@ describe('ItemInfoPage', () => {
   });
 });
 
+describe('Carousel', () => {
+  const wrapper = mount(ItemInfoPage);
+
+  it('hides product-img when there is no product-img', async () => {
+    await wrapper.setData({
+      itemInfo: {
+        productImg: [],
+      },
+    });
+
+    expect(wrapper.find('[data-test="product-img"]').exists()).toBeFalsy();
+  });
+
+  it('renders product-img when there is product-img', async () => {
+    await wrapper.setData({
+      itemInfo: {
+        productImg: [
+          'testImg',
+        ],
+      },
+    });
+
+    expect(wrapper.find('[data-test="product-img"]').exists()).toBeTruthy();
+  });
+
+  it('displays product-img from data', async () => {
+    await wrapper.setData({
+      itemInfo: {
+        productImg: [
+          'testImg',
+        ],
+      },
+    });
+
+    expect(wrapper.find('[data-test="product-img"]').attributes().src).toEqual('testImg');
+  });
+
+  it('renders N when there are N product-img', async () => {
+    const productImg = [
+      'testImg',
+      'testImg',
+      'testImg',
+    ];
+    await wrapper.setData({
+      itemInfo: {
+        productImg,
+      },
+    });
+
+    expect(wrapper.findAll('[data-test="product-img"]').length).toEqual(productImg.length);
+  });
+
+  describe('Slide Test', () => {
+    describe('When there is only one image,', () => {
+      beforeEach(async () => {
+        await wrapper.setData({
+          slideIndex: 0,
+          productImg: [
+            'testImg',
+          ],
+        });
+      });
+      it('hides prev-btn', async () => {
+        expect(wrapper.find('[data-test="prev-btn"]').exists().isVisible).toBeFalsy();
+      });
+      it('hides next-btn', async () => {
+        expect(wrapper.find('[data-test="next-btn"]').exists().isVisible).toBeFalsy();
+      });
+    });
+    describe('When there are many images', () => {
+      beforeEach(async () => {
+        await wrapper.setData({
+          slideIndex: 0,
+          productImg: [
+            'testImg',
+            'testImg',
+            'testImg',
+          ],
+        });
+      });
+      it('hides prev-btn when it is the first image', async () => {
+        const prevBtn = wrapper.find('[data-test="prev-btn"]');
+
+        expect(prevBtn.exists().isVisible).toBeFalsy();
+      });
+      it('hides next-btn when it is the last image', async () => {
+        const nextBtn = wrapper.find('[data-test="next-btn"]');
+
+        await nextBtn.trigger('click');
+        await nextBtn.trigger('click');
+
+        expect(nextBtn.exists().isVisible).toBeFalsy();
+      });
+    });
+  });
+});
+
 describe('Seller Section', () => {
   const wrapper = mount(ItemInfoPage);
 
@@ -31,7 +128,7 @@ describe('Seller Section', () => {
   });
 
   describe('Profile Img', () => {
-    const profileImg = 'https://s3.ap-northeast-2.amazonaws.com/elasticbeanstalk-ap-northeast-2-176213403491/media/magazine_img/magazine_313/97-1.jpg';
+    const profileImg = 'testImg';
     it('renders profile-img when there is a profile image', async () => {
       await wrapper.setData({
         itemInfo: {
@@ -234,7 +331,7 @@ describe('Review Section', () => {
     const reviewDate = '2021-12-12';
     const title = '매우 만족';
     const content = 'content';
-    const reviewImg = 'https://s3.ap-northeast-2.amazonaws.com/elasticbeanstalk-ap-northeast-2-176213403491/media/magazine_img/magazine_313/97-1.jpg';
+    const reviewImg = 'testImg';
     beforeEach(async () => {
       await wrapper.setData({
         itemInfo: {
@@ -336,7 +433,7 @@ describe('Review Section', () => {
   });
 
   it('renders a review-img when there is an image', async () => {
-    const reviewImg = 'https://s3.ap-northeast-2.amazonaws.com/elasticbeanstalk-ap-northeast-2-176213403491/media/magazine_img/magazine_313/97-1.jpg';
+    const reviewImg = 'testImg';
     await wrapper.setData({
       itemInfo: {
         reviews: [
@@ -355,7 +452,7 @@ describe('Review Section', () => {
   });
 
   it('displays review-img from data', async () => {
-    const reviewImg = 'https://s3.ap-northeast-2.amazonaws.com/elasticbeanstalk-ap-northeast-2-176213403491/media/magazine_img/magazine_313/97-1.jpg';
+    const reviewImg = 'testImg';
     await wrapper.setData({
       itemInfo: {
         reviews: [
