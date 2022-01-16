@@ -431,6 +431,7 @@ main {
   width: 100px;
   height: 100px;
   object-fit: cover;
+  margin-left: 4px;
 }
 
 .floating-action-btn {
