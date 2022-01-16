@@ -166,6 +166,7 @@ export default {
             reviewDate: '2021-12-12',
             title: '매우 만족',
             content: 'contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent',
+            reviewImg: 'https://s3.ap-northeast-2.amazonaws.com/elasticbeanstalk-ap-northeast-2-176213403491/media/magazine_img/magazine_313/97-1.jpg',
           },
         ],
       },
@@ -415,7 +416,7 @@ main {
 .review-wrapper .review-img {
   width: 100px;
   height: 100px;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .floating-action-btn {
