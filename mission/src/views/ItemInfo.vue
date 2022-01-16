@@ -204,7 +204,7 @@ export default {
   },
   computed: {
     discountRate() {
-      return `${(Math.floor((this.itemInfo.salesPrice / this.itemInfo.originalPrice) * 100)).toString()}%`;
+      return `${(Math.floor((1 - (this.itemInfo.salesPrice / this.itemInfo.originalPrice)) * 100)).toString()}%`;
     },
     originalPrice() {
       return `${this.addComma(this.itemInfo.originalPrice)}원`;
