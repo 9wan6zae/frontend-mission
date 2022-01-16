@@ -158,6 +158,7 @@ export default {
         tags: ['20대', '남성', '캐쥬얼'],
         productName: '베이지 스웨터',
         originalPrice: 58000,
+        discountRate: 12,
         productInfo: `
           <b>Color</b>
           <p>베이지, 브라운, 네이비, 화이트</p>
@@ -222,7 +223,7 @@ export default {
     },
     salesPrice() {
       if (this.itemInfo?.discountRate) {
-        return `${this.addComma(this.itemInfo?.originalPrice * ((1 - (this.itemInfo?.discountRate / 100))))}원`;
+        return `${this.addComma(Math.ceil(this.itemInfo?.originalPrice * ((1 - (this.itemInfo?.discountRate / 100)))))}원`;
       }
       return this.originalPrice;
     },
