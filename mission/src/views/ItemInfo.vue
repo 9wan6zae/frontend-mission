@@ -17,7 +17,7 @@
           icon="arrow-circle-left"
           size="lg"
           :style="{
-            color: '#fff'
+            color: 'var(--emphasis)'
           }"
           @click="prev"
           data-test="prev-btn"
@@ -29,7 +29,7 @@
           icon="arrow-circle-right"
           size="lg"
           :style="{
-            color: '#fff',
+            color: 'var(--emphasis)',
             right: 0,
           }"
           @click="next"
