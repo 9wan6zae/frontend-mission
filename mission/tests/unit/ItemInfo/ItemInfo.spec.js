@@ -254,6 +254,7 @@ describe('ItemInfoPage', () => {
         await wrapper.setData({
           itemInfo: {
             originalPrice: price,
+            discountRate: undefined,
           },
         });
       });
