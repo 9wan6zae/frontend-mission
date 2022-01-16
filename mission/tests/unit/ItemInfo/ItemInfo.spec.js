@@ -247,20 +247,23 @@ describe('ItemInfoPage', () => {
       expect(wrapper.find('[data-test="product-name"]').text()).toBe(productName);
     });
 
-    describe('원가와 판매가가 같을 경우, discount-rate와 original-price는 보여주지 않는다.', () => {
+    describe('원가만 있는 경우, discount-rate를 보여주지 않고 판매가가 원가가 된다.', () => {
       const price = 2000;
 
       beforeEach(async () => {
         await wrapper.setData({
           itemInfo: {
             originalPrice: price,
-            salesPrice: price,
           },
         });
       });
 
       it('renders sales-price', () => {
         expect(wrapper.find('[data-test="sales-price"]').exists()).toBeTruthy();
+      });
+
+      it('shows original-price for the value of sales-price', () => {
+        expect(wrapper.find('[data-test="sales-price"]').text()).toEqual('2,000원');
       });
 
       it('hides original-price', async () => {
@@ -271,20 +274,24 @@ describe('ItemInfoPage', () => {
         expect(wrapper.find('[data-test="discount-rate"]').exists()).toBeFalsy();
       });
     });
-    describe('원가와 판매가가 다를 경우, discount-rate와 original-price는 보여주고 할인율을 계산한다.', () => {
-      const originalPrice = 4000;
-      const salesPrice = 1000;
+    describe('원가와 할인율이 있는 경우, discount-rate와 original-price는 보여주고 판매가를 계산한다.', () => {
+      const originalPrice = 58000;
+      const discountRate = 15;
 
       beforeEach(async () => {
         await wrapper.setData({
           itemInfo: {
             originalPrice,
-            salesPrice,
+            discountRate,
           },
         });
       });
       it('renders sales-price', () => {
         expect(wrapper.find('[data-test="sales-price"]').exists()).toBeTruthy();
+      });
+
+      it('shows correct sales-price', () => {
+        expect(wrapper.find('[data-test="sales-price"]').text()).toEqual('49,300원');
       });
 
       it('renders original-price', () => {
@@ -293,18 +300,6 @@ describe('ItemInfoPage', () => {
 
       it('renders discount-rate', () => {
         expect(wrapper.find('[data-test="discount-rate"]').exists()).toBeTruthy();
-      });
-
-      it('shows original-price', async () => {
-        expect(wrapper.find('[data-test="original-price"]').isVisible()).toBeTruthy();
-      });
-
-      it('shows discount-rate', async () => {
-        expect(wrapper.find('[data-test="discount-rate"]').isVisible()).toBeTruthy();
-      });
-
-      it('shows correct discount-rate', () => {
-        expect(wrapper.find('[data-test="discount-rate"]').text()).toBe('75%');
       });
     });
   });
@@ -493,16 +488,16 @@ describe('ItemInfoPage', () => {
     });
 
     it('shows sales-price in floating-action-btn', async () => {
-      const originalPrice = 2000;
-      const salesPrice = 1000;
+      const originalPrice = 58000;
+      const discountRate = 15;
       await wrapper.setData({
         itemInfo: {
           originalPrice,
-          salesPrice,
+          discountRate,
         },
       });
 
-      expect(wrapper.find('[data-test="floating-action-btn"]').text()).toContain(salesPrice.toLocaleString('ko-KR'));
+      expect(wrapper.find('[data-test="floating-action-btn"]').text()).toContain('49,300원');
     });
   });
 });

@@ -77,15 +77,15 @@
       <p class="product-name" data-test="product-name">{{ itemInfo?.productName }}</p>
       <div class="flex-align-center">
         <span
-          v-if="isShowDiscountRate"
+          v-if="itemInfo?.discountRate"
           class="discount-rate"
           data-test="discount-rate"
         >
-          {{ discountRate }}
+          {{ itemInfo.discountRate }}%
         </span>
         <span class="sales-price" data-test="sales-price">{{ salesPrice }}</span>
         <span
-          v-if="isShowDiscountRate"
+          v-if="itemInfo?.discountRate"
           class="original-price"
           data-test="original-price"
         >
@@ -158,7 +158,6 @@ export default {
         tags: ['20대', '남성', '캐쥬얼'],
         productName: '베이지 스웨터',
         originalPrice: 58000,
-        salesPrice: 49000,
         productInfo: `
           <b>Color</b>
           <p>베이지, 브라운, 네이비, 화이트</p>
@@ -218,17 +217,14 @@ export default {
     },
   },
   computed: {
-    discountRate() {
-      return `${(Math.floor((1 - (this.itemInfo?.salesPrice / this.itemInfo?.originalPrice)) * 100)).toString()}%`;
-    },
     originalPrice() {
       return `${this.addComma(this.itemInfo?.originalPrice)}원`;
     },
     salesPrice() {
-      return `${this.addComma(this.itemInfo?.salesPrice)}원`;
-    },
-    isShowDiscountRate() {
-      return this.itemInfo?.originalPrice !== this.itemInfo?.salesPrice;
+      if (this.itemInfo?.discountRate) {
+        return `${this.addComma(this.itemInfo?.originalPrice * ((1 - (this.itemInfo?.discountRate / 100))))}원`;
+      }
+      return this.originalPrice;
     },
     notReviewMessage() {
       return message.notReview;
