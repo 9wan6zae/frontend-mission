@@ -51,7 +51,7 @@
         data-test="default-profile-img"
       />
       <section class="seller-info">
-        <p class="seller-name" data-test="seller-name">{{itemInfo?.sellerName}}</p>
+        <p class="seller-name" data-test="seller-name">{{ itemInfo?.sellerName }}</p>
         <div style="height: 22px">
           <span
             class="seller-tag"
@@ -74,7 +74,7 @@
       />
     </section>
     <section class="price-wrapper pa0-20 flex-col flex-justify-center">
-      <p class="product-name" data-test="product-name">{{itemInfo?.productName}}</p>
+      <p class="product-name" data-test="product-name">{{ itemInfo?.productName }}</p>
       <div class="flex-align-center">
         <span
           v-if="isShowDiscountRate"
@@ -108,17 +108,17 @@
         >
           <div>
             <header>
-              <span class="nickname" data-test="nickname">{{hideNickname(review.nickname)}}</span>
+              <span class="nickname" data-test="nickname">{{ hideNickname(review.nickname) }}</span>
               <time
                 class="review-date"
                 data-test="review-date"
                 :datetime="review?.reviewDate"
               >
-                {{review.reviewDate}}
+                {{ review.reviewDate }}
               </time>
             </header>
-            <strong class="review-title" data-test="review-title">{{review.title}}</strong>
-            <p class="review-content" data-test="review-content">{{review.content}}</p>
+            <strong class="review-title" data-test="review-title">{{ review.title }}</strong>
+            <p class="review-content" data-test="review-content">{{ review.content }}</p>
           </div>
           <img
             v-if="review.reviewImg"
@@ -128,11 +128,11 @@
           />
         </div>
       </div>
-      <p v-else>{{notReviewMessage}}</p>
+      <p v-else>{{ notReviewMessage }}</p>
     </section>
   </main>
   <div class="floating-action-btn box-shadow flex-center" data-test="floating-action-btn">
-    <p data-test="floating-action-btn-content">{{floatingActionBtnText}}</p>
+    <p data-test="floating-action-btn-content">{{ floatingActionBtnText }}</p>
   </div>
 </div>
 </template>
