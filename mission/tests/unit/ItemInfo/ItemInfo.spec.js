@@ -272,9 +272,8 @@ describe('ItemInfoPage', () => {
       });
     });
     describe('원가와 판매가가 다를 경우, discount-rate와 original-price는 보여주고 할인율을 계산한다.', () => {
-      const originalPrice = 2000;
+      const originalPrice = 4000;
       const salesPrice = 1000;
-      const discountRate = `${Math.floor((salesPrice / originalPrice) * 100)}%`;
 
       beforeEach(async () => {
         await wrapper.setData({
@@ -305,7 +304,7 @@ describe('ItemInfoPage', () => {
       });
 
       it('shows correct discount-rate', () => {
-        expect(wrapper.find('[data-test="discount-rate"]').text()).toBe(discountRate);
+        expect(wrapper.find('[data-test="discount-rate"]').text()).toBe('75%');
       });
     });
   });
@@ -355,10 +354,7 @@ describe('ItemInfoPage', () => {
       });
 
       it('displays nickname from data', async () => {
-        const nicknameLength = nickname.length;
-        const modifiedNickname = `${nickname.slice(0, 2)}${('*').repeat(nicknameLength - 2)}`;
-
-        expect(wrapper.find('[data-test="nickname"]').text()).toEqual(modifiedNickname);
+        expect(wrapper.find('[data-test="nickname"]').text()).toEqual('te*****');
       });
 
       it('renders review-date', () => {
