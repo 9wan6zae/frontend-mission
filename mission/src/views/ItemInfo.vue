@@ -2,7 +2,7 @@
 <div id='item-info-page'>
   <main>
     <section class="product-img-wrapper">
-      <div v-if="itemInfo.productImg" class="carousel">
+      <div v-if="itemInfo?.productImg" class="carousel">
         <div class="carousel__content" data-test="carousel-content">
           <div class="carousel__item" v-for="(img, i) in itemInfo.productImg" :key="i">
             <img
@@ -39,7 +39,7 @@
     </section>
     <section class="seller-info-wrapper pa0-20 flex-align-center">
       <img
-        v-if="itemInfo.profileImg"
+        v-if="itemInfo?.profileImg"
         class="profile-img"
         :src="itemInfo.profileImg"
         data-test="profile-img"
@@ -51,11 +51,11 @@
         data-test="default-profile-img"
       />
       <section class="seller-info">
-        <p class="seller-name" data-test="seller-name">{{itemInfo.sellerName}}</p>
+        <p class="seller-name" data-test="seller-name">{{itemInfo?.sellerName}}</p>
         <div style="height: 22px">
           <span
             class="seller-tag"
-            v-for="(tag, i) in itemInfo.tags"
+            v-for="(tag, i) in itemInfo?.tags"
             :key="i"
             data-test="seller-tag"
           >
@@ -74,7 +74,7 @@
       />
     </section>
     <section class="price-wrapper pa0-20 flex-col flex-justify-center">
-      <p class="product-name" data-test="product-name">{{itemInfo.productName}}</p>
+      <p class="product-name" data-test="product-name">{{itemInfo?.productName}}</p>
       <div class="flex-align-center">
         <span
           v-if="isShowDiscountRate"
@@ -95,11 +95,11 @@
     </section>
     <section class="content-container">
       <p class="title">상품정보</p>
-      <span data-test="product-info" v-html="itemInfo.productInfo"></span>
+      <span data-test="product-info" v-html="itemInfo?.productInfo"></span>
     </section>
     <section class="content-container" data-test="review-section">
       <p class="title">리뷰</p>
-      <div v-if="itemInfo.reviews && itemInfo.reviews.length > 0">
+      <div v-if="itemInfo?.reviews && itemInfo.reviews.length > 0">
         <div
           class="review-wrapper box-shadow"
           v-for="(review, i) in itemInfo.reviews"
@@ -112,7 +112,7 @@
               <time
                 class="review-date"
                 data-test="review-date"
-                :datetime="review.reviewDate"
+                :datetime="review?.reviewDate"
               >
                 {{review.reviewDate}}
               </time>
@@ -146,35 +146,13 @@ export default {
     return {
       slideIndex: 0,
       isFavorite: false,
-      itemInfo: {
-        productImg: [
-          'https://s3.ap-northeast-2.amazonaws.com/elasticbeanstalk-ap-northeast-2-176213403491/media/magazine_img/magazine_313/97-1.jpg',
-          'https://s3.ap-northeast-2.amazonaws.com/elasticbeanstalk-ap-northeast-2-176213403491/media/magazine_img/magazine_313/97-%EC%8D%B8%EB%84%A4%EC%9D%BC.jpg',
-          'https://s3.ap-northeast-2.amazonaws.com/elasticbeanstalk-ap-northeast-2-176213403491/media/magazine_img/magazine_313/97-4.jpg',
-        ],
-        sellerName: 'test',
-        tags: ['10대', '20대'],
-        originalPrice: 2000,
-        salesPrice: 1000,
-        productInfo: `
-          <h1>Heading</h1>
-          <p>test</p>
-        `,
-        reviews: [
-          {
-            nickname: 'test123',
-            reviewDate: '2021-12-12',
-            title: '매우 만족',
-            content: 'contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent',
-            reviewImg: 'https://s3.ap-northeast-2.amazonaws.com/elasticbeanstalk-ap-northeast-2-176213403491/media/magazine_img/magazine_313/97-1.jpg',
-          },
-        ],
-      },
+      itemInfo: {},
     };
   },
   methods: {
     addComma(number) {
-      return number.toLocaleString('ko-KR');
+      if (number) return number.toLocaleString('ko-KR');
+      return 0;
     },
     toggleIsFavorite() {
       this.isFavorite = !this.isFavorite;
@@ -197,7 +175,7 @@ export default {
       }
     },
     next() {
-      if (this.slideIndex !== this.itemInfo.productImg.length - 1) {
+      if (this.slideIndex !== this.itemInfo?.productImg.length - 1) {
         this.slideIndex += 1;
         this.slideAction();
       }
@@ -205,16 +183,16 @@ export default {
   },
   computed: {
     discountRate() {
-      return `${(Math.floor((1 - (this.itemInfo.salesPrice / this.itemInfo.originalPrice)) * 100)).toString()}%`;
+      return `${(Math.floor((1 - (this.itemInfo?.salesPrice / this.itemInfo?.originalPrice)) * 100)).toString()}%`;
     },
     originalPrice() {
-      return `${this.addComma(this.itemInfo.originalPrice)}원`;
+      return `${this.addComma(this.itemInfo?.originalPrice)}원`;
     },
     salesPrice() {
-      return `${this.addComma(this.itemInfo.salesPrice)}원`;
+      return `${this.addComma(this.itemInfo?.salesPrice)}원`;
     },
     isShowDiscountRate() {
-      return this.itemInfo.originalPrice !== this.itemInfo.salesPrice;
+      return this.itemInfo?.originalPrice !== this.itemInfo?.salesPrice;
     },
     notReviewMessage() {
       return message.notReview;
