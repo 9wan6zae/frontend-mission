@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils';
-import ItemInfoPage from '@/components/ItemList/Item.vue';
+import ItemListItem from '@/components/ItemList/Item.vue';
 
 describe('ItemListItem', () => {
   it('redners ItemListItem', () => {
-    const wrapper = mount(ItemInfoPage);
+    const wrapper = mount(ItemListItem);
 
     expect(wrapper.find('.item-list-item').exists()).toBe(true);
   });
