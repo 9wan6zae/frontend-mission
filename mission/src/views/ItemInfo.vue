@@ -139,9 +139,11 @@
 
 <script>
 import message from '@/data/message';
+import comma from '@/mixins/comma';
 
 export default {
   name: 'ItemInfoPage',
+  mixins: [comma],
   data() {
     return {
       slideIndex: 0,
@@ -186,10 +188,6 @@ export default {
     };
   },
   methods: {
-    addComma(number) {
-      if (number) return number.toLocaleString('ko-KR');
-      return 0;
-    },
     toggleIsFavorite() {
       this.isFavorite = !this.isFavorite;
     },
