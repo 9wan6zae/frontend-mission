@@ -20,14 +20,14 @@ export default {
           timer = setTimeout(() => {
             timer = null;
             this.scrollY = window.scrollY;
-          }, 100);
+          }, 200);
         }
       });
     },
   },
   computed: {
     appHeaderClass() {
-      return this.scrollY === 0 ? 'app-header--visible' : 'app-header--hidden';
+      return this.scrollY < 60 ? 'app-header--visible' : 'app-header--hidden';
     },
   },
   created() {
@@ -40,7 +40,9 @@ export default {
 #app-header {
   width: 100%;
   height: var(--appHeaderHeight);
-  background: #fff;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 999;
   position: fixed;
   top: 0;
   left: 0;
