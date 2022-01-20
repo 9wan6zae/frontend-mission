@@ -1,5 +1,5 @@
 <template>
-  <div class="item-list-item">
+  <article class="item-list-item">
     <figure>
       <img :src="item?.img" data-test="item-img" />
     </figure>
@@ -30,7 +30,7 @@
     >
       {{ item?.description }}
     </p>
-  </div>
+  </article>
 </template>
 
 <script>

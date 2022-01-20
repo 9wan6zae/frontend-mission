@@ -1,7 +1,7 @@
 <template>
-  <div :class="appHeaderClass" id="app-header">
+  <header :class="appHeaderClass" id="app-header">
     <h1 data-test="header-title">{{ title }}</h1>
-  </div>
+  </header>
 </template>
 
 <script>

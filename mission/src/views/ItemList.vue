@@ -1,13 +1,16 @@
 <template>
   <div id="item-list-page">
     <AppHeader />
-    <section class="item-list-wrapper" data-test="item-list-wrapper">
+    <main class="item-list-wrapper" data-test="item-list-wrapper">
       <div class="item-list">
-        <article v-for="item in itemList" :key="item.id" data-test="item-list">
-          <ItemListItem :item="item" />
-        </article>
+        <ItemListItem
+          v-for="item in itemList"
+          :key="item.id"
+          :item="item"
+          data-test="item-list"
+        />
       </div>
-    </section>
+    </main>
     <NavBar />
   </div>
 </template>
