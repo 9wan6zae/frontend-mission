@@ -38,6 +38,7 @@ export default {
 
 <style scoped>
 #nav-bar {
+  background: #fff;
   width: 100%;
   height: var(--navBarHeight);
   position: fixed;
@@ -49,7 +50,7 @@ export default {
 #nav-bar nav {
   border-top: 1px solid var(--darkgray);
   text-align: center;
-  padding: 10px 20px 20px 20px;
+  padding: 10px 10px 20px 10px;
 }
 
 #nav-bar nav article{
