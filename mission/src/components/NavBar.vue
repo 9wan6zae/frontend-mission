@@ -15,19 +15,19 @@ export default {
     return {
       navMenu: [
         {
-          icon: ['fas', 'star'],
+          icon: ['fas', 'home'],
           title: '홈',
         },
         {
-          icon: ['fas', 'car'],
+          icon: ['fas', 'heart'],
           title: '찜',
         },
         {
-          icon: ['fas', 'user'],
+          icon: ['fas', 'shopping-cart'],
           title: '장바구니',
         },
         {
-          icon: ['fas', 'star'],
+          icon: ['fas', 'user'],
           title: '마이페이지',
         },
       ],
