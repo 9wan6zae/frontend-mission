@@ -8,6 +8,7 @@
   --darkgray: #9E9E9E;
   --lightgray: #ddd;
   --emphasis: #FF5160;
+  --appHeaderHeight: 60px;
 }
 
 #app {
