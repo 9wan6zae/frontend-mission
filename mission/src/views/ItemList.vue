@@ -2,7 +2,7 @@
   <div id="item-list-page">
     <AppHeader />
     <main class="item-list-wrapper" data-test="item-list-wrapper">
-      <div class="item-list">
+      <div class="item-list flex-justify-center">
         <ItemListItem
           v-for="item in itemList"
           :key="item.id"
@@ -125,11 +125,12 @@ export default {
 .item-list-wrapper {
   padding-top: calc(var(--appHeaderHeight) + 20px);
   padding-bottom: calc(var(--navBarHeight) + 20px);
+  width: 100%;
 }
 .item-list {
   padding: 0 20px;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 300px));
   gap: 20px 20px;
 }
 </style>

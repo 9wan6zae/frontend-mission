@@ -1,9 +1,11 @@
 <template>
-    <nav id="nav-bar" data-test="nav-menu-bar" class="flex-space-between">
-      <article v-for="menu in navMenu" :key="menu.title" data-test="nav-menu">
-        <font-awesome-icon :icon="menu.icon" data-test="nav-menu-icon" />
-        <p class="menu-title" data-test="nav-menu-title">{{ menu.title }}</p>
-      </article>
+    <nav id="nav-bar" data-test="nav-menu-bar">
+      <div class="nav-menu-wrapper flex-space-between">
+        <article v-for="menu in navMenu" :key="menu.title" data-test="nav-menu">
+          <font-awesome-icon :icon="menu.icon" data-test="nav-menu-icon" />
+          <p class="menu-title" data-test="nav-menu-title">{{ menu.title }}</p>
+        </article>
+      </div>
     </nav>
 </template>
 
@@ -46,13 +48,20 @@ export default {
   border-top: 1px solid var(--darkgray);
   text-align: center;
   padding: 10px 10px 20px 10px;
+  display: flex;
+  justify-content: center;
 }
 
-#nav-bar article{
+.nav-menu-wrapper {
+  width: 100%;
+  max-width: 460px;
+}
+
+article{
   width: 80px;
 }
 
-#nav-bar article .menu-title{
+article .menu-title{
   margin-top: 2px;
   font-size: 14px;
   font-weight: 400;
