@@ -34,11 +34,11 @@
 </template>
 
 <script>
-import comma from '@/mixins/comma';
+import price from '@/mixins/price';
 
 export default {
   name: 'ItemListItem',
-  mixins: [comma],
+  mixins: [price],
   props: {
     item: Object,
   },
@@ -48,7 +48,7 @@ export default {
     },
     salesPrice() {
       if (this.item?.discountRate) {
-        return `${this.addComma(Math.ceil(this.item?.originalPrice * ((1 - (this.item?.discountRate / 100)))))}원`;
+        return `${this.addComma(this.calcDiscountedPrice(this.item?.discountRate, this.item?.originalPrice))}원`;
       }
       return `${this.addComma(this.item?.originalPrice)}원`;
     },

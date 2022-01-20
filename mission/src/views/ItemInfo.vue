@@ -139,11 +139,11 @@
 
 <script>
 import message from '@/data/message';
-import comma from '@/mixins/comma';
+import price from '@/mixins/price';
 
 export default {
   name: 'ItemInfoPage',
-  mixins: [comma],
+  mixins: [price],
   data() {
     return {
       slideIndex: 0,
@@ -221,7 +221,7 @@ export default {
     },
     salesPrice() {
       if (this.itemInfo?.discountRate) {
-        return `${this.addComma(Math.ceil(this.itemInfo?.originalPrice * ((1 - (this.itemInfo?.discountRate / 100)))))}원`;
+        return `${this.addComma(this.calcDiscountedPrice(this.itemInfo?.discountRate, this.itemInfo?.originalPrice))}원`;
       }
       return this.originalPrice;
     },
