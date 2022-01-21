@@ -42,14 +42,12 @@ export default {
     item: Object,
   },
   setup(props) {
-    const { salesPrice } = usePrice(props.item?.originalPrice, props.item?.discountRate);
+    const { salesPrice, isDiscount } = usePrice(
+      props.item?.originalPrice,
+      props.item?.discountRate,
+    );
 
-    return { salesPrice };
-  },
-  computed: {
-    isDiscount() {
-      return this.item?.discountRate;
-    },
+    return { salesPrice, isDiscount };
   },
 };
 </script>

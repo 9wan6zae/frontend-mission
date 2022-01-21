@@ -15,7 +15,9 @@ export default (price, discountRate) => {
       ? `${addComma(calcDiscountedPrice())}원`
       : originalPrice.value));
 
+  const isDiscount = computed(() => discountRate);
+
   return {
-    addComma, calcDiscountedPrice, originalPrice, salesPrice,
+    addComma, calcDiscountedPrice, originalPrice, salesPrice, isDiscount,
   };
 };
