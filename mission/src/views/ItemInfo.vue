@@ -139,11 +139,9 @@
 
 <script>
 import message from '@/data/message';
-import price from '@/mixins/price';
 
 export default {
   name: 'ItemInfoPage',
-  mixins: [price],
   data() {
     return {
       slideIndex: 0,
@@ -188,6 +186,10 @@ export default {
     };
   },
   methods: {
+    addComma(number) {
+      if (number) return number.toLocaleString('ko-KR');
+      return 0;
+    },
     toggleIsFavorite() {
       this.isFavorite = !this.isFavorite;
     },
@@ -221,7 +223,7 @@ export default {
     },
     salesPrice() {
       if (this.itemInfo?.discountRate) {
-        return `${this.addComma(this.calcDiscountedPrice(this.itemInfo?.discountRate, this.itemInfo?.originalPrice))}원`;
+        return `${this.addComma(Math.ceil(this.itemInfo?.originalPrice * ((1 - (this.itemInfo?.discountRate / 100)))))}원`;
       }
       return this.originalPrice;
     },
