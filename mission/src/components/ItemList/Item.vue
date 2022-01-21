@@ -34,23 +34,21 @@
 </template>
 
 <script>
-import price from '@/mixins/price';
+import usePrice from '@/composables/usePrice';
 
 export default {
   name: 'ItemListItem',
-  mixins: [price],
   props: {
     item: Object,
+  },
+  setup(props) {
+    const { salesPrice } = usePrice(props.item?.originalPrice, props.item?.discountRate);
+
+    return { salesPrice };
   },
   computed: {
     isDiscount() {
       return this.item?.discountRate;
-    },
-    salesPrice() {
-      if (this.item?.discountRate) {
-        return `${this.addComma(this.calcDiscountedPrice(this.item?.discountRate, this.item?.originalPrice))}원`;
-      }
-      return `${this.addComma(this.item?.originalPrice)}원`;
     },
   },
 };
