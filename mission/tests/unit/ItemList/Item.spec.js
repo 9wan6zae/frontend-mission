@@ -70,7 +70,16 @@ describe('ItemListItem', () => {
       });
 
       it('renders discount-rate', () => {
-        expect(wrapper.find('[data-test="discount-rate"]').exists()).toBeTruthy();
+        const wrapperDiscountRate = mount(ItemListItem, {
+          propsData: {
+            item: {
+              discountRate: 15,
+              originalPrice: 58000,
+            },
+          },
+        });
+
+        expect(wrapperDiscountRate.find('[data-test="discount-rate"]').exists()).toBeTruthy();
       });
 
       it('renders price', () => {
@@ -78,11 +87,29 @@ describe('ItemListItem', () => {
       });
 
       it('display discount-rate from props', () => {
-        expect(wrapper.find('[data-test="discount-rate"]').text()).toBe('15%');
+        const wrapperDiscountRate = mount(ItemListItem, {
+          propsData: {
+            item: {
+              discountRate: 15,
+              originalPrice: 58000,
+            },
+          },
+        });
+
+        expect(wrapperDiscountRate.find('[data-test="discount-rate"]').text()).toBe('15%');
       });
 
       it('display price from props', () => {
-        expect(wrapper.find('[data-test="price"]').text()).toBe('49,300원');
+        const wrapperPrice = mount(ItemListItem, {
+          propsData: {
+            item: {
+              originalPrice: 58000,
+              discountRate: 15,
+            },
+          },
+        });
+
+        expect(wrapperPrice.find('[data-test="price"]').text()).toBe('49,300원');
       });
     });
 
@@ -107,7 +134,15 @@ describe('ItemListItem', () => {
       });
 
       it('display price from props', () => {
-        expect(wrapper.find('[data-test="price"]').text()).toBe('58,000원');
+        const wrapperPrice = mount(ItemListItem, {
+          propsData: {
+            item: {
+              originalPrice: 58000,
+            },
+          },
+        });
+
+        expect(wrapperPrice.find('[data-test="price"]').text()).toBe('58,000원');
       });
     });
   });
