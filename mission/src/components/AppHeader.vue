@@ -27,7 +27,7 @@ export default {
   },
   computed: {
     appHeaderClass() {
-      return this.scrollY < 60 ? 'app-header--visible' : 'app-header--hidden';
+      return this.scrollY === 0 ? 'app-header--visible' : 'app-header--hidden';
     },
   },
   created() {
