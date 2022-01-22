@@ -10,19 +10,18 @@ export default {
     return {
       title: '9wan6zae\'s Shop',
       scrollY: 0,
+      timer: null,
     };
   },
   methods: {
-    setScrollEvent() {
-      let timer;
-      window.addEventListener('scroll', () => {
-        if (!timer) {
-          timer = setTimeout(() => {
-            timer = null;
-            this.scrollY = window.scrollY;
-          }, 200);
-        }
-      });
+    setScrollY() {
+      if (this.timer === null) {
+        this.timer = setTimeout(() => {
+          this.scrollY = window.scrollY;
+          clearTimeout(this.timer);
+          this.timer = null;
+        }, 200);
+      }
     },
   },
   computed: {
@@ -31,7 +30,10 @@ export default {
     },
   },
   created() {
-    this.setScrollEvent();
+    window.addEventListener('scroll', this.setScrollY);
+  },
+  beforeUnmount() {
+    window.removeEventListener('scroll', this.setScrollY);
   },
 };
 </script>
