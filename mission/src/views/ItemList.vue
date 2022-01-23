@@ -131,6 +131,6 @@ export default {
   padding: 0 20px;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 300px));
-  gap: 20px 20px;
+  gap: 20px;
 }
 </style>
