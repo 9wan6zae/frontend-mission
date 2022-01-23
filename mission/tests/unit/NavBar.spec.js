@@ -1,15 +1,30 @@
 import { mount } from '@vue/test-utils';
+
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import NavBar from '@/components/NavBar.vue';
+
+library.add(fas, far);
 
 describe('NavBar', () => {
   it('renders NavBar', () => {
-    const wrapper = mount(NavBar);
+    const wrapper = mount(NavBar, {
+      global: {
+        stubs: { FontAwesomeIcon },
+      },
+    });
 
     expect(wrapper.find('#nav-bar').exists()).toBe(true);
   });
 
   it('renders nav-menu-bar', () => {
-    const wrapper = mount(NavBar);
+    const wrapper = mount(NavBar, {
+      global: {
+        stubs: { FontAwesomeIcon },
+      },
+    });
 
     expect(wrapper.find('[data-test="nav-menu-bar"]').exists()).toBeTruthy();
   });
@@ -17,23 +32,26 @@ describe('NavBar', () => {
   it('renders N when there are N nav-menu', () => {
     const navMenu = [
       {
-        icon: 'test',
+        icon: 'home',
         title: '홈',
       },
       {
-        icon: 'test',
+        icon: 'heart',
         title: '찜',
       },
       {
-        icon: 'test',
+        icon: 'shopping-cart',
         title: '장바구니',
       },
       {
-        icon: 'test',
+        icon: 'user',
         title: '마이페이지',
       },
     ];
     const wrapper = mount(NavBar, {
+      global: {
+        stubs: { FontAwesomeIcon },
+      },
       data() {
         return {
           navMenu,
@@ -46,10 +64,14 @@ describe('NavBar', () => {
 
   describe('nav-menu', () => {
     const menu = {
-      icon: ['fas', 'star'],
+      icon: ['fas', 'heart'],
       title: '홈',
     };
-    const wrapper = mount(NavBar);
+    const wrapper = mount(NavBar, {
+      global: {
+        stubs: { FontAwesomeIcon },
+      },
+    });
 
     beforeEach(async () => {
       await wrapper.setData({
@@ -71,7 +93,7 @@ describe('NavBar', () => {
     });
 
     it('displays nav-menu-icon from data', () => {
-      expect(wrapper.find('[data-test="nav-menu-icon"]').attributes().icon).toContain(menu.icon);
+      expect(wrapper.find('[data-test="nav-menu-icon"]').html()).toContain(menu.icon[1]);
     });
   });
 });
