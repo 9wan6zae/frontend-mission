@@ -17,7 +17,7 @@ export default {
     setScrollY() {
       if (this.timer === null) {
         this.timer = setTimeout(() => {
-          this.scrollY = window.scrollY;
+          this.scrollY = window.pageYOffset || document.documentElement.scrollTop;
           clearTimeout(this.timer);
           this.timer = null;
         }, 200);
