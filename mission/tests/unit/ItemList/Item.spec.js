@@ -56,8 +56,10 @@ describe('ItemListItem', () => {
 
   describe('price', () => {
     describe('When there is discount-rate', () => {
-      it('renders discount-rate', () => {
-        const wrapper = mount(ItemListItem, {
+      let wrapper;
+
+      beforeEach(() => {
+        wrapper = mount(ItemListItem, {
           propsData: {
             item: {
               discountRate: 15,
@@ -65,98 +67,63 @@ describe('ItemListItem', () => {
             },
           },
         });
-
+      });
+      it('renders discount-rate', () => {
         expect(wrapper.find('[data-test="discount-rate"]').exists()).toBeTruthy();
       });
 
       it('renders price', () => {
-        const wrapper = mount(ItemListItem, {
-          propsData: {
-            item: {
-              discountRate: 15,
-              originalPrice: 58000,
-            },
-          },
-        });
-
         expect(wrapper.find('[data-test="price"]').exists()).toBeTruthy();
       });
 
       it('display discount-rate from props', () => {
-        const wrapper = mount(ItemListItem, {
-          propsData: {
-            item: {
-              discountRate: 15,
-              originalPrice: 58000,
-            },
-          },
-        });
-
         expect(wrapper.find('[data-test="discount-rate"]').text()).toBe('15%');
       });
 
       it('display price from props', () => {
-        const wrapper = mount(ItemListItem, {
-          propsData: {
-            item: {
-              discountRate: 15,
-              originalPrice: 58000,
-            },
-          },
-        });
-
         expect(wrapper.find('[data-test="price"]').text()).toBe('49,300원');
       });
     });
 
     describe('When there is no discount-rate', () => {
-      it('renders discount-rate', () => {
-        const wrapper = mount(ItemListItem, {
+      let wrapper;
+
+      beforeEach(() => {
+        wrapper = mount(ItemListItem, {
           propsData: {
             item: {
               originalPrice: 58000,
             },
           },
         });
-
+      });
+      it('renders discount-rate', () => {
         expect(wrapper.find('[data-test="discount-rate"]').exists()).toBeFalsy();
       });
 
       it('renders price', () => {
-        const wrapper = mount(ItemListItem, {
-          propsData: {
-            item: {
-              originalPrice: 58000,
-            },
-          },
-        });
-
         expect(wrapper.find('[data-test="price"]').exists()).toBeTruthy();
       });
 
       it('display price from props', () => {
-        const wrapper = mount(ItemListItem, {
-          propsData: {
-            item: {
-              originalPrice: 58000,
-            },
-          },
-        });
-
         expect(wrapper.find('[data-test="price"]').text()).toBe('58,000원');
       });
     });
   });
   describe('item-name', () => {
+    let wrapper;
     const item = {
       name: 'test-name',
     };
 
-    const wrapper = mount(ItemListItem, {
-      propsData: {
-        item,
-      },
+    beforeEach(() => {
+      wrapper = mount(ItemListItem, {
+        propsData: {
+          item,
+        },
+      });
     });
+
     it('renders item-name', () => {
       expect(wrapper.find('[data-test="item-name"]').exists()).toBeTruthy();
     });
@@ -167,14 +134,17 @@ describe('ItemListItem', () => {
   });
 
   describe('item-description', () => {
+    let wrapper;
     const item = {
       description: 'test-description',
     };
 
-    const wrapper = mount(ItemListItem, {
-      propsData: {
-        item,
-      },
+    beforeEach(() => {
+      wrapper = mount(ItemListItem, {
+        propsData: {
+          item,
+        },
+      });
     });
     it('renders item-description', () => {
       expect(wrapper.find('[data-test="item-description"]').exists()).toBeTruthy();
