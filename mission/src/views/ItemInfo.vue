@@ -6,9 +6,10 @@
     <ProductInfo :info="itemInfo?.itemInfo" />
     <ReviewInfo :reviews="itemInfo?.reviews" />
   </main>
-  <div class="floating-action-btn box-shadow flex-center" data-test="floating-action-btn">
-    <p data-test="floating-action-btn-content">{{ floatingActionBtnText }}</p>
-  </div>
+  <BuyFloatingActionBtn
+    :originalPrice="itemInfo?.itemInfo?.originalPrice"
+    :discountRate="itemInfo?.itemInfo?.discountRate"
+  />
 </div>
 </template>
 
@@ -17,6 +18,7 @@ import ItemMainImg from '@/components/ItemInfo/ItemMainImg.vue';
 import SellerInfo from '@/components/ItemInfo/SellerInfo.vue';
 import ProductInfo from '@/components/ItemInfo/ProductInfo.vue';
 import ReviewInfo from '@/components/ItemInfo/ReviewInfo.vue';
+import BuyFloatingActionBtn from '@/components/FloatingActionBtn/BuyFloatingActionBtn.vue';
 
 export default {
   name: 'ItemInfoPage',
@@ -25,9 +27,11 @@ export default {
     SellerInfo,
     ProductInfo,
     ReviewInfo,
+    BuyFloatingActionBtn,
   },
   data() {
     return {
+      salesPrice: undefined,
       itemInfo: {
         productImg: [
           'http://drive.google.com/uc?export=view&id=1NiKKy29GjTEX4ztxhCQjhDqAFJmTzRs8',
@@ -72,35 +76,11 @@ export default {
       },
     };
   },
-  computed: {
-    floatingActionBtnText() {
-      return `${this.salesPrice} 구매`;
-    },
-  },
 };
 </script>
 
 <style scoped>
 main {
   padding-bottom: 80px;
-}
-
-.floating-action-btn {
-  cursor: pointer;
-  position: fixed;
-  left: 20px;
-  right: 20px;
-  bottom: 20px;
-  height: 60px;
-  border-radius: 10px;
-  background: var(--emphasis);
-  border: none;
-  outline: none;
-}
-
-.floating-action-btn p {
-  color: #fff;
-  font-weight: 600;
-  font-size: 24px;
 }
 </style>
