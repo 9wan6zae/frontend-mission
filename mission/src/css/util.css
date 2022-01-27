@@ -1,0 +1,32 @@
+* {
+  box-sizing: border-box;
+}
+
+.box-shadow {
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pa0-20 {
+  padding: 0 20px;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-justify-center {
+  display: flex;
+  justify-content: center;
+}
+
+.flex-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex-align-center {
+  display: flex;
+  align-items: center;
+}
