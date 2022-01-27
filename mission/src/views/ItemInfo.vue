@@ -3,30 +3,7 @@
   <main>
     <ItemMainImg :img="itemInfo?.productImg" />
     <SellerInfo :seller="itemInfo?.seller" />
-    <section class="price-wrapper pa0-20 flex-col flex-justify-center">
-      <p class="product-name" data-test="product-name">{{ itemInfo?.productName }}</p>
-      <div class="flex-align-center">
-        <span
-          v-if="itemInfo?.discountRate"
-          class="discount-rate"
-          data-test="discount-rate"
-        >
-          {{ itemInfo.discountRate }}%
-        </span>
-        <span class="sales-price" data-test="sales-price">{{ salesPrice }}</span>
-        <span
-          v-if="itemInfo?.discountRate"
-          class="original-price"
-          data-test="original-price"
-        >
-          {{ originalPrice }}
-        </span>
-      </div>
-    </section>
-    <section class="content-container">
-      <p class="title">상품정보</p>
-      <span data-test="product-info" v-html="itemInfo?.productInfo"></span>
-    </section>
+    <ProductInfo :info="itemInfo?.itemInfo" />
     <section class="content-container" data-test="review-section">
       <p class="title">리뷰</p>
       <div v-if="itemInfo?.reviews && itemInfo.reviews.length > 0">
@@ -71,12 +48,14 @@
 import message from '@/data/message';
 import ItemMainImg from '@/components/ItemInfo/ItemMainImg.vue';
 import SellerInfo from '@/components/ItemInfo/SellerInfo.vue';
+import ProductInfo from '@/components/ItemInfo/ProductInfo.vue';
 
 export default {
   name: 'ItemInfoPage',
   components: {
     ItemMainImg,
     SellerInfo,
+    ProductInfo,
   },
   data() {
     return {
@@ -91,17 +70,19 @@ export default {
           sellerName: '테스터',
           tags: ['20대', '남성', '캐쥬얼'],
         },
-        productName: '베이지 스웨터',
-        originalPrice: 58000,
-        discountRate: 12,
-        productInfo: `
-          <b>Color</b>
-          <p>베이지, 브라운, 네이비, 화이트</p>
-          <br/>
-          <b>장점</b>
-          <p>신축성이 좋고 빨래를 하셔도 상하지 않아요!</p>
-          <img width="100%" src='https://drive.google.com/uc?export=view&id=1up6VsQnHqeZ87I3URO1Wqqe2KpkMkYHG' />
-        `,
+        itemInfo: {
+          productName: '베이지 스웨터',
+          originalPrice: 58000,
+          discountRate: 12,
+          info: `
+            <b>Color</b>
+            <p>베이지, 브라운, 네이비, 화이트</p>
+            <br/>
+            <b>장점</b>
+            <p>신축성이 좋고 빨래를 하셔도 상하지 않아요!</p>
+            <img width="100%" src='https://drive.google.com/uc?export=view&id=1up6VsQnHqeZ87I3URO1Wqqe2KpkMkYHG' />
+          `,
+        },
         reviews: [
           {
             nickname: 'abcde',
@@ -121,25 +102,12 @@ export default {
     };
   },
   methods: {
-    addComma(number) {
-      if (number) return number.toLocaleString('ko-KR');
-      return 0;
-    },
     hideNickname(nickname) {
       const nicknameLength = nickname.length;
       return `${nickname.slice(0, 2)}${('*').repeat(nicknameLength - 2)}`;
     },
   },
   computed: {
-    originalPrice() {
-      return `${this.addComma(this.itemInfo?.originalPrice)}원`;
-    },
-    salesPrice() {
-      if (this.itemInfo?.discountRate) {
-        return `${this.addComma(Math.ceil(this.itemInfo?.originalPrice * ((1 - (this.itemInfo?.discountRate / 100)))))}원`;
-      }
-      return this.originalPrice;
-    },
     notReviewMessage() {
       return message.notReview;
     },
@@ -151,52 +119,6 @@ export default {
 </script>
 
 <style scoped>
-.price-wrapper {
-  width: 100%;
-  height: 80px;
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-}
-
-.price-wrapper .product-name {
-  font-weight: normal;
-  font-size: 18px;
-  margin-bottom: 4px;
-}
-
-.price-wrapper span {
-  margin-right: 6px;
-}
-
-.price-wrapper .discount-rate {
-  font-weight: 600;
-  font-size: 24px;
-  color: var(--emphasis);
-}
-
-.price-wrapper .sales-price {
-  font-weight: 600;
-  font-size: 24px;
-}
-
-.price-wrapper .original-price {
-  font-weight: 600;
-  font-size: 18px;
-  text-decoration-line: line-through;
-  color: var(--lightgray);
-}
-
-.content-container {
-  padding: 30px 20px 0px 20px;
-}
-
-.content-container .title {
-  font-weight: 600;
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-
 .review-wrapper {
   width: 100%;
   height: 120px;
