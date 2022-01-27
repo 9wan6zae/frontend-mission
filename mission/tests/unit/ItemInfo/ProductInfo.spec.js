@@ -1,11 +1,11 @@
 import { mount } from '@vue/test-utils';
 import ProductInfo from '@/components/ItemInfo/ProductInfo.vue';
 
-describe('ItemInfoPage', () => {
-  it('redners ItemInfoPage', () => {
+describe('ProductInfo', () => {
+  it('redners ProductInfo', () => {
     const wrapper = mount(ProductInfo);
 
-    expect(wrapper.find('.item-info-wrapper').exists()).toBe(true);
+    expect(wrapper.find('.product-info-wrapper').exists()).toBe(true);
   });
 
   describe('Product Info Section', () => {

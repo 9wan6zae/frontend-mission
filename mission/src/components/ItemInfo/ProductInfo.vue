@@ -1,5 +1,5 @@
 <template>
-  <section class="item-info-wrapper pa0-20 flex-col flex-justify-center">
+  <section class="product-info-wrapper pa0-20 flex-col flex-justify-center">
     <p class="product-name" data-test="product-name">{{ info?.productName }}</p>
     <div class="flex-align-center">
       <span
@@ -29,7 +29,7 @@
 import usePrice from '@/composables/usePrice';
 
 export default {
-  name: 'ItemInfo',
+  name: 'ProductInfo',
   props: {
     info: Object,
   },
@@ -45,7 +45,7 @@ export default {
 </script>
 
 <style scoped>
-.item-info-wrapper {
+.product-info-wrapper {
   width: 100%;
   height: 80px;
   background: #fff;
@@ -53,28 +53,28 @@ export default {
   flex-direction: column;
 }
 
-.item-info-wrapper .product-name {
+.product-info-wrapper .product-name {
   font-weight: normal;
   font-size: 18px;
   margin-bottom: 4px;
 }
 
-.item-info-wrapper span {
+.product-info-wrapper span {
   margin-right: 6px;
 }
 
-.item-info-wrapper .discount-rate {
+.product-info-wrapper .discount-rate {
   font-weight: 600;
   font-size: 24px;
   color: var(--emphasis);
 }
 
-.item-info-wrapper .sales-price {
+.product-info-wrapper .sales-price {
   font-weight: 600;
   font-size: 24px;
 }
 
-.item-info-wrapper .original-price {
+.product-info-wrapper .original-price {
   font-weight: 600;
   font-size: 18px;
   text-decoration-line: line-through;
