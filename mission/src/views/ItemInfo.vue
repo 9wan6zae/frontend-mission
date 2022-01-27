@@ -2,42 +2,7 @@
 <div id='item-info-page'>
   <main>
     <ItemMainImg :img="itemInfo?.productImg" />
-    <section class="seller-info-wrapper pa0-20 flex-align-center">
-      <img
-        v-if="itemInfo?.profileImg"
-        class="profile-img"
-        :src="itemInfo.profileImg"
-        data-test="profile-img"
-      />
-      <img
-        v-else
-        class="profile-img"
-        src="@/assets/svg/defaultProfileImg.svg"
-        data-test="default-profile-img"
-      />
-      <section class="seller-info">
-        <p class="seller-name" data-test="seller-name">{{ itemInfo?.sellerName }}</p>
-        <div style="height: 22px">
-          <span
-            class="seller-tag"
-            v-for="(tag, i) in itemInfo?.tags"
-            :key="i"
-            data-test="seller-tag"
-          >
-            #{{ tag }}
-          </span>
-        </div>
-      </section>
-      <font-awesome-icon
-        data-test="favorite-btn"
-        @click="toggleIsFavorite"
-        :icon="isFavorite ? ['fas', 'star'] : ['far', 'star']"
-        size="lg"
-        :style="{
-          color: 'var(--emphasis)'
-        }"
-      />
-    </section>
+    <SellerInfo :seller="itemInfo?.seller" />
     <section class="price-wrapper pa0-20 flex-col flex-justify-center">
       <p class="product-name" data-test="product-name">{{ itemInfo?.productName }}</p>
       <div class="flex-align-center">
@@ -105,24 +70,27 @@
 <script>
 import message from '@/data/message';
 import ItemMainImg from '@/components/ItemInfo/ItemMainImg.vue';
+import SellerInfo from '@/components/ItemInfo/SellerInfo.vue';
 
 export default {
   name: 'ItemInfoPage',
   components: {
     ItemMainImg,
+    SellerInfo,
   },
   data() {
     return {
-      isFavorite: false,
       itemInfo: {
         productImg: [
           'http://drive.google.com/uc?export=view&id=1NiKKy29GjTEX4ztxhCQjhDqAFJmTzRs8',
           'https://drive.google.com/uc?export=view&id=1p7PD6L6WhP_DJK9bsJGtj9ilTzNQuwK9',
           'https://drive.google.com/uc?export=view&id=1up6VsQnHqeZ87I3URO1Wqqe2KpkMkYHG',
         ],
-        profileImg: 'https://drive.google.com/uc?export=view&id=1up6VsQnHqeZ87I3URO1Wqqe2KpkMkYHG',
-        sellerName: '테스터',
-        tags: ['20대', '남성', '캐쥬얼'],
+        seller: {
+          profileImg: 'https://drive.google.com/uc?export=view&id=1up6VsQnHqeZ87I3URO1Wqqe2KpkMkYHG',
+          sellerName: '테스터',
+          tags: ['20대', '남성', '캐쥬얼'],
+        },
         productName: '베이지 스웨터',
         originalPrice: 58000,
         discountRate: 12,
@@ -157,9 +125,6 @@ export default {
       if (number) return number.toLocaleString('ko-KR');
       return 0;
     },
-    toggleIsFavorite() {
-      this.isFavorite = !this.isFavorite;
-    },
     hideNickname(nickname) {
       const nicknameLength = nickname.length;
       return `${nickname.slice(0, 2)}${('*').repeat(nicknameLength - 2)}`;
@@ -186,42 +151,6 @@ export default {
 </script>
 
 <style scoped>
-.seller-info-wrapper {
-  width: 100%;
-  height: 80px;
-  background: #fff;
-  border-bottom: 1px solid var(--lightgray);
-}
-
-.seller-info-wrapper .profile-img {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.seller-info {
-  margin-left: 12px;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.seller-info .seller-name {
-  font-style: normal;
-  font-weight: bold;
-  font-size: 18px;
-}
-
-.seller-tag {
-  font-weight: normal;
-  font-size: 16px;
-  color: var(--darkgray);
-  margin-right: 4px;
-}
-
 .price-wrapper {
   width: 100%;
   height: 80px;
