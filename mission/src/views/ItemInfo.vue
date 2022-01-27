@@ -1,42 +1,7 @@
 <template>
 <div id='item-info-page'>
   <main>
-    <section class="product-img-wrapper">
-      <div v-if="itemInfo?.productImg" class="carousel">
-        <div class="carousel__content" data-test="carousel-content">
-          <div class="carousel__item" v-for="(img, i) in itemInfo.productImg" :key="i">
-            <img
-              class="product-img" :src="img"
-              data-test="product-img"
-            />
-          </div>
-        </div>
-        <font-awesome-icon
-          v-show="slideIndex !== 0"
-          class="floating-arrow-btn"
-          icon="arrow-circle-left"
-          size="lg"
-          :style="{
-            color: 'var(--emphasis)'
-          }"
-          @click="prev"
-          data-test="prev-btn"
-        />
-
-        <font-awesome-icon
-          v-show="slideIndex !== itemInfo.productImg.length - 1"
-          class="floating-arrow-btn"
-          icon="arrow-circle-right"
-          size="lg"
-          :style="{
-            color: 'var(--emphasis)',
-            right: 0,
-          }"
-          @click="next"
-          data-test="next-btn"
-        />
-      </div>
-    </section>
+    <ItemMainImg :img="itemInfo?.productImg" />
     <section class="seller-info-wrapper pa0-20 flex-align-center">
       <img
         v-if="itemInfo?.profileImg"
@@ -139,21 +104,23 @@
 
 <script>
 import message from '@/data/message';
+import ItemMainImg from '@/components/ItemInfo/ItemMainImg.vue';
 
 export default {
   name: 'ItemInfoPage',
+  components: {
+    ItemMainImg,
+  },
   data() {
     return {
-      slideIndex: 0,
       isFavorite: false,
       itemInfo: {
         productImg: [
-          'https://s3.us-west-2.amazonaws.com/secure.notion-static.com/9eb18655-8e17-4402-b19d-c59d5935437e/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220116%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220116T030855Z&X-Amz-Expires=86400&X-Amz-Signature=bae6aa468c52a254ff466f20f2763145add0a006788eb9c12054e78c0afbcc8b&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject',
-          'https://s3.us-west-2.amazonaws.com/secure.notion-static.com/ed804d0d-49ca-4bb0-a16d-0107a639b311/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220116%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220116T030927Z&X-Amz-Expires=86400&X-Amz-Signature=a3beb91a69557f63304fcb7633e72e1279db687cdac46ab9c4cedc2390dda567&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject',
-          'https://s3.us-west-2.amazonaws.com/secure.notion-static.com/7d5b05ab-4f09-4591-8f48-c32051c3a827/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220116%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220116T030945Z&X-Amz-Expires=86400&X-Amz-Signature=0f72c204a0a912fc62c76be10d655b854b7b0ca09596856cb14f365c1c9dc564&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject',
-          'https://s3.us-west-2.amazonaws.com/secure.notion-static.com/641b8e64-57bb-4933-b777-c800d0ec0a5a/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220116%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220116T030959Z&X-Amz-Expires=86400&X-Amz-Signature=656570621f027421acafef4f8b8bd34eb2e571a7394cf7feb46ac123740a0ff8&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject',
+          'http://drive.google.com/uc?export=view&id=1NiKKy29GjTEX4ztxhCQjhDqAFJmTzRs8',
+          'https://drive.google.com/uc?export=view&id=1p7PD6L6WhP_DJK9bsJGtj9ilTzNQuwK9',
+          'https://drive.google.com/uc?export=view&id=1up6VsQnHqeZ87I3URO1Wqqe2KpkMkYHG',
         ],
-        profileImg: 'https://s3.us-west-2.amazonaws.com/secure.notion-static.com/ed84454d-65da-4512-8663-8d144354dc5c/A6940C25-3AD9-4F0F-859C-A6BA82A03E96.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220116%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220116T031247Z&X-Amz-Expires=86400&X-Amz-Signature=8a38ee9f666216ae8190e6b0403fc670edfdf4a40c86e7e786f42af3634c5440&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22A6940C25-3AD9-4F0F-859C-A6BA82A03E96.jpeg%22&x-id=GetObject',
+        profileImg: 'https://drive.google.com/uc?export=view&id=1up6VsQnHqeZ87I3URO1Wqqe2KpkMkYHG',
         sellerName: '테스터',
         tags: ['20대', '남성', '캐쥬얼'],
         productName: '베이지 스웨터',
@@ -165,7 +132,7 @@ export default {
           <br/>
           <b>장점</b>
           <p>신축성이 좋고 빨래를 하셔도 상하지 않아요!</p>
-          <img width="100%" src='https://s3.us-west-2.amazonaws.com/secure.notion-static.com/9eb18655-8e17-4402-b19d-c59d5935437e/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220116%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220116T030855Z&X-Amz-Expires=86400&X-Amz-Signature=bae6aa468c52a254ff466f20f2763145add0a006788eb9c12054e78c0afbcc8b&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject' />
+          <img width="100%" src='https://drive.google.com/uc?export=view&id=1up6VsQnHqeZ87I3URO1Wqqe2KpkMkYHG' />
         `,
         reviews: [
           {
@@ -173,7 +140,7 @@ export default {
             reviewData: '2022-01-16',
             title: '신축성이 좋아요',
             content: '색상도 이쁘고 무엇보다 옷감이 잘 상하지 않아서 좋아요! 다음에도 재구매하고 싶습니다!',
-            reviewImg: 'https://s3.us-west-2.amazonaws.com/secure.notion-static.com/9eb18655-8e17-4402-b19d-c59d5935437e/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220116%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220116T030855Z&X-Amz-Expires=86400&X-Amz-Signature=bae6aa468c52a254ff466f20f2763145add0a006788eb9c12054e78c0afbcc8b&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject',
+            reviewImg: 'https://drive.google.com/uc?export=view&id=1up6VsQnHqeZ87I3URO1Wqqe2KpkMkYHG',
           },
           {
             nickname: 'tester',
@@ -197,25 +164,6 @@ export default {
       const nicknameLength = nickname.length;
       return `${nickname.slice(0, 2)}${('*').repeat(nicknameLength - 2)}`;
     },
-    slideAction() {
-      const carouselContent = document.querySelector('.carousel__content');
-      if (carouselContent) {
-        const size = carouselContent.clientWidth;
-        carouselContent.style.transform = `translateX(-${this.slideIndex * size}px)`;
-      }
-    },
-    prev() {
-      if (this.slideIndex !== 0) {
-        this.slideIndex -= 1;
-        this.slideAction();
-      }
-    },
-    next() {
-      if (this.slideIndex !== this.itemInfo?.productImg.length - 1) {
-        this.slideIndex += 1;
-        this.slideAction();
-      }
-    },
   },
   computed: {
     originalPrice() {
@@ -238,61 +186,6 @@ export default {
 </script>
 
 <style scoped>
-p, span {
-  margin: 0;
-  color: var(--black);
-}
-
-main {
-  margin-bottom: 100px;
-}
-
-.floating-arrow-btn {
-  position: absolute;
-  margin: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 999;
-}
-
-.product-img-wrapper {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  padding-top: 100%;
-  background: #ddd;
-}
-
-.carousel {
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-.carousel__content {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  transition: all .3s ease-out
-}
-
-.carousel__item {
-  min-width: 100%;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-}
-
-.product-img {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 .seller-info-wrapper {
   width: 100%;
   height: 80px;
