@@ -9,7 +9,7 @@ import usePrice from '@/composables/usePrice';
 import FloatingActionBtn from '@/components/FloatingActionBtn/FloatingActionBtn.vue';
 
 export default {
-  name: 'BuyFloatingActionBtn',
+  name: 'PurchaseFloatingActionBtn',
   components: {
     FloatingActionBtn,
   },

@@ -6,7 +6,7 @@
     <ProductInfo :info="itemInfo?.itemInfo" />
     <ReviewInfo :reviews="itemInfo?.reviews" />
   </main>
-  <BuyFloatingActionBtn
+  <PurchaseFloatingActionBtn
     :originalPrice="itemInfo?.itemInfo?.originalPrice"
     :discountRate="itemInfo?.itemInfo?.discountRate"
   />
@@ -18,7 +18,7 @@ import ItemMainImg from '@/components/ItemInfo/ItemMainImg.vue';
 import SellerInfo from '@/components/ItemInfo/SellerInfo.vue';
 import ProductInfo from '@/components/ItemInfo/ProductInfo.vue';
 import ReviewInfo from '@/components/ItemInfo/ReviewInfo.vue';
-import BuyFloatingActionBtn from '@/components/FloatingActionBtn/BuyFloatingActionBtn.vue';
+import PurchaseFloatingActionBtn from '@/components/FloatingActionBtn/PurchaseFloatingActionBtn.vue';
 
 export default {
   name: 'ItemInfoPage',
@@ -27,7 +27,7 @@ export default {
     SellerInfo,
     ProductInfo,
     ReviewInfo,
-    BuyFloatingActionBtn,
+    PurchaseFloatingActionBtn,
   },
   data() {
     return {

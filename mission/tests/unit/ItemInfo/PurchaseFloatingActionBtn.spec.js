@@ -1,10 +1,10 @@
 import { mount } from '@vue/test-utils';
-import BuyFloatingActionBtn from '@/components/FloatingActionBtn/BuyFloatingActionBtn.vue';
+import PurchaseFloatingActionBtn from '@/components/FloatingActionBtn/PurchaseFloatingActionBtn.vue';
 
 describe('Floating Action Button', () => {
   const originalPrice = 58000;
   const discountRate = 15;
-  const wrapper = mount(BuyFloatingActionBtn, {
+  const wrapper = mount(PurchaseFloatingActionBtn, {
     props: {
       originalPrice,
       discountRate,

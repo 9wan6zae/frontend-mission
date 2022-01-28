@@ -4,7 +4,7 @@ import ItemMainImg from '@/components/ItemInfo/ItemMainImg.vue';
 import SellerInfo from '@/components/ItemInfo/SellerInfo.vue';
 import ProductInfo from '@/components/ItemInfo/ProductInfo.vue';
 import ReviewInfo from '@/components/ItemInfo/ReviewInfo.vue';
-import BuyFloatingActionBtn from '@/components/FloatingActionBtn/BuyFloatingActionBtn.vue';
+import PurchaseFloatingActionBtn from '@/components/FloatingActionBtn/PurchaseFloatingActionBtn.vue';
 
 describe('ItemInfoPage', () => {
   it('redners ItemInfoPage', () => {
@@ -37,9 +37,9 @@ describe('ItemInfoPage', () => {
     expect(wrapper.findComponent(ReviewInfo)).toBeTruthy();
   });
 
-  it('renders BuyFloatingActionBtn', () => {
+  it('renders PurchaseFloatingActionBtn', () => {
     const wrapper = mount(ItemInfoPage);
 
-    expect(wrapper.findComponent(BuyFloatingActionBtn)).toBeTruthy();
+    expect(wrapper.findComponent(PurchaseFloatingActionBtn)).toBeTruthy();
   });
 });
