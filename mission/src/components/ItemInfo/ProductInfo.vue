@@ -3,7 +3,7 @@
     <p class="product-name" data-test="product-name">{{ info?.productName }}</p>
     <div class="flex-align-center">
       <span
-        v-if="info?.discountRate"
+        v-if="isDiscount"
         class="discount-rate"
         data-test="discount-rate"
       >
@@ -11,7 +11,7 @@
       </span>
       <span class="sales-price" data-test="sales-price">{{ salesPrice }}</span>
       <span
-        v-if="info?.discountRate"
+        v-if="isDiscount"
         class="original-price"
         data-test="original-price"
       >
