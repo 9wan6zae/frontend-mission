@@ -65,7 +65,7 @@ export default {
 }
 
 .seller-info-wrapper .profile-img {
-  width: 60px;
+  min-width: 60px;
   height: 60px;
   border-radius: 50%;
   object-fit: cover;
