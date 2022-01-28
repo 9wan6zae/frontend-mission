@@ -42,4 +42,22 @@ describe('ItemInfoPage', () => {
 
     expect(wrapper.findComponent(PurchaseFloatingActionBtn)).toBeTruthy();
   });
+
+  it('is the same price as the price displayed on the purchase button ', () => {
+    const wrapper = mount(ItemInfoPage, {
+      data() {
+        return {
+          itemInfo: {
+            itemInfo: {
+              originalPrice: 58000,
+              discountRate: 15,
+            },
+          },
+        };
+      },
+    });
+
+    expect(wrapper.find('[data-test="floating-action-btn-content"]').text())
+      .toContain(wrapper.find('[data-test="sales-price"]').text());
+  });
 });
