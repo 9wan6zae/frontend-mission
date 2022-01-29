@@ -1,16 +1,16 @@
 <template>
-<div id='item-info-page'>
-  <main>
-    <ItemMainImg :img="itemInfo?.productImg" />
-    <SellerInfo :seller="itemInfo?.seller" />
-    <ProductInfo :info="itemInfo?.itemInfo" />
-    <ReviewInfo :reviews="itemInfo?.reviews" />
-  </main>
-  <PurchaseFloatingActionBtn
-    :originalPrice="itemInfo?.itemInfo?.originalPrice"
-    :discountRate="itemInfo?.itemInfo?.discountRate"
-  />
-</div>
+  <div id='item-info-page'>
+    <main>
+      <ItemMainImg :img="itemInfo?.productImg" />
+      <SellerInfo :seller="itemInfo?.seller" />
+      <ProductInfo :info="itemInfo?.itemInfo" />
+      <ReviewInfo :reviews="itemInfo?.reviews" />
+    </main>
+    <PurchaseFloatingActionBtn
+      :originalPrice="itemInfo?.itemInfo?.originalPrice"
+      :discountRate="itemInfo?.itemInfo?.discountRate"
+    />
+  </div>
 </template>
 
 <script>
