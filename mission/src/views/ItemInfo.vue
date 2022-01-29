@@ -31,7 +31,6 @@ export default {
   },
   data() {
     return {
-      salesPrice: undefined,
       itemInfo: {
         productImg: [
           'http://drive.google.com/uc?export=view&id=1NiKKy29GjTEX4ztxhCQjhDqAFJmTzRs8',
