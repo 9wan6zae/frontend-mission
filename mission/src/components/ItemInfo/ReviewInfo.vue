@@ -1,18 +1,18 @@
 <template>
   <section class="content-container" data-test="review-section">
-      <p class="title">리뷰</p>
-      <div
-        v-if="doesExistReviews"
-      >
-        <Review
-          data-test="review-wrapper"
-          :review="review"
-          v-for="review in reviews"
-          :key="review?.id"
-        />
-      </div>
-      <p v-else>{{ notReviewMessage }}</p>
-    </section>
+    <p class="title">리뷰</p>
+    <div
+      v-if="doesExistReviews"
+    >
+      <Review
+        data-test="review-wrapper"
+        :review="review"
+        v-for="review in reviews"
+        :key="review?.id"
+      />
+    </div>
+    <p v-else>{{ notReviewMessage }}</p>
+  </section>
 </template>
 
 <script>
