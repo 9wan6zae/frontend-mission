@@ -29,21 +29,17 @@ export default {
   },
   data() {
     return {
-      items: [
-        {
-          product_no: 'asdf1234',
-          name: '핏이 좋은 수트',
-          image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
-          price: 198000.0,
-          original_price: 298000.0,
-          description: '아주 잘 맞는 수트',
-        },
-      ],
+      items: [],
     };
   },
+  methods: {
+    async getItem() {
+      const response = await itemAPI.get();
+      this.items = response.data.items;
+    },
+  },
   async created() {
-    const response = await itemAPI.get();
-    this.items = response.data.items;
+    this.getItem();
   },
 };
 </script>
