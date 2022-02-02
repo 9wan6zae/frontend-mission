@@ -26,4 +26,21 @@ describe('AppHeader', () => {
 
     expect(wrapper.find('[data-test="header-title"]').text()).toBe(title);
   });
+
+  it('renders menu-name', () => {
+    const wrapper = mount(AppHeader);
+
+    expect(wrapper.find('[data-test="menu-name"]').exists()).toBeTruthy();
+  });
+
+  it('displays menu-name', () => {
+    const menuName = 'Some menu';
+    const wrapper = mount(AppHeader, {
+      props: {
+        menuName,
+      },
+    });
+
+    expect(wrapper.find('[data-test="menu-name"]').text()).toBe(menuName);
+  });
 });
