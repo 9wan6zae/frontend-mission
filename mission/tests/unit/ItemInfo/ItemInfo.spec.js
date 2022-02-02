@@ -53,7 +53,7 @@ describe('ItemInfoPage', () => {
       original_price: 298000,
       description: '아주 잘 맞는 수트',
     };
-    itemAPI.get = jest.fn().mockResolvedValue({
+    itemAPI.getItem = jest.fn().mockResolvedValue({
       data: {
         item,
       },
@@ -62,14 +62,14 @@ describe('ItemInfoPage', () => {
 
     it('itemAPI 호출하는지', (done) => {
       wrapper.vm.$nextTick(async () => {
-        expect(itemAPI.get).toHaveBeenCalled();
+        expect(itemAPI.getItem).toHaveBeenCalled();
         done();
       });
     });
     it('itemAPI를 통해 받은 item을 렌더링되는지', async (done) => {
       wrapper.vm.$nextTick(async () => {
-        expect(itemAPI.get).toHaveBeenCalled();
-        await itemAPI.get(item.product_no);
+        expect(itemAPI.getItem).toHaveBeenCalled();
+        await itemAPI.getItem(item.product_no);
         expect(wrapper.find('[data-test="product-name"]').text()).toBe('핏이 좋은 수트');
         expect(wrapper.find('[data-test="discount-rate"]').text()).toBe('34%');
         expect(wrapper.find('[data-test="discount-rate"]').text()).toBe('34%');

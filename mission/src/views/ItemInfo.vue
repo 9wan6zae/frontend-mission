@@ -53,7 +53,7 @@ export default {
     this.loaded = false;
     window.scrollTo(0, 0);
     const productNo = this.$route?.params.product_no;
-    const response = await itemAPI.get(productNo);
+    const response = await itemAPI.getItem(productNo);
     this.item = response.data.item;
     this.loaded = true;
   },
