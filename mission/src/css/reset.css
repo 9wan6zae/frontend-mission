@@ -3,7 +3,7 @@
   --darkgray: #9E9E9E;
   --lightgray: #ddd;
   --emphasis: #FF5160;
-  --appHeaderHeight: 60px;
+  --appHeaderHeight: 66px;
   --navBarHeight: 80px;
 }
 
@@ -20,4 +20,8 @@ html, body {
 p, span {
   margin: 0;
   color: var(--black);
+}
+
+a {
+  text-decoration: none;
 }
