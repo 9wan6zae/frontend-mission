@@ -96,4 +96,35 @@ describe('NavBar', () => {
       expect(wrapper.find('[data-test="nav-menu-icon"]').html()).toContain(menu.icon[1]);
     });
   });
+
+  it('메뉴 버튼을 클릭하면 라우팅되는지', async () => {
+    const navMenu = [
+      {
+        icon: ['fas', 'heart'],
+        title: '찜',
+        path: '/wish',
+      },
+    ];
+    const mockRouter = {
+      push: jest.fn(),
+    };
+    const wrapper = mount(NavBar, {
+      global: {
+        stubs: { FontAwesomeIcon },
+        mocks: {
+          $router: mockRouter,
+        },
+      },
+      data() {
+        return {
+          navMenu,
+        };
+      },
+    });
+
+    await wrapper.find('[data-test="nav-menu"]').trigger('click');
+
+    expect(mockRouter.push).toHaveBeenCalledTimes(1);
+    expect(mockRouter.push).toHaveBeenCalledWith('/wish');
+  });
 });
