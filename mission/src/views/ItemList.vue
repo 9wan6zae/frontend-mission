@@ -1,31 +1,30 @@
 <template>
   <div id="item-list-page">
-    <AppHeader menuName="판매 중인 상품" />
-    <main class="item-list-wrapper" data-test="item-list-wrapper">
-      <div class="item-list flex-justify-center">
+    <Layout menuName="판매 중인 상품">
+      <div
+        class="item-list flex-justify-center"
+        data-test="item-list-wrapper"
+      >
         <ItemListItem
           v-for="item in itemList"
           :key="item.id"
           :item="item"
-          data-test="item-list"
+          data-test="item"
         />
       </div>
-    </main>
-    <NavBar />
+    </Layout>
   </div>
 </template>
 
 <script>
+import Layout from '@/components/Layout.vue';
 import ItemListItem from '@/components/ItemList/Item.vue';
-import AppHeader from '../components/AppHeader.vue';
-import NavBar from '../components/NavBar.vue';
 
 export default {
   name: 'ItemListPage',
   components: {
     ItemListItem,
-    AppHeader,
-    NavBar,
+    Layout,
   },
   data() {
     return {
@@ -122,13 +121,8 @@ export default {
 </script>
 
 <style scoped>
-.item-list-wrapper {
-  padding-top: calc(var(--appHeaderHeight) + 20px);
-  padding-bottom: calc(var(--navBarHeight) + 20px);
-  width: 100%;
-}
 .item-list {
-  padding: 0 20px;
+  padding: 20px;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 300px));
   gap: 20px;

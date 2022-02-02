@@ -1,19 +1,22 @@
 <template>
   <div id='item-info-page'>
-    <main>
-      <ItemMainImg :img="itemInfo?.productImg" />
-      <SellerInfo :seller="itemInfo?.seller" />
-      <ProductInfo :info="itemInfo?.itemInfo" />
-      <ReviewInfo :reviews="itemInfo?.reviews" />
-    </main>
-    <PurchaseFloatingActionBtn
-      :originalPrice="itemInfo?.itemInfo?.originalPrice"
-      :discountRate="itemInfo?.itemInfo?.discountRate"
-    />
+    <Layout menuName="상품 정보" prev :nav="false">
+      <main>
+        <ItemMainImg :img="itemInfo?.productImg" />
+        <SellerInfo :seller="itemInfo?.seller" />
+        <ProductInfo :info="itemInfo?.itemInfo" />
+        <ReviewInfo :reviews="itemInfo?.reviews" />
+      </main>
+      <PurchaseFloatingActionBtn
+        :originalPrice="itemInfo?.itemInfo?.originalPrice"
+        :discountRate="itemInfo?.itemInfo?.discountRate"
+      />
+    </Layout>
   </div>
 </template>
 
 <script>
+import Layout from '@/components/Layout.vue';
 import ItemMainImg from '@/components/ItemInfo/ItemMainImg.vue';
 import SellerInfo from '@/components/ItemInfo/SellerInfo.vue';
 import ProductInfo from '@/components/ItemInfo/ProductInfo.vue';
@@ -23,6 +26,7 @@ import PurchaseFloatingActionBtn from '@/components/FloatingActionBtn/PurchaseFl
 export default {
   name: 'ItemInfoPage',
   components: {
+    Layout,
     ItemMainImg,
     SellerInfo,
     ProductInfo,
@@ -75,11 +79,8 @@ export default {
       },
     };
   },
+  mounted() {
+    window.scrollTo(0, 0);
+  },
 };
 </script>
-
-<style scoped>
-main {
-  padding-bottom: 80px;
-}
-</style>
