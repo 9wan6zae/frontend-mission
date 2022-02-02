@@ -1,6 +1,6 @@
 <template>
   <div id="item-list-page">
-    <AppHeader />
+    <AppHeader menuName="판매 중인 상품" />
     <main class="item-list-wrapper" data-test="item-list-wrapper">
       <div class="item-list flex-justify-center">
         <ItemListItem
