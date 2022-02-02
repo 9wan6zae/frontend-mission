@@ -53,8 +53,7 @@ export default {
 #app-header {
   width: 100%;
   height: var(--appHeaderHeight);
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(4px);
+  background: #fff;
   z-index: 999;
   position: fixed;
   top: 0;
