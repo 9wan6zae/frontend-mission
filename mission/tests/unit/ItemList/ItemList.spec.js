@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import ItemListPage from '@/views/ItemList.vue';
+import itemAPI from '@/api/itemAPI';
 
 describe('ItemListPage', () => {
   it('redners ItemListPage', () => {
@@ -15,32 +16,15 @@ describe('ItemListPage', () => {
   });
 
   it('renders N when there are N item', () => {
-    const items = [
-      {
-        id: 1,
-        img: 'test-img',
-        discountRate: 15,
-        originalPrice: 10000,
-        name: 'test-name',
-        description: 'test-description',
-      },
-      {
-        id: 2,
-        img: 'test-img',
-        discountRate: 15,
-        originalPrice: 10000,
-        name: 'test-name',
-        description: 'test-description',
-      },
-      {
-        id: 3,
-        img: 'test-img',
-        discountRate: 15,
-        originalPrice: 10000,
-        name: 'test-name',
-        description: 'test-description',
-      },
-    ];
+    const itemsLength = 3;
+    const items = Array(itemsLength).fill({
+      product_no: 'asdf1234',
+      name: '핏이 좋은 수트',
+      image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
+      price: 198000.0,
+      original_price: 298000.0,
+      description: '아주 잘 맞는 수트',
+    });
     const wrapper = mount(ItemListPage, {
       data() {
         return {
@@ -49,6 +33,38 @@ describe('ItemListPage', () => {
       },
     });
 
-    expect(wrapper.findAll('[data-test="item"]').length).toEqual(items.length);
+    expect(wrapper.findAll('[data-test="item"]').length).toEqual(itemsLength);
+  });
+
+  describe('ItemAPI', () => {
+    const items = Array(3).fill({
+      product_no: 'asdf1234',
+      name: '핏이 좋은 수트',
+      image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
+      price: 198000,
+      original_price: 298000,
+      description: '아주 잘 맞는 수트',
+    });
+    itemAPI.get = jest.fn().mockResolvedValue({
+      data: {
+        items,
+      },
+    });
+    const wrapper = mount(ItemListPage);
+
+    it('itemAPI 호출하는지', (done) => {
+      wrapper.vm.$nextTick(async () => {
+        expect(itemAPI.get).toHaveBeenCalled();
+        done();
+      });
+    });
+    it('itemAPI를 통해 받은 items만큼 렌더링되는지', async (done) => {
+      await wrapper.vm.$nextTick(async () => {
+        expect(itemAPI.get).toHaveBeenCalled();
+        await itemAPI.get();
+        expect(wrapper.findAll('[data-test="item"]').length).toEqual(items.length);
+        done();
+      });
+    });
   });
 });
