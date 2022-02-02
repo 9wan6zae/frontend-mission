@@ -1,5 +1,5 @@
 <template>
-  <article class="item-list-item">
+  <article class="item-list-item" @click="goItemInfo" data-test="link">
     <figure>
       <img :src="item?.img" data-test="item-img" />
     </figure>
@@ -48,6 +48,11 @@ export default {
     );
 
     return { salesPrice, isDiscount };
+  },
+  methods: {
+    goItemInfo() {
+      this.$router.push(`/item/${this.item.id}`);
+    },
   },
 };
 </script>
