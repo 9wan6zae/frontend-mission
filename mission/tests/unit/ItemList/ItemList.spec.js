@@ -49,6 +49,6 @@ describe('ItemListPage', () => {
       },
     });
 
-    expect(wrapper.findAll('[data-test="item-list"]').length).toEqual(itemList.length);
+    expect(wrapper.findAll('[data-test="item"]').length).toEqual(itemList.length);
   });
 });
