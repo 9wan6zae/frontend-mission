@@ -5,22 +5,22 @@
   >
     <div>
       <header>
-        <span class="nickname" data-test="nickname">{{ hideNickname(review?.nickname) }}</span>
+        <span class="nickname" data-test="nickname">{{ hideNickname(writer) }}</span>
         <time
           class="review-date"
           data-test="review-date"
-          :datetime="review?.reviewDate"
+          :datetime="created"
         >
-          {{ review?.reviewDate }}
+          {{ created }}
         </time>
       </header>
-      <strong class="review-title" data-test="review-title">{{ review?.title }}</strong>
-      <p class="review-content" data-test="review-content">{{ review?.content }}</p>
+      <strong class="review-title" data-test="review-title">{{ title }}</strong>
+      <p class="review-content" data-test="review-content">{{ content }}</p>
     </div>
     <img
-      v-if="review?.reviewImg"
+      v-if="img"
       class="review-img"
-      :src="review.reviewImg"
+      :src="img"
       data-test="review-img"
     />
   </div>
@@ -30,7 +30,34 @@
 export default {
   name: 'Review',
   props: {
-    review: Object,
+    review_no: {
+      type: Number,
+      default: 0,
+    },
+    writer: {
+      type: String,
+      default: '',
+    },
+    title: {
+      type: String,
+      default: '',
+    },
+    content: {
+      type: String,
+      default: '',
+    },
+    likes_count: {
+      type: Number,
+      default: 0,
+    },
+    created: {
+      type: String,
+      default: '',
+    },
+    img: {
+      type: String,
+      default: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/example.jpg',
+    },
   },
   methods: {
     hideNickname(nickname) {

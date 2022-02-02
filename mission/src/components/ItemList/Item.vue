@@ -1,7 +1,7 @@
 <template>
   <article class="item-list-item" @click="goItemInfo" data-test="link">
     <figure>
-      <img :src="item?.img" data-test="item-img" />
+      <img :src="image" data-test="item-img" />
     </figure>
     <section class="price-section">
       <span
@@ -9,7 +9,7 @@
         class="discount-rate"
         data-test="discount-rate"
       >
-        {{ item?.discountRate }}%
+        {{ discountRate }}%
       </span>
       <span
         class="sales-price"
@@ -22,13 +22,13 @@
       class="item-name one-line-ellipsis"
       data-test="item-name"
     >
-      {{ item?.name }}
+      {{ name }}
     </p>
     <p
       class="item-description one-line-ellipsis"
       data-test="item-description"
     >
-      {{ item?.description }}
+      {{ description }}
     </p>
   </article>
 </template>
@@ -39,19 +39,42 @@ import usePrice from '@/composables/usePrice';
 export default {
   name: 'ItemListItem',
   props: {
-    item: Object,
+    product_no: {
+      type: String,
+      default: '',
+    },
+    name: {
+      type: String,
+      default: '',
+    },
+    image: {
+      type: String,
+      default: '',
+    },
+    price: {
+      type: Number,
+      default: 0,
+    },
+    original_price: {
+      type: Number,
+      default: 0,
+    },
+    description: {
+      type: String,
+      default: '',
+    },
   },
   setup(props) {
-    const { salesPrice, isDiscount } = usePrice(
-      props.item?.originalPrice,
-      props.item?.discountRate,
+    const { salesPrice, isDiscount, discountRate } = usePrice(
+      props.original_price,
+      props.price,
     );
 
-    return { salesPrice, isDiscount };
+    return { salesPrice, isDiscount, discountRate };
   },
   methods: {
     goItemInfo() {
-      this.$router.push(`/item/${this.item.id}`);
+      this.$router.push(`/item/${this.product_no}`);
     },
   },
 };

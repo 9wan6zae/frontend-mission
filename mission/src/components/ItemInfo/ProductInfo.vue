@@ -1,13 +1,13 @@
 <template>
   <section class="product-info-wrapper pa0-20 flex-col flex-justify-center">
-    <p class="product-name" data-test="product-name">{{ info?.productName }}</p>
+    <p class="product-name" data-test="product-name">{{ name }}</p>
     <div class="flex-align-center">
       <span
         v-if="isDiscount"
         class="discount-rate"
         data-test="discount-rate"
       >
-        {{ info.discountRate }}%
+        {{ discountRate }}%
       </span>
       <span class="sales-price" data-test="sales-price">{{ salesPrice }}</span>
       <span
@@ -21,7 +21,7 @@
   </section>
   <section class="content-container">
     <p class="title">상품정보</p>
-    <span data-test="product-info" v-html="info?.info"></span>
+    <span data-test="product-info" v-html="description"></span>
   </section>
 </template>
 
@@ -31,15 +31,34 @@ import usePrice from '@/composables/usePrice';
 export default {
   name: 'ProductInfo',
   props: {
-    info: Object,
+    name: {
+      type: String,
+      default: '',
+    },
+    original_price: {
+      type: Number,
+      default: 0,
+    },
+    price: {
+      type: Number,
+      default: 0,
+    },
+    description: {
+      type: String,
+      default: '',
+    },
   },
   setup(props) {
-    const { originalPrice, salesPrice, isDiscount } = usePrice(
-      props.info?.originalPrice,
-      props.info?.discountRate,
+    const {
+      originalPrice, salesPrice, isDiscount, discountRate,
+    } = usePrice(
+      props.original_price,
+      props.price,
     );
 
-    return { originalPrice, salesPrice, isDiscount };
+    return {
+      originalPrice, salesPrice, isDiscount, discountRate,
+    };
   },
 };
 </script>

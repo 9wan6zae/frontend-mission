@@ -1,9 +1,9 @@
 <template>
   <section class="seller-info-wrapper pa0-20 flex-align-center">
     <img
-      v-if="seller?.profileImg"
+      v-if="profile_image"
       class="profile-img"
-      :src="seller?.profileImg"
+      :src="profile_image"
       data-test="profile-img"
     />
     <img
@@ -13,11 +13,11 @@
       data-test="default-profile-img"
     />
     <section class="seller-info">
-      <p class="seller-name" data-test="seller-name">{{ seller?.sellerName }}</p>
+      <p class="seller-name" data-test="seller-name">{{ name }}</p>
       <div style="height: 22px">
         <span
           class="seller-tag"
-          v-for="(tag, i) in seller?.tags"
+          v-for="(tag, i) in hash_tags"
           :key="i"
           data-test="seller-tag"
         >
@@ -41,7 +41,20 @@
 export default {
   name: 'SellerInfo',
   props: {
-    seller: Object,
+    seller_no: {
+      type: Number,
+      default: 0,
+    },
+    name: {
+      type: String,
+      default: '',
+    },
+    hash_tags: {
+      type: Array,
+    },
+    profile_image: {
+      type: String,
+    },
   },
   data() {
     return {

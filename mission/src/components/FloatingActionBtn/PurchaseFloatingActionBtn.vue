@@ -14,13 +14,13 @@ export default {
     FloatingActionBtn,
   },
   props: {
-    originalPrice: Number,
-    discountRate: Number,
+    original_price: Number,
+    price: Number,
   },
   setup(props) {
     const { salesPrice } = usePrice(
-      props.originalPrice,
-      props.discountRate,
+      props.original_price,
+      props.price,
     );
 
     return { salesPrice };

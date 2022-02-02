@@ -6,9 +6,9 @@
     >
       <Review
         data-test="review-wrapper"
-        :review="review"
+        v-bind="review"
         v-for="review in reviews"
-        :key="review?.id"
+        :key="review?.review_no"
       />
     </div>
     <p v-else>{{ notReviewMessage }}</p>
