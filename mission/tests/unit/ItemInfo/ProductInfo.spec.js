@@ -15,26 +15,21 @@ describe('ProductInfo', () => {
     });
 
     it('represents the value entered in product-name', async () => {
-      const productName = '핏이 좋은 슈트';
+      const name = '핏이 좋은 슈트';
       await wrapper.setProps({
-        info: {
-          productName,
-        },
+        name,
       });
 
-      expect(wrapper.find('[data-test="product-name"]').text()).toBe(productName);
+      expect(wrapper.find('[data-test="product-name"]').text()).toBe(name);
     });
 
-    describe('원가만 있는 경우, discount-rate를 보여주지 않고 판매가가 원가가 된다.', () => {
+    describe('판매가만 있는 경우, discount-rate를 보여주지 않는다', () => {
       const price = 2000;
 
       beforeEach(() => {
         wrapper = mount(ProductInfo, {
           props: {
-            info: {
-              originalPrice: price,
-              discountRate: undefined,
-            },
+            price,
           },
         });
       });
@@ -55,17 +50,15 @@ describe('ProductInfo', () => {
         expect(wrapper.find('[data-test="discount-rate"]').exists()).toBeFalsy();
       });
     });
-    describe('원가와 할인율이 있는 경우, discount-rate와 original-price는 보여주고 판매가를 계산한다.', () => {
+    describe('원가가 있는 경우, discount-rate와 original-price는 보여주고 할인율을 계산한다', () => {
       const originalPrice = 58000;
-      const discountRate = 15;
+      const price = 49300;
 
       beforeEach(() => {
         wrapper = mount(ProductInfo, {
           props: {
-            info: {
-              originalPrice,
-              discountRate,
-            },
+            original_price: originalPrice,
+            price,
           },
         });
       });
@@ -84,20 +77,22 @@ describe('ProductInfo', () => {
       it('renders discount-rate', () => {
         expect(wrapper.find('[data-test="discount-rate"]').exists()).toBeTruthy();
       });
+
+      it('shows correct discount-rate', () => {
+        expect(wrapper.find('[data-test="discount-rate"]').text()).toEqual('15%');
+      });
     });
   });
 
   describe('Detail Product Info Section', () => {
     it('shows the entered string in product-info', async () => {
       const wrapper = mount(ProductInfo);
-      const info = '<h1>Heading</h1>';
+      const description = '<h1>Heading</h1>';
       await wrapper.setProps({
-        info: {
-          info,
-        },
+        description,
       });
 
-      expect(wrapper.find('[data-test="product-info"]').html()).toContain(info);
+      expect(wrapper.find('[data-test="product-info"]').html()).toContain(description);
     });
   });
 });

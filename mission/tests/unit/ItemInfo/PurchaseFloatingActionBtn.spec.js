@@ -3,11 +3,11 @@ import PurchaseFloatingActionBtn from '@/components/FloatingActionBtn/PurchaseFl
 
 describe('Floating Action Button', () => {
   const originalPrice = 58000;
-  const discountRate = 15;
+  const price = 49300;
   const wrapper = mount(PurchaseFloatingActionBtn, {
     props: {
-      originalPrice,
-      discountRate,
+      original_price: originalPrice,
+      price,
     },
   });
   it('renders floating-action-btn', () => {

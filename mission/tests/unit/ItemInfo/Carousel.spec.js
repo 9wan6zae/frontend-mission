@@ -5,7 +5,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-import ItemMainImg from '@/components/ItemInfo/ItemMainImg.vue';
+import ItemMainImg from '@/components/ItemInfo/Carousel.vue';
 
 library.add(fas, far);
 

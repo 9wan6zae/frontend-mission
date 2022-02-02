@@ -10,27 +10,15 @@ describe('ReviewInfo', () => {
     expect(wrapper.find('[data-test="review-section"]').exists()).toBe(true);
   });
 
-  it('renders N when there are N reviews', async () => {
-    const reviews = [
-      {
-        nickname: 'test',
-        createdAt: '2021-12-12',
-        title: '매우 만족',
-        content: 'content',
-      },
-      {
-        nickname: 'test',
-        createdAt: '2021-12-12',
-        title: '매우 만족',
-        content: 'content',
-      },
-      {
-        nickname: 'test',
-        createdAt: '2021-12-12',
-        title: '매우 만족',
-        content: 'content',
-      },
-    ];
+  it('renders N when there are N reviews', () => {
+    const arrayLength = 4;
+    const reviews = Array(arrayLength).fill({
+      writer: 'test123',
+      created: '2021-12-12',
+      title: '매우 만족',
+      content: 'content',
+      img: 'testImg',
+    });
 
     const wrapper = mount(ReviewInfo, {
       props: {
@@ -40,8 +28,8 @@ describe('ReviewInfo', () => {
 
     const reviewWrapper = wrapper.findAllComponents(Review);
 
-    expect(reviewWrapper).toHaveLength(reviews.length);
-    expect(wrapper.findAll('[data-test="review-wrapper"]').length).toBe(reviews.length);
+    expect(reviewWrapper).toHaveLength(arrayLength);
+    expect(wrapper.findAll('[data-test="review-wrapper"]').length).toBe(arrayLength);
   });
 
   it('renders a custom message when there is no review', async () => {

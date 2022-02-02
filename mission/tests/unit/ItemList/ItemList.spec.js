@@ -15,7 +15,7 @@ describe('ItemListPage', () => {
   });
 
   it('renders N when there are N item', () => {
-    const itemList = [
+    const items = [
       {
         id: 1,
         img: 'test-img',
@@ -44,11 +44,11 @@ describe('ItemListPage', () => {
     const wrapper = mount(ItemListPage, {
       data() {
         return {
-          itemList,
+          items,
         };
       },
     });
 
-    expect(wrapper.findAll('[data-test="item"]').length).toEqual(itemList.length);
+    expect(wrapper.findAll('[data-test="item"]').length).toEqual(items.length);
   });
 });

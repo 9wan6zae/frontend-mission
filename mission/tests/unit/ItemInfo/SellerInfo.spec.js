@@ -33,24 +33,20 @@ describe('SellerInfo', () => {
       });
 
       it('displays seller-name from data', async () => {
-        const sellerName = '테스터';
+        const name = '테스터';
         await wrapper.setProps({
-          seller: {
-            sellerName,
-          },
+          name,
         });
 
-        expect(wrapper.find('[data-test="seller-name"]').text()).toEqual(sellerName);
+        expect(wrapper.find('[data-test="seller-name"]').text()).toEqual(name);
       });
     });
 
     describe('Profile Img', () => {
-      const profileImg = 'testImg';
+      const profileImage = 'testImg';
       it('renders profile-img when there is a profile image', async () => {
         await wrapper.setProps({
-          seller: {
-            profileImg,
-          },
+          profile_image: profileImage,
         });
 
         expect(wrapper.find('[data-test="profile-img"]').exists()).toBeTruthy();
@@ -58,19 +54,15 @@ describe('SellerInfo', () => {
 
       it('displays profile-img from data', async () => {
         await wrapper.setProps({
-          seller: {
-            profileImg,
-          },
+          profile_image: profileImage,
         });
 
-        expect(wrapper.find('[data-test="profile-img"]').attributes().src).toEqual(profileImg);
+        expect(wrapper.find('[data-test="profile-img"]').attributes().src).toEqual(profileImage);
       });
 
       it('renders default-profile-img when is there is no profile image', async () => {
         await wrapper.setProps({
-          seller: {
-            profileImg: undefined,
-          },
+          profile_image: undefined,
         });
 
         expect(wrapper.find('[data-test="default-profile-img"]').exists()).toBeTruthy();
@@ -81,9 +73,7 @@ describe('SellerInfo', () => {
       it('renders tags when there is tags', async () => {
         const tags = ['남성', '의류', '10대'];
         await wrapper.setProps({
-          seller: {
-            tags,
-          },
+          hash_tags: tags,
         });
 
         expect(wrapper.findAll('[data-test="seller-tag"]').length).toEqual(tags.length);
@@ -92,22 +82,10 @@ describe('SellerInfo', () => {
       it('hides tags when there is no tags', async () => {
         const tags = [];
         await wrapper.setProps({
-          seller: {
-            tags,
-          },
+          hash_tags: tags,
         });
 
         expect(wrapper.find('[data-test="seller-tag"]').exists()).toBeFalsy();
-      });
-
-      it('renders default-profile-img when is there is no profile image', async () => {
-        await wrapper.setProps({
-          seller: {
-            profileImg: undefined,
-          },
-        });
-
-        expect(wrapper.find('[data-test="default-profile-img"]').exists()).toBeTruthy();
       });
     });
 
