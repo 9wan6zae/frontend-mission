@@ -8,6 +8,8 @@
   --darkgray: #9E9E9E;
   --lightgray: #ddd;
   --emphasis: #FF5160;
+  --appHeaderHeight: 60px;
+  --navBarHeight: 80px;
 }
 
 #app {
@@ -18,6 +20,11 @@
 }
 html, body {
   margin: 0;
+}
+
+p, span {
+  margin: 0;
+  color: var(--black);
 }
 
 * {
@@ -41,6 +48,11 @@ html, body {
 .flex-justify-center {
   display: flex;
   justify-content: center;
+}
+
+.flex-space-between {
+  display: flex;
+  justify-content: space-between;
 }
 
 .flex-align-center {
