@@ -1,9 +1,5 @@
 import { mount } from '@vue/test-utils';
-// import VueRouter from 'vue-router';
-// import App from '@/App.vue';
 import ItemListItem from '@/components/ItemList/Item.vue';
-// import ItemInfo from '@/views/ItemInfo.vue';
-// import routes from '@/router';
 
 describe('ItemListItem', () => {
   it('redners ItemListItem', () => {
