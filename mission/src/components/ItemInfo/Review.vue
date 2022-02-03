@@ -15,7 +15,7 @@
         </time>
       </header>
       <strong class="review-title" data-test="review-title">{{ title }}</strong>
-      <p class="review-content" data-test="review-content">{{ content }}</p>
+      <p class="review-content two-line-ellipsis " data-test="review-content">{{ content }}</p>
     </div>
     <img
       v-if="img"
@@ -107,12 +107,6 @@ export default {
 .review-wrapper .review-content {
   font-weight: normal;
   font-size: 16px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  word-break: break-all;
 }
 
 .review-wrapper .review-img {
