@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import ItemListPage from '@/views/ItemList.vue';
 import ItemInfoPage from '@/views/ItemInfo.vue';
-import WishPage from '@/views/Wish.vue';
+import WishListPage from '@/views/WishList.vue';
 
 const routes = [
   {
@@ -11,11 +11,11 @@ const routes = [
   },
   {
     path: '/wish',
-    name: 'WishPage',
-    component: WishPage,
+    name: 'WishListPage',
+    component: WishListPage,
   },
   {
-    path: '/item/:id',
+    path: '/item/:product_no',
     name: 'ItemInfo',
     component: ItemInfoPage,
   },
