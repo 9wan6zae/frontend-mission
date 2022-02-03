@@ -6,7 +6,7 @@ describe('WishPage', () => {
   it('redners WishPage', () => {
     const wrapper = mount(WishPage);
 
-    expect(wrapper.find('#item-list-page').exists()).toBe(true);
+    expect(wrapper.find('#wish-list-page').exists()).toBe(true);
   });
 
   it('renders item-list-wrapper', () => {

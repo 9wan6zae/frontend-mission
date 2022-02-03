@@ -1,5 +1,5 @@
 <template>
-  <div id="item-list-page">
+  <div id="wish-list-page">
     <ListLayout
       menuName='찜 목록'
       :items="items"
