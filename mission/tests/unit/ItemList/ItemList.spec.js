@@ -15,27 +15,6 @@ describe('ItemListPage', () => {
     expect(wrapper.find('[data-test="item-list-wrapper"]').exists).toBeTruthy();
   });
 
-  it('renders N when there are N item', () => {
-    const itemsLength = 3;
-    const items = Array(itemsLength).fill({
-      product_no: 'asdf1234',
-      name: '핏이 좋은 수트',
-      image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
-      price: 198000.0,
-      original_price: 298000.0,
-      description: '아주 잘 맞는 수트',
-    });
-    const wrapper = mount(ItemListPage, {
-      data() {
-        return {
-          items,
-        };
-      },
-    });
-
-    expect(wrapper.findAll('[data-test="item"]').length).toEqual(itemsLength);
-  });
-
   describe('ItemAPI', () => {
     const items = Array(3).fill({
       product_no: 'asdf1234',
