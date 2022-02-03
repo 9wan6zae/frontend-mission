@@ -1,11 +1,10 @@
 <template>
   <div id='item-info-page'>
     <Layout menuName="상품 정보" prev :nav="false">
-      <main>
+      <main v-if="!loading">
         <ItemMainImg :img="item?.image" />
         <SellerInfo v-bind="item?.seller" />
         <ProductInfo
-          v-if="loaded"
           :name="item?.name"
           :original_price="item?.original_price"
           :price="item?.price"
@@ -13,8 +12,9 @@
         />
         <ReviewInfo :reviews="item?.reviews" />
       </main>
+      <LoadingComponent v-else />
       <PurchaseFloatingActionBtn
-        v-if="loaded"
+        v-if="!loading"
         :original_price="item?.original_price"
         :price="item?.price"
       />
@@ -24,6 +24,7 @@
 
 <script>
 import itemAPI from '@/api/itemAPI';
+import LoadingComponent from '@/components/Loading/LoadingContent.vue';
 import Layout from '@/components/Layouts/Layout.vue';
 import ItemMainImg from '@/components/ItemInfo/ItemMainImg.vue';
 import SellerInfo from '@/components/ItemInfo/SellerInfo.vue';
@@ -35,6 +36,7 @@ export default {
   name: 'ItemInfoPage',
   components: {
     Layout,
+    LoadingComponent,
     ItemMainImg,
     SellerInfo,
     ProductInfo,
@@ -43,17 +45,22 @@ export default {
   },
   data() {
     return {
-      loaded: false,
+      loading: true,
       item: {},
     };
   },
-  async created() {
-    this.loaded = false;
+  methods: {
+    async getItem() {
+      this.loading = true;
+      const productNo = this.$route?.params.product_no;
+      const response = await itemAPI.getItem(productNo);
+      this.item = response.data.item;
+      this.loading = false;
+    },
+  },
+  created() {
     window.scrollTo(0, 0);
-    const productNo = this.$route?.params.product_no;
-    const response = await itemAPI.getItem(productNo);
-    this.item = response.data.item;
-    this.loaded = true;
+    this.getItem();
   },
 };
 </script>
