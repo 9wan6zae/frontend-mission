@@ -1,41 +1,34 @@
 <template>
   <div id="item-list-page">
-    <Layout menuName="판매 중인 상품">
-      <div
-        class="item-list flex-justify-center"
-        data-test="item-list-wrapper"
-      >
-        <ItemListItem
-          v-for="item in items"
-          :key="item.product_no"
-          v-bind="item"
-          data-test="item"
-        />
-      </div>
-    </Layout>
+    <ListLayout
+      menuName="판매 중인 상품"
+      :items="items"
+      :loading="loading"
+    />
   </div>
 </template>
 
 <script>
 import itemAPI from '@/api/itemAPI';
-import Layout from '@/components/Layouts/Layout.vue';
-import ItemListItem from '@/components/ItemList/Item.vue';
+import ListLayout from '@/components/Layouts/ListLayout.vue';
 
 export default {
   name: 'ItemListPage',
   components: {
-    ItemListItem,
-    Layout,
+    ListLayout,
   },
   data() {
     return {
+      loading: true,
       items: [],
     };
   },
   methods: {
     async getItem() {
+      this.loading = true;
       const response = await itemAPI.get();
       this.items = response.data.items;
+      this.loading = false;
     },
   },
   async created() {
