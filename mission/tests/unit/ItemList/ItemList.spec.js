@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils';
+import { mount, flushPromises } from '@vue/test-utils';
 import ItemListPage from '@/views/ItemList.vue';
 import itemAPI from '@/api/itemAPI';
 
@@ -31,19 +31,16 @@ describe('ItemListPage', () => {
     });
     const wrapper = mount(ItemListPage);
 
-    it('itemAPI 호출하는지', (done) => {
-      wrapper.vm.$nextTick(async () => {
-        expect(itemAPI.get).toHaveBeenCalled();
-        done();
-      });
+    it('itemAPI 호출하는지', async () => {
+      await flushPromises();
+
+      expect(itemAPI.get).toHaveBeenCalled();
     });
-    it('itemAPI를 통해 받은 items만큼 렌더링되는지', async (done) => {
-      await wrapper.vm.$nextTick(async () => {
-        expect(itemAPI.get).toHaveBeenCalled();
-        await itemAPI.get();
-        expect(wrapper.findAll('[data-test="item"]').length).toEqual(items.length);
-        done();
-      });
+    it('itemAPI를 통해 받은 items만큼 렌더링되는지', async () => {
+      await itemAPI.get();
+      await flushPromises();
+
+      expect(wrapper.findAll('[data-test="item"]').length).toEqual(items.length);
     });
   });
 });

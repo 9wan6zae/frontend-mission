@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils';
+import { mount, flushPromises } from '@vue/test-utils';
 import WishPage from '@/views/WishList.vue';
 import wishAPI from '@/api/wishAPI';
 
@@ -31,19 +31,16 @@ describe('WishPage', () => {
     });
     const wrapper = mount(WishPage);
 
-    it('wishAPI 호출하는지', (done) => {
-      wrapper.vm.$nextTick(async () => {
-        expect(wishAPI.get).toHaveBeenCalled();
-        done();
-      });
+    it('wishAPI 호출하는지', async () => {
+      await flushPromises();
+
+      expect(wishAPI.get).toHaveBeenCalled();
     });
-    it('wishAPI를 통해 받은 items만큼 렌더링되는지', async (done) => {
-      await wrapper.vm.$nextTick(async () => {
-        expect(wishAPI.get).toHaveBeenCalled();
-        await wishAPI.get();
-        expect(wrapper.findAll('[data-test="item"]').length).toEqual(items.length);
-        done();
-      });
+    it('wishAPI 통해 받은 items만큼 렌더링되는지', async () => {
+      await wishAPI.get();
+      await flushPromises();
+
+      expect(wrapper.findAll('[data-test="item"]').length).toEqual(items.length);
     });
   });
 });
