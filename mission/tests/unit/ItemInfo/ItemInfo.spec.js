@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils';
+import { mount, flushPromises } from '@vue/test-utils';
 import ItemInfoPage from '@/views/ItemInfo.vue';
 import ItemMainImg from '@/components/ItemInfo/ItemMainImg.vue';
 import SellerInfo from '@/components/ItemInfo/SellerInfo.vue';
@@ -58,7 +58,7 @@ describe('ItemInfoPage', () => {
       expect(wrapper.find('[data-test="loading-content"]').exists()).toBeTruthy();
     });
 
-    it('로딩이 완료되면 원래의 Content를 보여준다.', (done) => {
+    it('로딩이 완료되면 원래의 Content를 보여준다.', async () => {
       const item = {
         product_no: 'asdf1234',
         name: '핏이 좋은 수트',
@@ -81,12 +81,11 @@ describe('ItemInfoPage', () => {
         },
       });
 
-      wrapper.vm.$nextTick(async () => {
-        await itemAPI.getItem(item.product_no);
-        expect(wrapper.find('[data-test="item-info-content"]').exists()).toBeTruthy();
-        expect(wrapper.find('[data-test="loading-content"]').exists()).toBeFalsy();
-        done();
-      });
+      await itemAPI.getItem(item.product_no);
+      await flushPromises();
+
+      expect(wrapper.find('[data-test="item-info-content"]').exists()).toBeTruthy();
+      expect(wrapper.find('[data-test="loading-content"]').exists()).toBeFalsy();
     });
   });
 
@@ -106,23 +105,19 @@ describe('ItemInfoPage', () => {
     });
     const wrapper = mount(ItemInfoPage);
 
-    it('itemAPI 호출하는지', (done) => {
-      wrapper.vm.$nextTick(async () => {
-        expect(itemAPI.getItem).toHaveBeenCalled();
-        done();
-      });
+    it('itemAPI 호출하는지', async () => {
+      await flushPromises();
+
+      expect(itemAPI.getItem).toHaveBeenCalled();
     });
-    it('itemAPI를 통해 받은 item을 렌더링되는지', async (done) => {
-      wrapper.vm.$nextTick(async () => {
-        expect(itemAPI.getItem).toHaveBeenCalled();
-        await itemAPI.getItem(item.product_no);
-        expect(wrapper.find('[data-test="product-name"]').text()).toBe('핏이 좋은 수트');
-        expect(wrapper.find('[data-test="discount-rate"]').text()).toBe('34%');
-        expect(wrapper.find('[data-test="discount-rate"]').text()).toBe('34%');
-        expect(wrapper.find('[data-test="original-price"]').text()).toBe('298,000원');
-        expect(wrapper.find('[data-test="sales-price"]').text()).toBe('198,000원');
-        done();
-      });
+    it('itemAPI를 통해 받은 item을 렌더링되는지', async () => {
+      await itemAPI.getItem(item.product_no);
+      await flushPromises();
+
+      expect(wrapper.find('[data-test="product-name"]').text()).toBe('핏이 좋은 수트');
+      expect(wrapper.find('[data-test="discount-rate"]').text()).toBe('34%');
+      expect(wrapper.find('[data-test="original-price"]').text()).toBe('298,000원');
+      expect(wrapper.find('[data-test="sales-price"]').text()).toBe('198,000원');
     });
   });
 });
