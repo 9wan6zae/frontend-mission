@@ -4,29 +4,27 @@
       <main>
         <ItemMainImg :img="item?.image" />
         <SellerInfo v-bind="item?.seller" />
-        <template v-if="loaded">
-          <ProductInfo
-            :name="item?.name"
-            :original_price="item?.original_price"
-            :price="item?.price"
-            :description="item?.description"
-          />
-        </template>
-        <ReviewInfo :reviews="item?.reviews" />
-      </main>
-      <template v-if="loaded">
-        <PurchaseFloatingActionBtn
+        <ProductInfo
+          v-if="loaded"
+          :name="item?.name"
           :original_price="item?.original_price"
           :price="item?.price"
+          :description="item?.description"
         />
-      </template>
+        <ReviewInfo :reviews="item?.reviews" />
+      </main>
+      <PurchaseFloatingActionBtn
+        v-if="loaded"
+        :original_price="item?.original_price"
+        :price="item?.price"
+      />
     </Layout>
   </div>
 </template>
 
 <script>
 import itemAPI from '@/api/itemAPI';
-import Layout from '@/components/Layout.vue';
+import Layout from '@/components/Layouts/Layout.vue';
 import ItemMainImg from '@/components/ItemInfo/ItemMainImg.vue';
 import SellerInfo from '@/components/ItemInfo/SellerInfo.vue';
 import ProductInfo from '@/components/ItemInfo/ProductInfo.vue';

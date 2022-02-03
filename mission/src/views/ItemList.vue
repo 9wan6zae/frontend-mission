@@ -18,7 +18,7 @@
 
 <script>
 import itemAPI from '@/api/itemAPI';
-import Layout from '@/components/Layout.vue';
+import Layout from '@/components/Layouts/Layout.vue';
 import ItemListItem from '@/components/ItemList/Item.vue';
 
 export default {

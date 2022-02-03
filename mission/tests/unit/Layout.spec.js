@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import AppHeader from '@/components/AppHeader.vue';
 import NavBar from '@/components/NavBar.vue';
-import Layout from '@/components/Layout.vue';
+import Layout from '@/components/Layouts/Layout.vue';
 
 library.add(fas, far);
 
