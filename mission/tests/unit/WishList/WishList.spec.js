@@ -15,7 +15,7 @@ describe('WishPage', () => {
     expect(wrapper.find('[data-test="item-list-wrapper"]').exists).toBeTruthy();
   });
 
-  describe('ItemAPI', () => {
+  describe('wishAPI', () => {
     const items = Array(3).fill({
       product_no: 'asdf1234',
       name: '핏이 좋은 수트',
@@ -37,7 +37,7 @@ describe('WishPage', () => {
         done();
       });
     });
-    it('itemAPI를 통해 받은 items만큼 렌더링되는지', async (done) => {
+    it('wishAPI를 통해 받은 items만큼 렌더링되는지', async (done) => {
       await wrapper.vm.$nextTick(async () => {
         expect(wishAPI.get).toHaveBeenCalled();
         await wishAPI.get();
