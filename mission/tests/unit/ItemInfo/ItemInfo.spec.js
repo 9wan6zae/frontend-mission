@@ -44,6 +44,52 @@ describe('ItemInfoPage', () => {
     expect(wrapper.findComponent(PurchaseFloatingActionBtn)).toBeTruthy();
   });
 
+  describe('Loading Content', () => {
+    it('로딩 중일 때 LoadingContent를 보여준다.', () => {
+      const wrapper = mount(ItemInfoPage, {
+        data() {
+          return {
+            loading: true,
+          };
+        },
+      });
+
+      expect(wrapper.find('[data-test="item-info-content"]').exists()).toBeFalsy();
+      expect(wrapper.find('[data-test="loading-content"]').exists()).toBeTruthy();
+    });
+
+    it('로딩이 완료되면 원래의 Content를 보여준다.', (done) => {
+      const item = {
+        product_no: 'asdf1234',
+        name: '핏이 좋은 수트',
+        image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
+        price: 198000,
+        original_price: 298000,
+        description: '아주 잘 맞는 수트',
+      };
+      itemAPI.getItem = jest.fn().mockResolvedValue({
+        data: {
+          item,
+        },
+      });
+      const wrapper = mount(ItemInfoPage, {
+        data() {
+          return {
+            item: {},
+            loading: false,
+          };
+        },
+      });
+
+      wrapper.vm.$nextTick(async () => {
+        await itemAPI.getItem(item.product_no);
+        expect(wrapper.find('[data-test="item-info-content"]').exists()).toBeTruthy();
+        expect(wrapper.find('[data-test="loading-content"]').exists()).toBeFalsy();
+        done();
+      });
+    });
+  });
+
   describe('ItemAPI', () => {
     const item = {
       product_no: 'asdf1234',
