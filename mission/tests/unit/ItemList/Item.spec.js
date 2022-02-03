@@ -142,26 +142,4 @@ describe('ItemListItem', () => {
       expect(wrapper.find('[data-test="item-description"]').text()).toBe(item.description);
     });
   });
-
-  it('상품을 클릭했을 때 ItemInfo.vue로 이동하는지', async () => {
-    const mockRouter = {
-      push: jest.fn(),
-    };
-
-    const wrapper = mount(ItemListItem, {
-      global: {
-        mocks: {
-          $router: mockRouter,
-        },
-      },
-      props: {
-        product_no: 1,
-      },
-    });
-
-    await wrapper.find('[data-test="link"]').trigger('click');
-
-    expect(mockRouter.push).toHaveBeenCalledTimes(1);
-    expect(mockRouter.push).toHaveBeenCalledWith('/item/1');
-  });
 });

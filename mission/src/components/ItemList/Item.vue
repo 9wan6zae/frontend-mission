@@ -1,36 +1,38 @@
 <template>
-  <article class="item-list-item" @click="goItemInfo" data-test="link">
-    <figure>
-      <img :src="image" data-test="item-img" />
-    </figure>
-    <section class="price-section">
-      <span
-        v-if="isDiscount"
-        class="discount-rate"
-        data-test="discount-rate"
+  <router-link :to="link">
+    <article class="item-list-item" data-test="link">
+      <figure>
+        <img :src="image" data-test="item-img" />
+      </figure>
+      <section class="price-section">
+        <span
+          v-if="isDiscount"
+          class="discount-rate"
+          data-test="discount-rate"
+        >
+          {{ discountRate }}%
+        </span>
+        <span
+          class="sales-price"
+          data-test="price"
+        >
+          {{ salesPrice }}
+        </span>
+      </section>
+      <p
+        class="item-name one-line-ellipsis"
+        data-test="item-name"
       >
-        {{ discountRate }}%
-      </span>
-      <span
-        class="sales-price"
-        data-test="price"
+        {{ name }}
+      </p>
+      <p
+        class="item-description one-line-ellipsis"
+        data-test="item-description"
       >
-        {{ salesPrice }}
-      </span>
-    </section>
-    <p
-      class="item-name one-line-ellipsis"
-      data-test="item-name"
-    >
-      {{ name }}
-    </p>
-    <p
-      class="item-description one-line-ellipsis"
-      data-test="item-description"
-    >
-      {{ description }}
-    </p>
-  </article>
+        {{ description }}
+      </p>
+    </article>
+  </router-link>
 </template>
 
 <script>
@@ -72,9 +74,9 @@ export default {
 
     return { salesPrice, isDiscount, discountRate };
   },
-  methods: {
-    goItemInfo() {
-      this.$router.push(`/item/${this.product_no}`);
+  computed: {
+    link() {
+      return `/item/${this.product_no}`;
     },
   },
 };

@@ -1,6 +1,25 @@
-import { mount } from '@vue/test-utils';
+import { mount, flushPromises } from '@vue/test-utils';
+import { createRouter, createWebHistory } from 'vue-router';
+import App from '@/App.vue';
 import ListLayout from '@/components/Layouts/ListLayout.vue';
 import LoadingItem from '@/components/Loading/LoadingItem.vue';
+import ItemListPage from '@/views/ItemList.vue';
+import ItemInfoPage from '@/views/ItemInfo.vue';
+import itemAPI from '@/api/itemAPI';
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [
+    {
+      path: '/',
+      component: ItemListPage,
+    },
+    {
+      path: '/item/:product_no',
+      component: ItemInfoPage,
+    },
+  ],
+});
 
 describe('ListLayout', () => {
   it('redners ListLayout', () => {
@@ -36,5 +55,36 @@ describe('ListLayout', () => {
     });
 
     expect(wrapper.findAllComponents(LoadingItem)).toHaveLength(2);
+  });
+
+  it('상품을 클릭했을 때 ItemInfo.vue로 이동하는지', async () => {
+    router.push('/');
+    await router.isReady();
+
+    const items = Array(3).fill({
+      product_no: 'asdf1234',
+      name: '핏이 좋은 수트',
+      image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
+      price: 198000,
+      original_price: 298000,
+      description: '아주 잘 맞는 수트',
+    });
+    itemAPI.get = jest.fn().mockResolvedValue({
+      data: {
+        items,
+      },
+    });
+    const wrapper = mount(App, {
+      global: {
+        plugins: [router],
+      },
+    });
+
+    await itemAPI.get();
+    await flushPromises();
+    await wrapper.find('[data-test="link"]').trigger('click');
+    await flushPromises();
+
+    expect(wrapper.find('#item-info-page').exists()).toBeTruthy();
   });
 });
