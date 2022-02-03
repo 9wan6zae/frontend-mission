@@ -1,5 +1,5 @@
 <template>
-  <article class="loading-item" data-test="link">
+  <article class="loading-item">
     <LoadingBlock style="width: 100%; height: 0px; padding-top: 100%" />
     <LoadingBlock
       style="width: 50%; height: 24px; margin-top: 6px; margin-bottom: 10px"
@@ -27,13 +27,5 @@ export default {
 
 section {
   margin-top: 6px;
-}
-
-.squre-block {
-  margin: 0;
-  width: 100%;
-  padding-top: 100%;
-  background: #ddd;
-  border-radius: 10px;
 }
 </style>
