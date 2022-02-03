@@ -1,5 +1,5 @@
 <template>
-  <article class="loading-item">
+  <article>
     <LoadingBlock style="width: 100%; height: 0px; padding-top: 100%" />
     <main>
       <div style="padding-top: 10px">
