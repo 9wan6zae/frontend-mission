@@ -1,12 +1,31 @@
-import { mount } from '@vue/test-utils';
+import { mount, flushPromises } from '@vue/test-utils';
+import { createRouter, createWebHistory } from 'vue-router';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+import App from '@/App.vue';
 import NavBar from '@/components/NavBar.vue';
+import ItemListPage from '@/views/ItemList.vue';
+import WishListPage from '@/views/WishList.vue';
 
 library.add(fas, far);
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [
+    {
+      path: '/',
+      component: ItemListPage,
+    },
+    {
+      path: '/wish',
+      component: WishListPage,
+    },
+  ],
+});
 
 describe('NavBar', () => {
   it('renders NavBar', () => {
@@ -98,33 +117,18 @@ describe('NavBar', () => {
   });
 
   it('메뉴 버튼을 클릭하면 라우팅되는지', async () => {
-    const navMenu = [
-      {
-        icon: ['fas', 'heart'],
-        title: '찜',
-        path: '/wish',
-      },
-    ];
-    const mockRouter = {
-      push: jest.fn(),
-    };
-    const wrapper = mount(NavBar, {
+    router.push('/');
+    await router.isReady();
+
+    const wrapper = mount(App, {
       global: {
-        stubs: { FontAwesomeIcon },
-        mocks: {
-          $router: mockRouter,
-        },
-      },
-      data() {
-        return {
-          navMenu,
-        };
+        plugins: [router],
       },
     });
 
-    await wrapper.find('[data-test="nav-menu"]').trigger('click');
+    await wrapper.find('#heart').trigger('click');
+    await flushPromises();
 
-    expect(mockRouter.push).toHaveBeenCalledTimes(1);
-    expect(mockRouter.push).toHaveBeenCalledWith('/wish');
+    expect(wrapper.find('[data-test="menu-name"]').text()).toBe('찜 목록');
   });
 });

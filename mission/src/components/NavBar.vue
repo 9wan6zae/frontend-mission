@@ -4,17 +4,19 @@
         <article
           v-for="menu in navMenu"
           :key="menu.title"
-          data-test="nav-menu"
-          @click="redirect(menu.path)"
         >
-          <font-awesome-icon
-            :icon="menu.icon"
-            data-test="nav-menu-icon"
-            :style="{
-              color: setIconColor(menu.path)
-            }"
-          />
-          <p class="menu-title" data-test="nav-menu-title">{{ menu.title }}</p>
+          <router-link :to="menu.path">
+            <div :id="menu.icon[1]" data-test="nav-menu">
+              <font-awesome-icon
+                :icon="menu.icon"
+                data-test="nav-menu-icon"
+                :style="{
+                  color: setIconColor(menu.path)
+                }"
+              />
+              <p class="menu-title" data-test="nav-menu-title">{{ menu.title }}</p>
+            </div>
+          </router-link>
         </article>
       </div>
     </nav>
@@ -43,15 +45,12 @@ export default {
         {
           icon: ['fas', 'user'],
           title: '마이페이지',
-          path: '/mypage',
+          path: '/info',
         },
       ],
     };
   },
   methods: {
-    redirect(path) {
-      this.$router.push(path);
-    },
     setIconColor(path) {
       return this.$route?.path === path ? 'var(--emphasis)' : 'var(--black)';
     },
