@@ -1,7 +1,7 @@
 <template>
   <div id='item-info-page'>
     <Layout menuName="상품 정보" prev :nav="false">
-      <main v-if="!loading" data-test="item-info-content">
+      <div v-if="!loading" data-test="item-info-content">
         <ItemMainImg :img="item?.image" />
         <SellerInfo v-bind="item?.seller" />
         <ProductInfo
@@ -11,7 +11,7 @@
           :description="item?.description"
         />
         <ReviewInfo :reviews="item?.reviews" />
-      </main>
+      </div>
       <LoadingComponent v-else data-test="loading-content" />
       <PurchaseFloatingActionBtn
         v-if="!loading"
