@@ -158,6 +158,22 @@ describe('CartPage', () => {
 
       expect(wrapper.find('[data-test="all-checkbox"]').classes()).toContain('unchecked');
     });
+    it('모든 상품이 체크 상태이면 전체 체크박스 활성화되는지', async () => {
+      const wrapper = mount(CartPage, {
+        global: {
+          stubs: { FontAwesomeIcon },
+        },
+      });
+
+      await cartAPI.get();
+      await flushPromises();
+
+      const checkboxs = wrapper.findAll('[data-test="cart-item-checkbox"]');
+      await checkboxs[0].trigger('click');
+      await checkboxs[1].trigger('click');
+
+      expect(wrapper.find('[data-test="all-checkbox"]').classes()).toContain('checked');
+    });
   });
   describe('CartAPI', () => {
     it('cartAPI 호출하는지', async () => {
