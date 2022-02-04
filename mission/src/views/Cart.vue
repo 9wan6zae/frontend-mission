@@ -74,14 +74,7 @@ export default {
       return true;
     },
     totalPrice() {
-      let price = 0;
-      for (let i = 0; i < this.cartItems.length; i += 1) {
-        const cartItem = this.cartItems[i];
-        if (cartItem.isCheck) {
-          price += cartItem.price;
-        }
-      }
-      return price;
+      return this.cartItems.reduce((acc, cur) => (cur.isCheck ? acc + cur.price : acc), 0);
     },
     btnText() {
       return `${this.totalPrice.toLocaleString('ko-kr')}원 구매`;
