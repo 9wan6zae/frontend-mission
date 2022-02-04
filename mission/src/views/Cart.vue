@@ -12,13 +12,20 @@
       />
       <p>전체선택</p>
     </section>
-    <section class="pa0-20">
+    <section v-if="!loading" class="pa0-20 item-wrapper">
       <cart-item
         v-for="item in cartItems"
         :key="item.product_no"
         v-bind="item"
         @checkedProductNo="chageIsCheck"
         data-test="cart-item"
+      />
+    </section>
+    <section v-else class="pa0-20 item-wrapper">
+      <loading-block
+        v-for="i in 2"
+        :key="i"
+        style="width: 100%; height: 100px; margin-bottom: 20px"
       />
     </section>
   </layout>
@@ -36,6 +43,7 @@ import cartAPI from '@/api/cartAPI';
 import Layout from '../components/Layouts/Layout.vue';
 import CartItem from '../components/Cart/CartItem.vue';
 import FloatingActionBtn from '../components/FloatingActionBtn/FloatingActionBtn.vue';
+import LoadingBlock from '../components/Loading/LoadingBlock.vue';
 
 export default {
   name: 'Cart',
@@ -43,9 +51,11 @@ export default {
     Layout,
     CartItem,
     FloatingActionBtn,
+    LoadingBlock,
   },
   data() {
     return {
+      loading: true,
       cartItems: [],
     };
   },
@@ -94,12 +104,14 @@ export default {
       }
     },
     async getCart() {
+      this.loading = true;
       const response = await cartAPI.get();
       const cartItems = response.data.cart_item;
       for (let i = 0; i < cartItems.length; i += 1) {
         cartItems[i].isCheck = false;
       }
       this.cartItems = cartItems;
+      this.loading = false;
     },
   },
   created() {
@@ -114,5 +126,9 @@ export default {
   height: 40px;
   background: #fff;
   padding-left: 30px;
+}
+
+.item-wrapper {
+  padding-bottom: 80px;
 }
 </style>
