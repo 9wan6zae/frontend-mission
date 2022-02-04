@@ -1,6 +1,7 @@
 import { mount, flushPromises } from '@vue/test-utils';
 import InfoPage from '@/views/Info.vue';
 import infoAPI from '@/api/infoAPI';
+import LoadingBlock from '@/components/Loading/LoadingBlock.vue';
 
 const info = {
   username: 'test-name',
@@ -47,5 +48,21 @@ describe('InfoPage', () => {
     await flushPromises();
 
     expect(infoAPI.get).toHaveBeenCalled();
+  });
+  describe('Loading', () => {
+    it('로딩 중일 때 loading-block이 보이는지', () => {
+      const wrapper = mount(InfoPage);
+
+      expect(wrapper.findComponent(LoadingBlock).exists()).toBeTruthy();
+    });
+
+    it('로딩이 완료되면 loading-block이 보이지 않는지', async () => {
+      const wrapper = mount(InfoPage);
+
+      await infoAPI.get();
+      await flushPromises();
+
+      expect(wrapper.findComponent(LoadingBlock).exists()).toBeFalsy();
+    });
   });
 });

@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import CartPage from '@/views/Cart.vue';
 import CartItem from '@/components/Cart/CartItem.vue';
 import cartAPI from '@/api/cartAPI';
+import LoadingBlock from '@/components/Loading/LoadingBlock.vue';
 
 library.add(fas, far);
 
@@ -180,6 +181,30 @@ describe('CartPage', () => {
       await flushPromises();
 
       expect(cartAPI.get).toHaveBeenCalled();
+    });
+  });
+  describe('Loading', () => {
+    it('로딩 중일 때 loading-block이 보이는지', () => {
+      const wrapper = mount(CartPage, {
+        global: {
+          stubs: { FontAwesomeIcon },
+        },
+      });
+
+      expect(wrapper.findComponent(LoadingBlock).exists()).toBeTruthy();
+    });
+
+    it('로딩이 완료되면 loading-block이 보이지 않는지', async () => {
+      const wrapper = mount(CartPage, {
+        global: {
+          stubs: { FontAwesomeIcon },
+        },
+      });
+
+      await cartAPI.get();
+      await flushPromises();
+
+      expect(wrapper.findComponent(LoadingBlock).exists()).toBeFalsy();
     });
   });
 });
