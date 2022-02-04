@@ -52,15 +52,21 @@ export default {
   methods: {
     async getItem() {
       this.loading = true;
-      const productNo = this.$route?.params.product_no;
+      const productNo = this.$route.params.product_no;
       const response = await itemAPI.getItem(productNo);
       this.item = response.data.item;
       this.loading = false;
     },
   },
   created() {
-    window.scrollTo(0, 0);
-    this.getItem();
+    this.$watch(
+      () => this.$route.params,
+      () => {
+        window.scrollTo(0, 0);
+        this.getItem();
+      },
+      { immediate: true },
+    );
   },
 };
 </script>
