@@ -7,39 +7,81 @@ import ReviewInfo from '@/components/ItemInfo/ReviewInfo.vue';
 import PurchaseFloatingActionBtn from '@/components/FloatingActionBtn/PurchaseFloatingActionBtn.vue';
 import itemAPI from '@/api/itemAPI';
 
+const mockRoute = {
+  params: {
+    id: 1,
+  },
+};
+
 describe('ItemInfoPage', () => {
   it('redners ItemInfoPage', () => {
-    const wrapper = mount(ItemInfoPage);
+    const wrapper = mount(ItemInfoPage, {
+      global: {
+        mocks: {
+          $route: mockRoute,
+        },
+      },
+    });
 
     expect(wrapper.find('#item-info-page').exists()).toBe(true);
   });
 
   it('renders ItemMainImg', () => {
-    const wrapper = mount(ItemInfoPage);
+    const wrapper = mount(ItemInfoPage, {
+      global: {
+        mocks: {
+          $route: mockRoute,
+        },
+      },
+    });
 
     expect(wrapper.findComponent(ItemMainImg)).toBeTruthy();
   });
 
   it('renders SellerInfo', () => {
-    const wrapper = mount(ItemInfoPage);
+    const wrapper = mount(ItemInfoPage, {
+      global: {
+        mocks: {
+          $route: mockRoute,
+        },
+      },
+    });
 
     expect(wrapper.findComponent(SellerInfo)).toBeTruthy();
   });
 
   it('renders ProductInfo', () => {
-    const wrapper = mount(ItemInfoPage);
+    const wrapper = mount(ItemInfoPage, {
+      global: {
+        mocks: {
+          $route: mockRoute,
+        },
+      },
+    });
 
     expect(wrapper.findComponent(ProductInfo)).toBeTruthy();
   });
 
   it('renders ReviewInfo', () => {
-    const wrapper = mount(ItemInfoPage);
+    const wrapper = mount(ItemInfoPage, {
+      global: {
+        mocks: {
+          $route: mockRoute,
+        },
+      },
+    });
 
     expect(wrapper.findComponent(ReviewInfo)).toBeTruthy();
   });
 
   it('renders PurchaseFloatingActionBtn', () => {
-    const wrapper = mount(ItemInfoPage);
+    const wrapper = mount(ItemInfoPage, {
+      global: {
+        mocks: {
+          $route: mockRoute,
+        },
+      },
+    });
 
     expect(wrapper.findComponent(PurchaseFloatingActionBtn)).toBeTruthy();
   });
@@ -47,6 +89,11 @@ describe('ItemInfoPage', () => {
   describe('Loading Content', () => {
     it('로딩 중일 때 LoadingContent를 보여준다.', () => {
       const wrapper = mount(ItemInfoPage, {
+        global: {
+          mocks: {
+            $route: mockRoute,
+          },
+        },
         data() {
           return {
             loading: true,
@@ -73,6 +120,11 @@ describe('ItemInfoPage', () => {
         },
       });
       const wrapper = mount(ItemInfoPage, {
+        global: {
+          mocks: {
+            $route: mockRoute,
+          },
+        },
         data() {
           return {
             item: {},
@@ -103,7 +155,13 @@ describe('ItemInfoPage', () => {
         item,
       },
     });
-    const wrapper = mount(ItemInfoPage);
+    const wrapper = mount(ItemInfoPage, {
+      global: {
+        mocks: {
+          $route: mockRoute,
+        },
+      },
+    });
 
     it('itemAPI 호출하는지', async () => {
       await flushPromises();
