@@ -3,6 +3,7 @@ import ItemListPage from '@/views/ItemList.vue';
 import ItemInfoPage from '@/views/ItemInfo.vue';
 import WishListPage from '@/views/WishList.vue';
 import CartPage from '@/views/Cart.vue';
+import InfoPage from '@/views/Info.vue';
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: '/cart',
     name: 'Cart',
     component: CartPage,
+  },
+  {
+    path: '/info',
+    name: 'Info',
+    component: InfoPage,
   },
   {
     path: '/about',
