@@ -15,4 +15,8 @@ instance.interceptors.request.use((config) => {
   return customConfig;
 });
 
+instance.interceptors.response.use((response) => response, (error) => {
+  console.log(error);
+});
+
 export default instance;
