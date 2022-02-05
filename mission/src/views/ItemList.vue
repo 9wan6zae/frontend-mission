@@ -9,8 +9,10 @@
 </template>
 
 <script>
-import itemAPI from '@/api/itemAPI';
 import ListLayout from '@/components/Layouts/ListLayout.vue';
+import Repository from '@/repositories/RepositoryFactory';
+
+const ItemRepository = Repository.get('item');
 
 export default {
   name: 'ItemListPage',
@@ -26,8 +28,8 @@ export default {
   methods: {
     async getItem() {
       this.loading = true;
-      const response = await itemAPI.get();
-      this.items = response.data.items;
+      const { data } = await ItemRepository.get();
+      this.items = data.items;
       this.loading = false;
     },
   },

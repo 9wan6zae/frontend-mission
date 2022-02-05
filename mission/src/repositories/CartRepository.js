@@ -1,6 +1,6 @@
-import axios from '@/utils/axios';
+import axios from './Clients/AxiosClient';
 
-const resource = '/info';
+const resource = '/cart';
 
 export default {
   get() {

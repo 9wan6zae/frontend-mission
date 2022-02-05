@@ -9,8 +9,10 @@
 </template>
 
 <script>
-import wishAPI from '@/api/wishAPI';
 import ListLayout from '@/components/Layouts/ListLayout.vue';
+import Repository from '@/repositories/RepositoryFactory';
+
+const WishRepository = Repository.get('wish');
 
 export default {
   name: 'WishListPage',
@@ -26,8 +28,8 @@ export default {
   methods: {
     async getItem() {
       this.loading = true;
-      const response = await wishAPI.get();
-      this.items = response.data.items;
+      const { data } = await WishRepository.get();
+      this.items = data.items;
       this.loading = false;
     },
   },

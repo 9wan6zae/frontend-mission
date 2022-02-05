@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import CartPage from '@/views/Cart.vue';
 import CartItem from '@/components/Cart/CartItem.vue';
-import cartAPI from '@/api/cartAPI';
+import cartAPI from '@/repositories/CartRepository';
 import LoadingBlock from '@/components/Loading/LoadingBlock.vue';
 
 library.add(fas, far);

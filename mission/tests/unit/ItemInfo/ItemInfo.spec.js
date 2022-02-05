@@ -5,7 +5,7 @@ import SellerInfo from '@/components/ItemInfo/SellerInfo.vue';
 import ProductInfo from '@/components/ItemInfo/ProductInfo.vue';
 import ReviewInfo from '@/components/ItemInfo/ReviewInfo.vue';
 import PurchaseFloatingActionBtn from '@/components/FloatingActionBtn/PurchaseFloatingActionBtn.vue';
-import itemAPI from '@/api/itemAPI';
+import itemAPI from '@/repositories/ItemRepository';
 
 const mockRoute = {
   params: {

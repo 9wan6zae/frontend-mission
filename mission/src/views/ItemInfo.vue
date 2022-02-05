@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import itemAPI from '@/api/itemAPI';
 import LoadingComponent from '@/components/Loading/LoadingContent.vue';
 import Layout from '@/components/Layouts/Layout.vue';
 import ItemMainImg from '@/components/ItemInfo/ItemMainImg.vue';
@@ -31,6 +30,9 @@ import SellerInfo from '@/components/ItemInfo/SellerInfo.vue';
 import ProductInfo from '@/components/ItemInfo/ProductInfo.vue';
 import ReviewInfo from '@/components/ItemInfo/ReviewInfo.vue';
 import PurchaseFloatingActionBtn from '@/components/FloatingActionBtn/PurchaseFloatingActionBtn.vue';
+import Repository from '@/repositories/RepositoryFactory';
+
+const ItemRepository = Repository.get('item');
 
 export default {
   name: 'ItemInfoPage',
@@ -53,8 +55,8 @@ export default {
     async getItem() {
       this.loading = true;
       const productNo = this.$route.params.product_no;
-      const response = await itemAPI.getItem(productNo);
-      this.item = response.data.item;
+      const { data } = await ItemRepository.getItem(productNo);
+      this.item = data.item;
       this.loading = false;
     },
   },

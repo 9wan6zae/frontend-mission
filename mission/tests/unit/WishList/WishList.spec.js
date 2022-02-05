@@ -1,6 +1,6 @@
 import { mount, flushPromises } from '@vue/test-utils';
 import WishPage from '@/views/WishList.vue';
-import wishAPI from '@/api/wishAPI';
+import wishAPI from '@/repositories/WishRepository';
 
 describe('WishPage', () => {
   it('redners WishPage', () => {

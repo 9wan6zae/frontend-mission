@@ -39,11 +39,13 @@
 </template>
 
 <script>
-import cartAPI from '@/api/cartAPI';
 import Layout from '../components/Layouts/Layout.vue';
 import CartItem from '../components/Cart/CartItem.vue';
 import FloatingActionBtn from '../components/FloatingActionBtn/FloatingActionBtn.vue';
 import LoadingBlock from '../components/Loading/LoadingBlock.vue';
+import Repository from '@/repositories/RepositoryFactory';
+
+const CartRepository = Repository.get('cart');
 
 export default {
   name: 'Cart',
@@ -98,8 +100,8 @@ export default {
     },
     async getCart() {
       this.loading = true;
-      const response = await cartAPI.get();
-      const cartItems = response.data.cart_item;
+      const { data } = await CartRepository.get();
+      const cartItems = data.cart_item;
       for (let i = 0; i < cartItems.length; i += 1) {
         cartItems[i].isCheck = false;
       }

@@ -1,6 +1,6 @@
 import { mount, flushPromises } from '@vue/test-utils';
 import InfoPage from '@/views/Info.vue';
-import infoAPI from '@/api/infoAPI';
+import infoAPI from '@/repositories/InfoRepository';
 import LoadingBlock from '@/components/Loading/LoadingBlock.vue';
 
 const info = {

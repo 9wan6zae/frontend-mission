@@ -1,6 +1,6 @@
 import { mount, flushPromises } from '@vue/test-utils';
 import ItemListPage from '@/views/ItemList.vue';
-import itemAPI from '@/api/itemAPI';
+import itemAPI from '@/repositories/ItemRepository';
 
 describe('ItemListPage', () => {
   it('redners ItemListPage', () => {

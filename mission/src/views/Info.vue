@@ -34,9 +34,11 @@
 </template>
 
 <script>
-import infoAPI from '@/api/infoAPI';
 import Layout from '../components/Layouts/Layout.vue';
 import LoadingBlock from '../components/Loading/LoadingBlock.vue';
+import Repository from '@/repositories/RepositoryFactory';
+
+const InfoRepository = Repository.get('info');
 
 export default {
   name: 'Info',
@@ -53,8 +55,8 @@ export default {
   methods: {
     async getInfo() {
       this.loading = true;
-      const response = await infoAPI.get();
-      this.info = response.data;
+      const { data } = await InfoRepository.get();
+      this.info = data;
       this.loading = false;
     },
   },

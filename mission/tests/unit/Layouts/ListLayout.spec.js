@@ -5,7 +5,7 @@ import ListLayout from '@/components/Layouts/ListLayout.vue';
 import LoadingItem from '@/components/Loading/LoadingItem.vue';
 import ItemListPage from '@/views/ItemList.vue';
 import ItemInfoPage from '@/views/ItemInfo.vue';
-import itemAPI from '@/api/itemAPI';
+import itemAPI from '@/repositories/ItemRepository';
 
 const router = createRouter({
   history: createWebHistory(),
