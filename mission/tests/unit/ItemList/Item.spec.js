@@ -8,29 +8,6 @@ describe('ItemListItem', () => {
     expect(wrapper.find('.item-list-item').exists()).toBe(true);
   });
 
-  describe('props', () => {
-    const item = {
-      product_no: 'test',
-      name: 'test-name',
-      image: 'test-img',
-      price: 49300,
-      original_price: 59800,
-      description: 'test-description',
-    };
-    it('delivers the declared properties', () => {
-      const wrapper = mount(ItemListItem, {
-        props: { ...item },
-      });
-
-      expect(wrapper.props().product_no).toBe(item.product_no);
-      expect(wrapper.props().image).toBe(item.image);
-      expect(wrapper.props().price).toBe(item.price);
-      expect(wrapper.props().original_price).toBe(item.original_price);
-      expect(wrapper.props().name).toBe(item.name);
-      expect(wrapper.props().description).toBe(item.description);
-    });
-  });
-
   describe('item-img', () => {
     const image = 'testImg';
     const wrapper = mount(ItemListItem);

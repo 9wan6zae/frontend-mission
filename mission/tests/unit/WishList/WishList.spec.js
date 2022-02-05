@@ -42,5 +42,20 @@ describe('WishPage', () => {
 
       expect(wrapper.findAll('[data-test="item"]').length).toEqual(items.length);
     });
+    it('wishAPI를 통해 받은 데이터를 보여주는지', async () => {
+      await wishAPI.get();
+      await flushPromises();
+
+      const renderedItems = wrapper.findAll('[data-test="item"]');
+
+      for (let i = 0; i < renderedItems.length; i += 1) {
+        const renderedItem = renderedItems[i];
+        expect(renderedItem.find('[data-test="item-name"]').text()).toEqual(items[i].name);
+        expect(renderedItem.find('[data-test="item-description"]').text()).toEqual(items[i].description);
+        expect(renderedItem.find('[data-test="item-img"]').attributes().src).toEqual(items[i].image);
+        expect(renderedItem.find('[data-test="price"]').text()).toEqual('198,000원');
+        expect(renderedItem.find('[data-test="discount-rate"]').text()).toEqual('34%');
+      }
+    });
   });
 });

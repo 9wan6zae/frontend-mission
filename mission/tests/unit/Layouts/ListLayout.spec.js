@@ -82,9 +82,11 @@ describe('ListLayout', () => {
 
     await itemAPI.get();
     await flushPromises();
+    // link를 클릭했을 때
     await wrapper.find('[data-test="link"]').trigger('click');
     await flushPromises();
 
+    // item-info로 넘어가는지
     expect(wrapper.find('#item-info-page').exists()).toBeTruthy();
   });
 });

@@ -14,76 +14,40 @@ const mockRoute = {
 };
 
 describe('ItemInfoPage', () => {
-  it('redners ItemInfoPage', () => {
-    const wrapper = mount(ItemInfoPage, {
-      global: {
-        mocks: {
-          $route: mockRoute,
+  describe('컴포넌트 렌더링', () => {
+    let wrapper;
+    beforeEach(() => {
+      wrapper = mount(ItemInfoPage, {
+        global: {
+          mocks: {
+            $route: mockRoute,
+          },
         },
-      },
+      });
+    });
+    it('redners ItemInfoPage', () => {
+      expect(wrapper.find('#item-info-page').exists()).toBe(true);
     });
 
-    expect(wrapper.find('#item-info-page').exists()).toBe(true);
-  });
-
-  it('renders ItemMainImg', () => {
-    const wrapper = mount(ItemInfoPage, {
-      global: {
-        mocks: {
-          $route: mockRoute,
-        },
-      },
+    it('renders ItemMainImg', () => {
+      expect(wrapper.findComponent(ItemMainImg)).toBeTruthy();
     });
 
-    expect(wrapper.findComponent(ItemMainImg)).toBeTruthy();
-  });
-
-  it('renders SellerInfo', () => {
-    const wrapper = mount(ItemInfoPage, {
-      global: {
-        mocks: {
-          $route: mockRoute,
-        },
-      },
+    it('renders SellerInfo', () => {
+      expect(wrapper.findComponent(SellerInfo)).toBeTruthy();
     });
 
-    expect(wrapper.findComponent(SellerInfo)).toBeTruthy();
-  });
-
-  it('renders ProductInfo', () => {
-    const wrapper = mount(ItemInfoPage, {
-      global: {
-        mocks: {
-          $route: mockRoute,
-        },
-      },
+    it('renders ProductInfo', () => {
+      expect(wrapper.findComponent(ProductInfo)).toBeTruthy();
     });
 
-    expect(wrapper.findComponent(ProductInfo)).toBeTruthy();
-  });
-
-  it('renders ReviewInfo', () => {
-    const wrapper = mount(ItemInfoPage, {
-      global: {
-        mocks: {
-          $route: mockRoute,
-        },
-      },
+    it('renders ReviewInfo', () => {
+      expect(wrapper.findComponent(ReviewInfo)).toBeTruthy();
     });
 
-    expect(wrapper.findComponent(ReviewInfo)).toBeTruthy();
-  });
-
-  it('renders PurchaseFloatingActionBtn', () => {
-    const wrapper = mount(ItemInfoPage, {
-      global: {
-        mocks: {
-          $route: mockRoute,
-        },
-      },
+    it('renders PurchaseFloatingActionBtn', () => {
+      expect(wrapper.findComponent(PurchaseFloatingActionBtn)).toBeTruthy();
     });
-
-    expect(wrapper.findComponent(PurchaseFloatingActionBtn)).toBeTruthy();
   });
 
   describe('Loading Content', () => {
@@ -93,11 +57,6 @@ describe('ItemInfoPage', () => {
           mocks: {
             $route: mockRoute,
           },
-        },
-        data() {
-          return {
-            loading: true,
-          };
         },
       });
 
@@ -127,8 +86,7 @@ describe('ItemInfoPage', () => {
         },
         data() {
           return {
-            item: {},
-            loading: false,
+            loading: true,
           };
         },
       });

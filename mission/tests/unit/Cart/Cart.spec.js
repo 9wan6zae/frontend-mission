@@ -170,8 +170,11 @@ describe('CartPage', () => {
       await flushPromises();
 
       const checkboxs = wrapper.findAll('[data-test="cart-item-checkbox"]');
-      await checkboxs[0].trigger('click');
-      await checkboxs[1].trigger('click');
+
+      for (let i = 0; i < checkboxs.length; i += 1) {
+        checkboxs[i].trigger('click');
+      }
+      await flushPromises();
 
       expect(wrapper.find('[data-test="all-checkbox"]').classes()).toContain('checked');
     });
