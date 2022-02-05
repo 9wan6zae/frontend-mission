@@ -15,7 +15,6 @@ describe('Floating Action Button', () => {
   });
 
   it('shows sales-price in floating-action-btn', () => {
-    console.log(wrapper.html());
     expect(wrapper.find('[data-test="floating-action-btn"]').text()).toContain('49,300원');
   });
 });

@@ -37,8 +37,6 @@ describe('InfoPage', () => {
     await infoAPI.get();
     await flushPromises();
 
-    console.log(wrapper.html());
-
     expect(wrapper.find('[data-test="info-username"]').text()).toBe('test-name(test-id)');
     expect(wrapper.find('[data-test="info-email"]').text()).toBe('test@test.com');
     expect(wrapper.find('[data-test="edit-btn"]').text()).toBe('편집');
