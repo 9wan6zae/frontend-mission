@@ -1,6 +1,8 @@
 import { mount } from '@vue/test-utils';
 import ItemListItem from '@/components/ItemList/Item.vue';
 
+jest.spyOn(window, 'scrollTo').mockImplementation(() => {});
+
 describe('ItemListItem', () => {
   it('redners ItemListItem', () => {
     const wrapper = mount(ItemListItem);
