@@ -77,11 +77,6 @@ describe('CartPage', () => {
           global: {
             stubs: { FontAwesomeIcon },
           },
-          data() {
-            return {
-              cartItems,
-            };
-          },
         });
 
         expect(wrapper.find('[data-test="floating-action-btn"]').isVisible()).toBeFalsy();
