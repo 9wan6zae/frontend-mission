@@ -45,6 +45,12 @@ export default {
     ReviewInfo,
     PurchaseFloatingActionBtn,
   },
+  props: {
+    product_no: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
       loading: true,
@@ -54,7 +60,7 @@ export default {
   methods: {
     async getItem() {
       this.loading = true;
-      const productNo = this.$route.params.product_no;
+      const productNo = this.product_no;
       const { data } = await ItemRepository.getItem(productNo);
       this.item = data.item;
       this.loading = false;

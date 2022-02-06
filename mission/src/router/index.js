@@ -20,6 +20,7 @@ const routes = [
     path: '/item/:product_no',
     name: 'ItemInfo',
     component: ItemInfoPage,
+    props: true,
   },
   {
     path: '/cart',
