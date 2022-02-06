@@ -23,7 +23,7 @@ div {
     background-position: 0% 0%;
   }
   100% {
-    background-position: 100% 00%;
+    background-position: 100% 0%;
   }
 }
 </style>
