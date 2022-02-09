@@ -1,5 +1,6 @@
 import { mount, flushPromises } from '@vue/test-utils';
 import { createStore } from 'vuex';
+import { createRouter, createWebHistory } from 'vue-router';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -7,19 +8,35 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import cart from '@/store/modules/cart';
 
+import App from '@/App.vue';
+import OrderPage from '@/views/Order.vue';
 import CartPage from '@/views/Cart.vue';
 import CartItem from '@/components/Cart/CartItem.vue';
 
 library.add(fas, far);
 
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [
+    {
+      path: '/cart',
+      component: CartPage,
+    },
+    {
+      path: '/order',
+      component: OrderPage,
+    },
+  ],
+});
+
 const items = [
   {
     product_no: 'asdf1234',
     is_check: false,
-    quantity: 1,
+    quantity: 2,
     name: '핏이 좋은 수트',
     image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
-    price: 198000,
+    price: 1000,
     original_price: 298000,
     description: '아주 잘 맞는 수트',
   },
@@ -83,7 +100,7 @@ describe('CartPage', () => {
         await wrapper.find('[data-test="all-checkbox"]').trigger('click');
 
         expect(wrapper.find('[data-test="floating-action-btn"]').isVisible()).toBeTruthy();
-        expect(wrapper.find('[data-test="floating-action-btn"]').text()).toBe('396,000원 구매');
+        expect(wrapper.find('[data-test="floating-action-btn"]').text()).toBe('200,000원 구매');
       });
     });
   });
@@ -157,5 +174,21 @@ describe('CartPage', () => {
 
       expect(wrapper.find('[data-test="all-checkbox"]').classes()).toContain('checked');
     });
+  });
+
+  it('구매 버튼을 클릭했을 때 order 페이지로 이동하는지', async () => {
+    router.push('/cart');
+    await router.isReady();
+
+    const wrapper = mount(App, {
+      global: {
+        plugins: [router, store],
+      },
+    });
+
+    await wrapper.find('[data-test="floating-action-btn"]').trigger('click');
+    await flushPromises();
+
+    expect(wrapper.find('#order-page').exists()).toBeTruthy();
   });
 });
