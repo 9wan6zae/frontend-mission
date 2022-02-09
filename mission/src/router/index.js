@@ -4,6 +4,7 @@ import ItemInfoPage from '@/views/ItemInfo.vue';
 import WishListPage from '@/views/WishList.vue';
 import CartPage from '@/views/Cart.vue';
 import InfoPage from '@/views/Info.vue';
+import OrderPage from '@/views/Order.vue';
 
 const routes = [
   {
@@ -31,6 +32,11 @@ const routes = [
     path: '/info',
     name: 'Info',
     component: InfoPage,
+  },
+  {
+    path: '/order',
+    name: 'Order',
+    component: OrderPage,
   },
   {
     path: '/about',
