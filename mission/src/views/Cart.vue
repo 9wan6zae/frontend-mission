@@ -22,13 +22,15 @@
       />
     </section>
   </layout>
-  <floating-action-btn
-    v-show="totalPrice"
-    style="bottom: 100px"
-    data-test="floating-action-btn"
-  >
-    {{ btnText }}
-  </floating-action-btn>
+  <router-link to="/order">
+    <floating-action-btn
+      v-show="totalPrice"
+      style="bottom: 100px"
+      data-test="floating-action-btn"
+    >
+      {{ btnText }}
+    </floating-action-btn>
+  </router-link>
 </template>
 
 <script>
