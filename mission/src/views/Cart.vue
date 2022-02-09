@@ -8,24 +8,17 @@
         data-test="all-checkbox"
         :class="iconClass"
         :icon="['fas', 'check-square']"
-        @click="allCheck"
+        @click="allCheck(isAllCheck)"
       />
       <p>전체선택</p>
     </section>
-    <section v-if="!loading" class="pa0-20 item-wrapper">
+    <section class="pa0-20 item-wrapper">
       <cart-item
-        v-for="item in cartItems"
+        v-for="(item, index) in items"
         :key="item.product_no"
         v-bind="item"
-        @checkedProductNo="chageIsCheck"
+        :index="index"
         data-test="cart-item"
-      />
-    </section>
-    <section v-else class="pa0-20 item-wrapper">
-      <loading-block
-        v-for="i in 2"
-        :key="i"
-        style="width: 100%; height: 100px; margin-bottom: 20px"
       />
     </section>
   </layout>
@@ -39,13 +32,10 @@
 </template>
 
 <script>
+import { mapState, mapGetters, mapMutations } from 'vuex';
 import Layout from '../components/Layouts/Layout.vue';
 import CartItem from '../components/Cart/CartItem.vue';
 import FloatingActionBtn from '../components/FloatingActionBtn/FloatingActionBtn.vue';
-import LoadingBlock from '../components/Loading/LoadingBlock.vue';
-import Repository from '@/repositories/RepositoryFactory';
-
-const CartRepository = Repository.get('cart');
 
 export default {
   name: 'Cart',
@@ -53,64 +43,37 @@ export default {
     Layout,
     CartItem,
     FloatingActionBtn,
-    LoadingBlock,
   },
   data() {
     return {
-      loading: true,
       cartItems: [],
     };
   },
   computed: {
+    ...mapState('cart', ['items']),
+    ...mapGetters('cart', ['isAllCheck', 'totalPrice']),
     iconClass() {
       return `checkbox ${this.isAllCheck ? 'checked' : 'unchecked'}`;
     },
     isAllCheck() {
-      if (!this.cartItems.length) return false;
-      for (let i = 0; i < this.cartItems.length; i += 1) {
-        const cartItem = this.cartItems[i];
-        if (!cartItem.isCheck) {
+      if (!this.items.length) return false;
+      for (let i = 0; i < this.items.length; i += 1) {
+        const item = this.items[i];
+        if (!item.is_check) {
           return false;
         }
       }
       return true;
-    },
-    totalPrice() {
-      return this.cartItems.reduce((acc, cur) => (cur.isCheck ? acc + cur.price : acc), 0);
     },
     btnText() {
       return `${this.totalPrice.toLocaleString('ko-kr')}원 구매`;
     },
   },
   methods: {
-    allCheck() {
-      const tempCheck = this.isAllCheck;
-      for (let i = 0; i < this.cartItems.length; i += 1) {
-        const cartItem = this.cartItems[i];
-        cartItem.isCheck = !tempCheck;
-      }
-    },
-    chageIsCheck(productNo) {
-      for (let i = 0; i < this.cartItems.length; i += 1) {
-        const cartItem = this.cartItems[i];
-        if (cartItem.product_no === productNo) {
-          cartItem.isCheck = !cartItem.isCheck;
-        }
-      }
-    },
-    async getCart() {
-      this.loading = true;
-      const { data } = await CartRepository.get();
-      const cartItems = data.cart_item;
-      for (let i = 0; i < cartItems.length; i += 1) {
-        cartItems[i].isCheck = false;
-      }
-      this.cartItems = cartItems;
-      this.loading = false;
-    },
+    ...mapMutations('cart', ['allCheck']),
   },
   created() {
-    this.getCart();
+
   },
 };
 </script>
