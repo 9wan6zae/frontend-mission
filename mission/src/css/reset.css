@@ -1,0 +1,27 @@
+:root {
+  --black: #1f1f1f;
+  --darkgray: #9E9E9E;
+  --lightgray: #ddd;
+  --emphasis: #FF5160;
+  --appHeaderHeight: 66px;
+  --navBarHeight: 80px;
+}
+
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+  margin: 0;
+}
+
+p, span {
+  margin: 0;
+  color: var(--black);
+}
+
+a {
+  text-decoration: none;
+}

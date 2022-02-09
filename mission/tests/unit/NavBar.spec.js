@@ -1,12 +1,31 @@
-import { mount } from '@vue/test-utils';
+import { mount, flushPromises } from '@vue/test-utils';
+import { createRouter, createWebHistory } from 'vue-router';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+import App from '@/App.vue';
 import NavBar from '@/components/NavBar.vue';
+import ItemListPage from '@/views/ItemList.vue';
+import WishListPage from '@/views/WishList.vue';
 
 library.add(fas, far);
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [
+    {
+      path: '/',
+      component: ItemListPage,
+    },
+    {
+      path: '/wish',
+      component: WishListPage,
+    },
+  ],
+});
 
 describe('NavBar', () => {
   it('renders NavBar', () => {
@@ -95,5 +114,21 @@ describe('NavBar', () => {
     it('displays nav-menu-icon from data', () => {
       expect(wrapper.find('[data-test="nav-menu-icon"]').html()).toContain(menu.icon[1]);
     });
+  });
+
+  it('메뉴 버튼을 클릭하면 라우팅되는지', async () => {
+    router.push('/');
+    await router.isReady();
+
+    const wrapper = mount(App, {
+      global: {
+        plugins: [router],
+      },
+    });
+
+    await wrapper.find('#heart').trigger('click');
+    await flushPromises();
+
+    expect(wrapper.find('[data-test="menu-name"]').text()).toBe('찜 목록');
   });
 });

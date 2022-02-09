@@ -1,23 +1,22 @@
 import { computed } from 'vue';
 
-export default (price, discountRate) => {
+export default (_originalPrice, _price) => {
   const addComma = (number) => (
     number
       ? number.toLocaleString('ko-KR')
       : 0);
 
-  const calcDiscountedPrice = () => Math.ceil(price * ((1 - (discountRate / 100))));
+  const discountRate = computed(() => (
+    Math.round(((_originalPrice - _price) / _originalPrice) * 100)
+  ));
 
-  const originalPrice = computed(() => `${addComma(price)}원`);
+  const originalPrice = computed(() => `${addComma(_originalPrice)}원`);
 
-  const salesPrice = computed(() => (
-    discountRate
-      ? `${addComma(calcDiscountedPrice())}원`
-      : originalPrice.value));
+  const salesPrice = computed(() => `${addComma(_price)}원`);
 
-  const isDiscount = computed(() => discountRate);
+  const isDiscount = computed(() => _originalPrice);
 
   return {
-    addComma, calcDiscountedPrice, originalPrice, salesPrice, isDiscount,
+    addComma, discountRate, originalPrice, salesPrice, isDiscount,
   };
 };

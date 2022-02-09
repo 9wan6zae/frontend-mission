@@ -1,9 +1,22 @@
 <template>
     <nav id="nav-bar" data-test="nav-menu-bar">
       <div class="nav-menu-wrapper flex-space-between">
-        <article v-for="menu in navMenu" :key="menu.title" data-test="nav-menu">
-          <font-awesome-icon :icon="menu.icon" data-test="nav-menu-icon" />
-          <p class="menu-title" data-test="nav-menu-title">{{ menu.title }}</p>
+        <article
+          v-for="menu in navMenu"
+          :key="menu.title"
+        >
+          <router-link :to="menu.path">
+            <div :id="menu.icon[1]" data-test="nav-menu">
+              <font-awesome-icon
+                :icon="menu.icon"
+                data-test="nav-menu-icon"
+                :style="{
+                  color: setIconColor(menu.path)
+                }"
+              />
+              <p class="menu-title" data-test="nav-menu-title">{{ menu.title }}</p>
+            </div>
+          </router-link>
         </article>
       </div>
     </nav>
@@ -17,21 +30,30 @@ export default {
         {
           icon: ['fas', 'home'],
           title: '홈',
+          path: '/',
         },
         {
           icon: ['fas', 'heart'],
           title: '찜',
+          path: '/wish',
         },
         {
           icon: ['fas', 'shopping-cart'],
           title: '장바구니',
+          path: '/cart',
         },
         {
           icon: ['fas', 'user'],
           title: '마이페이지',
+          path: '/info',
         },
       ],
     };
+  },
+  methods: {
+    setIconColor(path) {
+      return this.$route?.path === path ? 'var(--emphasis)' : 'var(--black)';
+    },
   },
 };
 </script>

@@ -1,504 +1,139 @@
-import { mount } from '@vue/test-utils';
+import { mount, flushPromises } from '@vue/test-utils';
 import ItemInfoPage from '@/views/ItemInfo.vue';
-import message from '@/data/message';
+import ItemMainImg from '@/components/ItemInfo/ItemMainImg.vue';
+import SellerInfo from '@/components/ItemInfo/SellerInfo.vue';
+import ProductInfo from '@/components/ItemInfo/ProductInfo.vue';
+import ReviewInfo from '@/components/ItemInfo/ReviewInfo.vue';
+import PurchaseFloatingActionBtn from '@/components/FloatingActionBtn/PurchaseFloatingActionBtn.vue';
+import itemAPI from '@/repositories/ItemRepository';
+
+const mockRoute = {
+  params: {
+    id: 1,
+  },
+};
 
 describe('ItemInfoPage', () => {
-  it('redners ItemInfoPage', () => {
-    const wrapper = mount(ItemInfoPage);
-
-    expect(wrapper.find('#item-info-page').exists()).toBe(true);
-  });
-
-  describe('Carousel', () => {
-    const wrapper = mount(ItemInfoPage);
-
-    it('hides product-img when there is no product-img', async () => {
-      await wrapper.setData({
-        itemInfo: {
-          productImg: [],
+  describe('컴포넌트 렌더링', () => {
+    let wrapper;
+    beforeEach(() => {
+      wrapper = mount(ItemInfoPage, {
+        global: {
+          mocks: {
+            $route: mockRoute,
+          },
         },
       });
-
-      expect(wrapper.find('[data-test="product-img"]').exists()).toBeFalsy();
+    });
+    it('redners ItemInfoPage', () => {
+      expect(wrapper.find('#item-info-page').exists()).toBe(true);
     });
 
-    it('renders product-img when there is product-img', async () => {
-      await wrapper.setData({
-        itemInfo: {
-          productImg: [
-            'testImg',
-          ],
-        },
-      });
-
-      expect(wrapper.find('[data-test="product-img"]').exists()).toBeTruthy();
+    it('renders ItemMainImg', () => {
+      expect(wrapper.findComponent(ItemMainImg)).toBeTruthy();
     });
 
-    it('displays product-img from data', async () => {
-      await wrapper.setData({
-        itemInfo: {
-          productImg: [
-            'testImg',
-          ],
-        },
-      });
-
-      expect(wrapper.find('[data-test="product-img"]').attributes().src).toEqual('testImg');
+    it('renders SellerInfo', () => {
+      expect(wrapper.findComponent(SellerInfo)).toBeTruthy();
     });
 
-    it('renders N when there are N product-img', async () => {
-      const productImg = [
-        'testImg',
-        'testImg',
-        'testImg',
-      ];
-      await wrapper.setData({
-        itemInfo: {
-          productImg,
-        },
-      });
-
-      expect(wrapper.findAll('[data-test="product-img"]').length).toEqual(productImg.length);
+    it('renders ProductInfo', () => {
+      expect(wrapper.findComponent(ProductInfo)).toBeTruthy();
     });
 
-    describe('Slide Test', () => {
-      describe('When there is only one image,', () => {
-        beforeEach(async () => {
-          await wrapper.setData({
-            slideIndex: 0,
-            itemInfo: {
-              productImg: [
-                'testImg',
-              ],
-            },
-          });
-        });
-        it('hides prev-btn', async () => {
-          expect(wrapper.find('[data-test="prev-btn"]').exists().isVisible).toBeFalsy();
-        });
-        it('hides next-btn', async () => {
-          expect(wrapper.find('[data-test="next-btn"]').exists().isVisible).toBeFalsy();
-        });
-      });
-      describe('When there are many images', () => {
-        beforeEach(async () => {
-          await wrapper.setData({
-            slideIndex: 0,
-            itemInfo: {
-              productImg: [
-                'testImg',
-                'testImg',
-                'testImg',
-              ],
-            },
-          });
-        });
-        it('hides prev-btn when it is the first image', async () => {
-          const prevBtn = wrapper.find('[data-test="prev-btn"]');
+    it('renders ReviewInfo', () => {
+      expect(wrapper.findComponent(ReviewInfo)).toBeTruthy();
+    });
 
-          expect(prevBtn.exists().isVisible).toBeFalsy();
-        });
-        it('hides next-btn when it is the last image', async () => {
-          const nextBtn = wrapper.find('[data-test="next-btn"]');
-
-          await nextBtn.trigger('click');
-          await nextBtn.trigger('click');
-
-          expect(nextBtn.exists().isVisible).toBeFalsy();
-        });
-      });
+    it('renders PurchaseFloatingActionBtn', () => {
+      expect(wrapper.findComponent(PurchaseFloatingActionBtn)).toBeTruthy();
     });
   });
 
-  describe('Seller Section', () => {
-    const wrapper = mount(ItemInfoPage);
-
-    describe('Seller Name', () => {
-      it('renders seller-name', async () => {
-        expect(wrapper.find('[data-test="seller-name"]').exists()).toBeTruthy();
-      });
-
-      it('displays seller-name from data', async () => {
-        const sellerName = '테스터';
-        await wrapper.setData({
-          itemInfo: {
-            sellerName,
+  describe('Loading Content', () => {
+    it('로딩 중일 때 LoadingContent를 보여준다.', () => {
+      const wrapper = mount(ItemInfoPage, {
+        global: {
+          mocks: {
+            $route: mockRoute,
           },
-        });
-
-        expect(wrapper.find('[data-test="seller-name"]').text()).toEqual(sellerName);
+        },
       });
+
+      expect(wrapper.find('[data-test="item-info-content"]').exists()).toBeFalsy();
+      expect(wrapper.find('[data-test="loading-content"]').exists()).toBeTruthy();
     });
 
-    describe('Profile Img', () => {
-      const profileImg = 'testImg';
-      it('renders profile-img when there is a profile image', async () => {
-        await wrapper.setData({
-          itemInfo: {
-            profileImg,
+    it('로딩이 완료되면 원래의 Content를 보여준다.', async () => {
+      const item = {
+        product_no: 'asdf1234',
+        name: '핏이 좋은 수트',
+        image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
+        price: 198000,
+        original_price: 298000,
+        description: '아주 잘 맞는 수트',
+      };
+      itemAPI.getItem = jest.fn().mockResolvedValue({
+        data: {
+          item,
+        },
+      });
+      const wrapper = mount(ItemInfoPage, {
+        global: {
+          mocks: {
+            $route: mockRoute,
           },
-        });
-
-        expect(wrapper.find('[data-test="profile-img"]').exists()).toBeTruthy();
+        },
+        data() {
+          return {
+            loading: true,
+          };
+        },
       });
 
-      it('displays profile-img from data', async () => {
-        await wrapper.setData({
-          itemInfo: {
-            profileImg,
-          },
-        });
+      await itemAPI.getItem(item.product_no);
+      await flushPromises();
 
-        expect(wrapper.find('[data-test="profile-img"]').attributes().src).toEqual(profileImg);
-      });
-
-      it('renders default-profile-img when is there is no profile image', async () => {
-        await wrapper.setData({
-          itemInfo: {
-            profileImg: undefined,
-          },
-        });
-
-        expect(wrapper.find('[data-test="default-profile-img"]').exists()).toBeTruthy();
-      });
-    });
-
-    describe('Tag', () => {
-      it('renders tags when there is tags', async () => {
-        const tags = ['남성', '의류', '10대'];
-        await wrapper.setData({
-          itemInfo: {
-            tags,
-          },
-        });
-
-        expect(wrapper.findAll('[data-test="seller-tag"]').length).toEqual(tags.length);
-      });
-
-      it('hides tags when there is no tags', async () => {
-        const tags = [];
-        await wrapper.setData({
-          itemInfo: {
-            tags,
-          },
-        });
-
-        expect(wrapper.find('[data-test="seller-tag"]').exists()).toBeFalsy();
-      });
-
-      it('renders default-profile-img when is there is no profile image', async () => {
-        await wrapper.setData({
-          itemInfo: {
-            profileImg: undefined,
-          },
-        });
-
-        expect(wrapper.find('[data-test="default-profile-img"]').exists()).toBeTruthy();
-      });
-    });
-
-    describe('Favorite Button', () => {
-      beforeEach(async () => {
-        await wrapper.setData({
-          isFavorite: false,
-        });
-      });
-      it('renders favorite-btn', () => {
-        expect(wrapper.find('[data-test="favorite-btn"]').exists()).toBeTruthy();
-      });
-
-      it('is initially rendered as regular style', () => {
-        expect(wrapper.find('[data-test="favorite-btn"]').attributes().icon).toContain('far');
-      });
-
-      it('changes to solid style when clicked', async () => {
-        const button = wrapper.find('[data-test="favorite-btn"]');
-
-        await button.trigger('click');
-
-        expect(button.attributes().icon).toContain('fas');
-      });
-
-      it('returns to the original style by double clicking', async () => {
-        const button = wrapper.find('[data-test="favorite-btn"]');
-
-        await button.trigger('click');
-        await button.trigger('click');
-
-        expect(button.attributes().icon).toContain('far');
-      });
+      expect(wrapper.find('[data-test="item-info-content"]').exists()).toBeTruthy();
+      expect(wrapper.find('[data-test="loading-content"]').exists()).toBeFalsy();
     });
   });
 
-  describe('Price Section', () => {
-    const wrapper = mount(ItemInfoPage);
-    it('renders product-name', () => {
-      expect(wrapper.find('[data-test="product-name"]').exists()).toBeTruthy();
+  describe('ItemAPI', () => {
+    const item = {
+      product_no: 'asdf1234',
+      name: '핏이 좋은 수트',
+      image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
+      price: 198000,
+      original_price: 298000,
+      description: '아주 잘 맞는 수트',
+    };
+    itemAPI.getItem = jest.fn().mockResolvedValue({
+      data: {
+        item,
+      },
     });
-
-    it('represents the value entered in product-name', async () => {
-      const productName = '핏이 좋은 슈트';
-      await wrapper.setData({
-        itemInfo: {
-          productName,
+    const wrapper = mount(ItemInfoPage, {
+      global: {
+        mocks: {
+          $route: mockRoute,
         },
-      });
-
-      expect(wrapper.find('[data-test="product-name"]').text()).toBe(productName);
+      },
     });
 
-    describe('원가만 있는 경우, discount-rate를 보여주지 않고 판매가가 원가가 된다.', () => {
-      const price = 2000;
+    it('itemAPI 호출하는지', async () => {
+      await flushPromises();
 
-      beforeEach(async () => {
-        await wrapper.setData({
-          itemInfo: {
-            originalPrice: price,
-            discountRate: undefined,
-          },
-        });
-      });
-
-      it('renders sales-price', () => {
-        expect(wrapper.find('[data-test="sales-price"]').exists()).toBeTruthy();
-      });
-
-      it('shows original-price for the value of sales-price', () => {
-        expect(wrapper.find('[data-test="sales-price"]').text()).toEqual('2,000원');
-      });
-
-      it('hides original-price', async () => {
-        expect(wrapper.find('[data-test="original-price"]').exists()).toBeFalsy();
-      });
-
-      it('hides discount-rate', async () => {
-        expect(wrapper.find('[data-test="discount-rate"]').exists()).toBeFalsy();
-      });
+      expect(itemAPI.getItem).toHaveBeenCalled();
     });
-    describe('원가와 할인율이 있는 경우, discount-rate와 original-price는 보여주고 판매가를 계산한다.', () => {
-      const originalPrice = 58000;
-      const discountRate = 15;
+    it('itemAPI를 통해 받은 item을 렌더링되는지', async () => {
+      await itemAPI.getItem(item.product_no);
+      await flushPromises();
 
-      beforeEach(async () => {
-        await wrapper.setData({
-          itemInfo: {
-            originalPrice,
-            discountRate,
-          },
-        });
-      });
-      it('renders sales-price', () => {
-        expect(wrapper.find('[data-test="sales-price"]').exists()).toBeTruthy();
-      });
-
-      it('shows correct sales-price', () => {
-        expect(wrapper.find('[data-test="sales-price"]').text()).toEqual('49,300원');
-      });
-
-      it('renders original-price', () => {
-        expect(wrapper.find('[data-test="original-price"]').exists()).toBeTruthy();
-      });
-
-      it('renders discount-rate', () => {
-        expect(wrapper.find('[data-test="discount-rate"]').exists()).toBeTruthy();
-      });
-    });
-  });
-
-  describe('Product Info Section', () => {
-    it('shows the entered string in product-info', async () => {
-      const wrapper = mount(ItemInfoPage);
-      await wrapper.setData({
-        itemInfo: {
-          productInfo: `
-            <h1>Heading</h1>
-          `,
-        },
-      });
-
-      expect(wrapper.find('[data-test="product-info"]').text()).toContain('Heading');
-    });
-  });
-
-  describe('Review Section', () => {
-    const wrapper = mount(ItemInfoPage);
-
-    describe('renders tag for reveiw section', () => {
-      const nickname = 'test123';
-      const reviewDate = '2021-12-12';
-      const title = '매우 만족';
-      const content = 'content';
-      const reviewImg = 'testImg';
-      beforeEach(async () => {
-        await wrapper.setData({
-          itemInfo: {
-            reviews: [
-              {
-                nickname,
-                reviewDate,
-                title,
-                content,
-                reviewImg,
-              },
-            ],
-          },
-        });
-      });
-
-      it('renders nickname', () => {
-        expect(wrapper.find('[data-test="nickname"]').exists()).toBeTruthy();
-      });
-
-      it('displays nickname from data', async () => {
-        expect(wrapper.find('[data-test="nickname"]').text()).toEqual('te*****');
-      });
-
-      it('renders review-date', () => {
-        expect(wrapper.find('[data-test="review-date"]').exists()).toBeTruthy();
-      });
-
-      it('displays review-date from data', async () => {
-        expect(wrapper.find('[data-test="review-date"]').text()).toEqual(reviewDate);
-      });
-
-      it('renders review-title', () => {
-        expect(wrapper.find('[data-test="review-title"]').exists()).toBeTruthy();
-      });
-
-      it('displays review-title from data', async () => {
-        expect(wrapper.find('[data-test="review-title"]').text()).toEqual(title);
-      });
-
-      it('renders review-content', () => {
-        expect(wrapper.find('[data-test="review-content"]').exists()).toBeTruthy();
-      });
-
-      it('displays review-content from data', async () => {
-        expect(wrapper.find('[data-test="review-content"]').text()).toEqual(content);
-      });
-
-      it('renders review-img', () => {
-        expect(wrapper.find('[data-test="review-img"]').exists()).toBeTruthy();
-      });
-
-      it('displays review-img from data', async () => {
-        expect(wrapper.find('[data-test="review-img"]').attributes().src).toEqual(reviewImg);
-      });
-    });
-
-    it('renders N when there are N reviews', async () => {
-      const reviews = [
-        {
-          nickname: 'test',
-          createdAt: '2021-12-12',
-          title: '매우 만족',
-          content: 'content',
-        },
-        {
-          nickname: 'test',
-          createdAt: '2021-12-12',
-          title: '매우 만족',
-          content: 'content',
-        },
-        {
-          nickname: 'test',
-          createdAt: '2021-12-12',
-          title: '매우 만족',
-          content: 'content',
-        },
-      ];
-      await wrapper.setData({
-        itemInfo: {
-          reviews,
-        },
-      });
-
-      expect(wrapper.findAll('[data-test="review-wrapper"]').length).toBe(reviews.length);
-    });
-
-    it('renders a custom message when there is no review', async () => {
-      await wrapper.setData({
-        itemInfo: {
-          reviews: [],
-        },
-      });
-
-      expect(wrapper.find('[data-test="review-section"]').text()).toContain(message.notReview);
-    });
-
-    it('renders a review-img when there is an image', async () => {
-      const reviewImg = 'testImg';
-      await wrapper.setData({
-        itemInfo: {
-          reviews: [
-            {
-              nickname: 'test',
-              createdAt: '2021-12-12',
-              title: '매우 만족',
-              content: 'content',
-              reviewImg,
-            },
-          ],
-        },
-      });
-
-      expect(wrapper.find('[data-test="review-img"]').exists()).toBeTruthy();
-    });
-
-    it('displays review-img from data', async () => {
-      const reviewImg = 'testImg';
-      await wrapper.setData({
-        itemInfo: {
-          reviews: [
-            {
-              nickname: 'test',
-              createdAt: '2021-12-12',
-              title: '매우 만족',
-              content: 'content',
-              reviewImg,
-            },
-          ],
-        },
-      });
-
-      expect(wrapper.find('[data-test="review-img"]').attributes().src).toEqual(reviewImg);
-    });
-
-    it('hides a review-img when there is no an image', async () => {
-      await wrapper.setData({
-        itemInfo: {
-          reviews: [
-            {
-              nickname: 'test',
-              createdAt: '2021-12-12',
-              title: '매우 만족',
-              content: 'content',
-            },
-          ],
-        },
-      });
-
-      expect(wrapper.find('[data-test="review-img"]').exists()).toBeFalsy();
-    });
-  });
-
-  describe('Floating Action Button', () => {
-    const wrapper = mount(ItemInfoPage);
-    it('renders floating-action-btn', () => {
-      expect(wrapper.find('[data-test="floating-action-btn"]').exists()).toBeTruthy();
-    });
-
-    it('shows sales-price in floating-action-btn', async () => {
-      const originalPrice = 58000;
-      const discountRate = 15;
-      await wrapper.setData({
-        itemInfo: {
-          originalPrice,
-          discountRate,
-        },
-      });
-
-      expect(wrapper.find('[data-test="floating-action-btn"]').text()).toContain('49,300원');
+      expect(wrapper.find('[data-test="product-name"]').text()).toBe('핏이 좋은 수트');
+      expect(wrapper.find('[data-test="discount-rate"]').text()).toBe('34%');
+      expect(wrapper.find('[data-test="original-price"]').text()).toBe('298,000원');
+      expect(wrapper.find('[data-test="sales-price"]').text()).toBe('198,000원');
     });
   });
 });

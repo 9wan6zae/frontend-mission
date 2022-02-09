@@ -1,11 +1,22 @@
 <template>
   <header :class="appHeaderClass" id="app-header">
-    <h1 data-test="header-title">{{ title }}</h1>
+    <section id="title-section">
+      <p id="title" data-test="header-title">{{ title }}</p>
+    </section>
+    <section id="info-section">
+      <h1 id="menu-name" data-test="menu-name">{{ menuName }}</h1>
+    </section>
   </header>
 </template>
 
 <script>
 export default {
+  props: {
+    menuName: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
       title: '9wan6zae\'s Shop',
@@ -42,8 +53,7 @@ export default {
 #app-header {
   width: 100%;
   height: var(--appHeaderHeight);
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(4px);
+  background: #fff;
   z-index: 999;
   position: fixed;
   top: 0;
@@ -52,18 +62,35 @@ export default {
   transition: transform .2s ease-out;
 }
 
-#app-header h1 {
-  font-size: 24px;
-  font-weight: 600;
-  color: var(--black);
-  text-align: center;
-}
-
 .app-header--visible {
   transform: translateY(0);
 }
 
 .app-header--hidden {
   transform: translateY(-100%);
+}
+
+#title-section {
+  padding-left: 10px;
+  height: 24px;
+}
+
+#title-section #title {
+  font-size: 14px;
+  color: var(--black);
+  font-weight: 600;
+}
+
+#info-section {
+  position: relative;
+  height: 36px;
+  text-align: center;
+}
+
+#menu-name {
+  margin: 0;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 36px;
 }
 </style>

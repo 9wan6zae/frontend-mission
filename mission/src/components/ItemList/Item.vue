@@ -1,36 +1,38 @@
 <template>
-  <article class="item-list-item">
-    <figure>
-      <img :src="item?.img" data-test="item-img" />
-    </figure>
-    <section class="price-section">
-      <span
-        v-if="isDiscount"
-        class="discount-rate"
-        data-test="discount-rate"
+  <router-link :to="link">
+    <article class="item-list-item" data-test="link">
+      <figure>
+        <img :src="image" data-test="item-img" />
+      </figure>
+      <section class="price-section">
+        <span
+          v-if="isDiscount"
+          class="discount-rate"
+          data-test="discount-rate"
+        >
+          {{ discountRate }}%
+        </span>
+        <span
+          class="sales-price"
+          data-test="price"
+        >
+          {{ salesPrice }}
+        </span>
+      </section>
+      <p
+        class="item-name one-line-ellipsis"
+        data-test="item-name"
       >
-        {{ item?.discountRate }}%
-      </span>
-      <span
-        class="sales-price"
-        data-test="price"
+        {{ name }}
+      </p>
+      <p
+        class="item-description one-line-ellipsis"
+        data-test="item-description"
       >
-        {{ salesPrice }}
-      </span>
-    </section>
-    <p
-      class="item-name one-line-ellipsis"
-      data-test="item-name"
-    >
-      {{ item?.name }}
-    </p>
-    <p
-      class="item-description one-line-ellipsis"
-      data-test="item-description"
-    >
-      {{ item?.description }}
-    </p>
-  </article>
+        {{ description }}
+      </p>
+    </article>
+  </router-link>
 </template>
 
 <script>
@@ -39,15 +41,43 @@ import usePrice from '@/composables/usePrice';
 export default {
   name: 'ItemListItem',
   props: {
-    item: Object,
+    product_no: {
+      type: String,
+      default: '',
+    },
+    name: {
+      type: String,
+      default: '',
+    },
+    image: {
+      type: String,
+      default: '',
+    },
+    price: {
+      type: Number,
+      default: 0,
+    },
+    original_price: {
+      type: Number,
+      default: 0,
+    },
+    description: {
+      type: String,
+      default: '',
+    },
   },
   setup(props) {
-    const { salesPrice, isDiscount } = usePrice(
-      props.item?.originalPrice,
-      props.item?.discountRate,
+    const { salesPrice, isDiscount, discountRate } = usePrice(
+      props.original_price,
+      props.price,
     );
 
-    return { salesPrice, isDiscount };
+    return { salesPrice, isDiscount, discountRate };
+  },
+  computed: {
+    link() {
+      return `/item/${this.product_no}`;
+    },
   },
 };
 </script>

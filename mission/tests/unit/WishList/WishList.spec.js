@@ -1,21 +1,21 @@
 import { mount, flushPromises } from '@vue/test-utils';
-import ItemListPage from '@/views/ItemList.vue';
-import itemAPI from '@/repositories/ItemRepository';
+import WishPage from '@/views/WishList.vue';
+import wishAPI from '@/repositories/WishRepository';
 
-describe('ItemListPage', () => {
-  it('redners ItemListPage', () => {
-    const wrapper = mount(ItemListPage);
+describe('WishPage', () => {
+  it('redners WishPage', () => {
+    const wrapper = mount(WishPage);
 
-    expect(wrapper.find('#item-list-page').exists()).toBe(true);
+    expect(wrapper.find('#wish-list-page').exists()).toBe(true);
   });
 
   it('renders item-list-wrapper', () => {
-    const wrapper = mount(ItemListPage);
+    const wrapper = mount(WishPage);
 
     expect(wrapper.find('[data-test="item-list-wrapper"]').exists).toBeTruthy();
   });
 
-  describe('ItemAPI', () => {
+  describe('wishAPI', () => {
     const items = Array(3).fill({
       product_no: 'asdf1234',
       name: '핏이 좋은 수트',
@@ -24,26 +24,26 @@ describe('ItemListPage', () => {
       original_price: 298000,
       description: '아주 잘 맞는 수트',
     });
-    itemAPI.get = jest.fn().mockResolvedValue({
+    wishAPI.get = jest.fn().mockResolvedValue({
       data: {
         items,
       },
     });
-    const wrapper = mount(ItemListPage);
+    const wrapper = mount(WishPage);
 
-    it('itemAPI 호출하는지', async () => {
+    it('wishAPI 호출하는지', async () => {
       await flushPromises();
 
-      expect(itemAPI.get).toHaveBeenCalled();
+      expect(wishAPI.get).toHaveBeenCalled();
     });
-    it('itemAPI를 통해 받은 items만큼 렌더링되는지', async () => {
-      await itemAPI.get();
+    it('wishAPI 통해 받은 items만큼 렌더링되는지', async () => {
+      await wishAPI.get();
       await flushPromises();
 
       expect(wrapper.findAll('[data-test="item"]').length).toEqual(items.length);
     });
-    it('itemAPI를 통해 받은 데이터를 보여주는지', async () => {
-      await itemAPI.get();
+    it('wishAPI를 통해 받은 데이터를 보여주는지', async () => {
+      await wishAPI.get();
       await flushPromises();
 
       const renderedItems = wrapper.findAll('[data-test="item"]');

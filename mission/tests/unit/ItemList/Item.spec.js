@@ -1,6 +1,8 @@
 import { mount } from '@vue/test-utils';
 import ItemListItem from '@/components/ItemList/Item.vue';
 
+jest.spyOn(window, 'scrollTo').mockImplementation(() => {});
+
 describe('ItemListItem', () => {
   it('redners ItemListItem', () => {
     const wrapper = mount(ItemListItem);
@@ -8,40 +10,13 @@ describe('ItemListItem', () => {
     expect(wrapper.find('.item-list-item').exists()).toBe(true);
   });
 
-  describe('props', () => {
-    const item = {
-      id: 1,
-      img: 'test-img',
-      discountRate: 15,
-      originalPrice: 10000,
-      name: 'test-name',
-      description: 'test-description',
-    };
-    it('delivers the declared properties', () => {
-      const wrapper = mount(ItemListItem, {
-        propsData: {
-          item,
-        },
-      });
-
-      expect(wrapper.props().item.id).toBe(item.id);
-      expect(wrapper.props().item.img).toBe(item.img);
-      expect(wrapper.props().item.discountRate).toBe(item.discountRate);
-      expect(wrapper.props().item.originalPrice).toBe(item.originalPrice);
-      expect(wrapper.props().item.name).toBe(item.name);
-      expect(wrapper.props().item.description).toBe(item.description);
-    });
-  });
-
   describe('item-img', () => {
-    const img = 'testImg';
+    const image = 'testImg';
     const wrapper = mount(ItemListItem);
 
     beforeEach(async () => {
       await wrapper.setProps({
-        item: {
-          img,
-        },
+        image,
       });
     });
 
@@ -50,21 +25,19 @@ describe('ItemListItem', () => {
     });
 
     it('displays item-img from props', () => {
-      expect(wrapper.find('[data-test="item-img"]').attributes().src).toEqual(img);
+      expect(wrapper.find('[data-test="item-img"]').attributes().src).toEqual(image);
     });
   });
 
   describe('price', () => {
-    describe('When there is discount-rate', () => {
+    describe('원가와 판매가 둘 다 있을 때', () => {
       let wrapper;
 
       beforeEach(() => {
         wrapper = mount(ItemListItem, {
-          propsData: {
-            item: {
-              discountRate: 15,
-              originalPrice: 58000,
-            },
+          props: {
+            price: 49300,
+            original_price: 58000,
           },
         });
       });
@@ -85,19 +58,17 @@ describe('ItemListItem', () => {
       });
     });
 
-    describe('When there is no discount-rate', () => {
+    describe('판매가만 있을 때', () => {
       let wrapper;
 
       beforeEach(() => {
         wrapper = mount(ItemListItem, {
-          propsData: {
-            item: {
-              originalPrice: 58000,
-            },
+          props: {
+            price: 58000,
           },
         });
       });
-      it('renders discount-rate', () => {
+      it('doesnt renders discount-rate', () => {
         expect(wrapper.find('[data-test="discount-rate"]').exists()).toBeFalsy();
       });
 
@@ -118,9 +89,7 @@ describe('ItemListItem', () => {
 
     beforeEach(() => {
       wrapper = mount(ItemListItem, {
-        propsData: {
-          item,
-        },
+        props: { ...item },
       });
     });
 
@@ -141,9 +110,7 @@ describe('ItemListItem', () => {
 
     beforeEach(() => {
       wrapper = mount(ItemListItem, {
-        propsData: {
-          item,
-        },
+        props: { ...item },
       });
     });
     it('renders item-description', () => {

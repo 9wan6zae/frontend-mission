@@ -1,7 +1,7 @@
 <template>
-  <div id="item-list-page">
+  <div id="wish-list-page">
     <ListLayout
-      menuName="판매 중인 상품"
+      menuName='찜 목록'
       :items="items"
       :loading="loading"
     />
@@ -12,10 +12,10 @@
 import ListLayout from '@/components/Layouts/ListLayout.vue';
 import Repository from '@/repositories/RepositoryFactory';
 
-const ItemRepository = Repository.get('item');
+const WishRepository = Repository.get('wish');
 
 export default {
-  name: 'ItemListPage',
+  name: 'WishListPage',
   components: {
     ListLayout,
   },
@@ -28,7 +28,7 @@ export default {
   methods: {
     async getItem() {
       this.loading = true;
-      const { data } = await ItemRepository.get();
+      const { data } = await WishRepository.get();
       this.items = data.items;
       this.loading = false;
     },
