@@ -1,20 +1,22 @@
 import { mount, flushPromises } from '@vue/test-utils';
+import { createStore } from 'vuex';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import cart from '@/store/modules/cart';
 
 import CartPage from '@/views/Cart.vue';
 import CartItem from '@/components/Cart/CartItem.vue';
-import cartAPI from '@/repositories/CartRepository';
-import LoadingBlock from '@/components/Loading/LoadingBlock.vue';
 
 library.add(fas, far);
 
-const cartItems = [
+const items = [
   {
     product_no: 'asdf1234',
+    is_check: false,
+    quantity: 1,
     name: '핏이 좋은 수트',
     image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
     price: 198000,
@@ -23,6 +25,8 @@ const cartItems = [
   },
   {
     product_no: 'asdf1235',
+    is_check: false,
+    quantity: 1,
     name: '핏이 좋은 수트',
     image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
     price: 198000,
@@ -31,9 +35,12 @@ const cartItems = [
   },
 ];
 
-cartAPI.get = jest.fn().mockResolvedValue({
-  data: {
-    cart_item: cartItems,
+const customCart = { ...cart };
+customCart.state.items = items;
+
+const store = createStore({
+  modules: {
+    cart: customCart,
   },
 });
 
@@ -41,6 +48,7 @@ describe('CartPage', () => {
   it('renders CartPage', () => {
     const wrapper = mount(CartPage, {
       global: {
+        plugins: [store],
         stubs: { FontAwesomeIcon },
       },
     });
@@ -49,48 +57,29 @@ describe('CartPage', () => {
   });
 
   describe('렌더링', () => {
-    it('전체 체크박스를 렌더링하는지', () => {
-      const wrapper = mount(CartPage, {
+    let wrapper;
+
+    beforeEach(() => {
+      wrapper = mount(CartPage, {
         global: {
+          plugins: [store],
           stubs: { FontAwesomeIcon },
         },
       });
-
+    });
+    it('전체 체크박스를 렌더링하는지', () => {
       expect(wrapper.find('[data-test="all-checkbox"]').exists()).toBe(true);
     });
 
     it('N개의 cartItem이 있으면 N개를 렌더링하는지', async () => {
-      const wrapper = mount(CartPage, {
-        global: {
-          stubs: { FontAwesomeIcon },
-        },
-      });
-      await cartAPI.get();
-      await flushPromises();
-
-      expect(wrapper.findAllComponents(CartItem)).toHaveLength(cartItems.length);
+      expect(wrapper.findAllComponents(CartItem)).toHaveLength(items.length);
     });
 
     describe('플로팅 버튼', () => {
       it('체크한 것이 없으면 플로팅 버튼을 감추는지', () => {
-        const wrapper = mount(CartPage, {
-          global: {
-            stubs: { FontAwesomeIcon },
-          },
-        });
-
         expect(wrapper.find('[data-test="floating-action-btn"]').isVisible()).toBeFalsy();
       });
       it('하나라도 체크한 것이 있으면 플로팅 버튼을 보이고, 적절한 값이 표시되는지', async () => {
-        const wrapper = mount(CartPage, {
-          global: {
-            stubs: { FontAwesomeIcon },
-          },
-        });
-
-        await cartAPI.get();
-        await flushPromises();
-
         await wrapper.find('[data-test="all-checkbox"]').trigger('click');
 
         expect(wrapper.find('[data-test="floating-action-btn"]').isVisible()).toBeTruthy();
@@ -100,34 +89,47 @@ describe('CartPage', () => {
   });
 
   describe('선택 기능', () => {
-    it('모든 상품이 체크가 안 된 상태에서 전체 체크박스를 클릭하면 모든 상품이 체크로 되는지', async () => {
-      const wrapper = mount(CartPage, {
+    let wrapper;
+
+    beforeEach(async () => {
+      wrapper = mount(CartPage, {
         global: {
+          plugins: [store],
           stubs: { FontAwesomeIcon },
         },
       });
 
-      await cartAPI.get();
-      await flushPromises();
+      const allCheckbox = wrapper.find('[data-test="all-checkbox"]');
+
+      // 전체 선택이 checked 상태면, 한 번 눌러 unchecked 상태로
+      // unchecked 상태면, 하나라도 선택되어 있을 수 있으니 두 번 누름
+      if (allCheckbox.classes().includes('checked')) {
+        await allCheckbox.trigger('click');
+      } else {
+        await allCheckbox.trigger('click');
+        await allCheckbox.trigger('click');
+      }
+    });
+    it('모든 상품이 체크가 안 된 상태에서 전체 체크박스를 클릭하면 모든 상품이 체크로 되는지', async () => {
+      const allCheckbox = wrapper.find('[data-test="all-checkbox"]');
+
+      expect(allCheckbox.classes()).toContain('unchecked');
 
       await wrapper.find('[data-test="all-checkbox"]').trigger('click');
+
+      expect(allCheckbox.classes()).toContain('checked');
+
       const checkboxs = wrapper.findAll('[data-test="cart-item-checkbox"]');
 
       for (let i = 0; i < checkboxs.length; i += 1) {
         const checkbox = checkboxs[i];
         expect(checkbox.classes()).toContain('checked');
       }
+
+      // 각 CartItem의 isCheck 값 초기화
+      await wrapper.find('[data-test="all-checkbox"]').trigger('click');
     });
     it('모든 상품이 체크가 된 상태에서 전체 체크박스를 클릭하면 모든 상품의 체크가 해제되는지', async () => {
-      const wrapper = mount(CartPage, {
-        global: {
-          stubs: { FontAwesomeIcon },
-        },
-      });
-
-      await cartAPI.get();
-      await flushPromises();
-
       // 한 번 클릭 시 전체 체크가 상태
       await wrapper.find('[data-test="all-checkbox"]').trigger('click');
       // 다시 클릭했을 때 전체 비활성화가 되는지
@@ -140,30 +142,12 @@ describe('CartPage', () => {
       }
     });
     it('상품이 하나라도 해제되어 있으면 전체 선택이 비활성화인지', async () => {
-      const wrapper = mount(CartPage, {
-        global: {
-          stubs: { FontAwesomeIcon },
-        },
-      });
-
-      await cartAPI.get();
-      await flushPromises();
-
       const checkboxs = wrapper.findAll('[data-test="cart-item-checkbox"]');
       await checkboxs[0].trigger('click');
 
       expect(wrapper.find('[data-test="all-checkbox"]').classes()).toContain('unchecked');
     });
     it('모든 상품이 체크 상태이면 전체 체크박스 활성화되는지', async () => {
-      const wrapper = mount(CartPage, {
-        global: {
-          stubs: { FontAwesomeIcon },
-        },
-      });
-
-      await cartAPI.get();
-      await flushPromises();
-
       const checkboxs = wrapper.findAll('[data-test="cart-item-checkbox"]');
 
       for (let i = 0; i < checkboxs.length; i += 1) {
@@ -172,37 +156,6 @@ describe('CartPage', () => {
       await flushPromises();
 
       expect(wrapper.find('[data-test="all-checkbox"]').classes()).toContain('checked');
-    });
-  });
-  describe('CartAPI', () => {
-    it('cartAPI 호출하는지', async () => {
-      await flushPromises();
-
-      expect(cartAPI.get).toHaveBeenCalled();
-    });
-  });
-  describe('Loading', () => {
-    it('로딩 중일 때 loading-block이 보이는지', () => {
-      const wrapper = mount(CartPage, {
-        global: {
-          stubs: { FontAwesomeIcon },
-        },
-      });
-
-      expect(wrapper.findComponent(LoadingBlock).exists()).toBeTruthy();
-    });
-
-    it('로딩이 완료되면 loading-block이 보이지 않는지', async () => {
-      const wrapper = mount(CartPage, {
-        global: {
-          stubs: { FontAwesomeIcon },
-        },
-      });
-
-      await cartAPI.get();
-      await flushPromises();
-
-      expect(wrapper.findComponent(LoadingBlock).exists()).toBeFalsy();
     });
   });
 });
