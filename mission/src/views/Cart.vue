@@ -53,7 +53,7 @@ export default {
   },
   computed: {
     ...mapState('cart', ['items']),
-    ...mapGetters('cart', ['isAllCheck', 'totalPrice']),
+    ...mapGetters('cart', ['totalPrice']),
     iconClass() {
       return `checkbox ${this.isAllCheck ? 'checked' : 'unchecked'}`;
     },
