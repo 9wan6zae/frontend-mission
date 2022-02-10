@@ -42,7 +42,6 @@ export default {
     ...mapMutations('cart', ['addCart']),
     addCartAction() {
       const item = JSON.parse(window.sessionStorage.getItem('item'));
-      console.log(item);
       this.addCart(item);
       this.isClick = true;
     },
