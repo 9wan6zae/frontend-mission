@@ -41,6 +41,9 @@ const cart = {
     removeItem: (state, productNo) => {
       state.items = state.items.filter((item) => item.product_no !== productNo);
     },
+    allRemoveItem: (state) => {
+      state.items = [];
+    },
   },
   actions: {
 
