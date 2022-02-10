@@ -1,28 +1,7 @@
 const cart = {
   namespaced: true,
   state: {
-    items: [
-      {
-        product_no: 'asdf1234',
-        is_check: false,
-        quantity: 1,
-        name: '핏이 좋은 수트',
-        image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
-        price: 2000,
-        original_price: 298000,
-        description: '아주 잘 맞는 수트',
-      },
-      {
-        product_no: 'asdf1235',
-        is_check: false,
-        quantity: 1,
-        name: '핏이 좋은 수트',
-        image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
-        price: 198000,
-        original_price: 298000,
-        description: '아주 잘 맞는 수트',
-      },
-    ],
+    items: [],
   },
   getters: {
     totalPrice: (state) => state.items
@@ -48,6 +27,16 @@ const cart = {
         const item = state.items[i];
         item.is_check = !boolean;
       }
+    },
+    addCart: (state, item) => {
+      for (let i = 0; i < state.items.length; i += 1) {
+        const sameProductNo = state.items[i].product_no === item.product_no;
+        if (sameProductNo) {
+          state.items[i].quantity += 1;
+          return;
+        }
+      }
+      state.items.push(item);
     },
   },
   actions: {
