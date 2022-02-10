@@ -38,6 +38,9 @@ const cart = {
       }
       state.items.push(item);
     },
+    removeItem: (state, productNo) => {
+      state.items = state.items.filter((item) => item.product_no !== productNo);
+    },
   },
   actions: {
 
