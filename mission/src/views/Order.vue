@@ -5,7 +5,7 @@
     :nav="false"
     :prev="true"
   >
-    <section class="pa0-20">
+    <section class="pa0-20 order-wrapper">
       <section>
         <h3>주문자 정보</h3>
         <article
@@ -164,6 +164,10 @@ export default {
 </script>
 
 <style scoped>
+.order-wrapper {
+  padding-bottom: 20px;
+}
+
 .customer-info-article {
   padding-bottom: 10px;
 }
