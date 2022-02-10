@@ -12,6 +12,7 @@ import App from '@/App.vue';
 import OrderPage from '@/views/Order.vue';
 import CartPage from '@/views/Cart.vue';
 import CartItem from '@/components/Cart/CartItem.vue';
+import message from '@/data/message';
 
 library.add(fas, far);
 
@@ -190,5 +191,22 @@ describe('CartPage', () => {
     await flushPromises();
 
     expect(wrapper.find('#order-page').exists()).toBeTruthy();
+  });
+  it('장바구니가 비었을 때 적절한 메시지를 보여주는지', () => {
+    customCart.state.items = [];
+
+    const emptyStore = createStore({
+      modules: {
+        cart: customCart,
+      },
+    });
+    const emptyWrapper = mount(CartPage, {
+      global: {
+        plugins: [emptyStore],
+        stubs: { FontAwesomeIcon },
+      },
+    });
+
+    expect(emptyWrapper.html()).toContain(message.emptyCart);
   });
 });
