@@ -209,4 +209,36 @@ describe('CartPage', () => {
 
     expect(emptyWrapper.html()).toContain(message.emptyCart);
   });
+  it('장바구니의 상품의 삭제버튼을 클릭했을 때 지워지는지', async () => {
+    customCart.state.items = [
+      {
+        product_no: 'asdf1234',
+        is_check: false,
+        quantity: 2,
+        name: '핏이 좋은 수트',
+        image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
+        price: 1000,
+        original_price: 298000,
+        description: '아주 잘 맞는 수트',
+      },
+    ];
+
+    const oneItemStore = createStore({
+      modules: {
+        cart: customCart,
+      },
+    });
+    const wrapper = mount(CartPage, {
+      global: {
+        plugins: [oneItemStore],
+        stubs: { FontAwesomeIcon },
+      },
+    });
+    // 상품 삭제 버튼 클릭
+    await wrapper.find('[data-test="remove-btn"]').trigger('click');
+    await flushPromises();
+
+    // 상품이 지워져 장바구니가 비었다는 메시지가 출력되었는지
+    expect(wrapper.html()).toContain(message.emptyCart);
+  });
 });
