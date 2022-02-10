@@ -1,5 +1,5 @@
 <template>
-  <article class="box-shadow" data-test="cart-item">
+  <article class="box-shadow item-wrapper" data-test="cart-item">
     <font-awesome-icon
       @click="toggleIsCheck(this.index)"
       :class="iconClass"
@@ -38,6 +38,12 @@
         </select>
       </section>
     </section>
+    <font-awesome-icon
+      @click="removeItem(this.product_no)"
+      class="removeBtn"
+      data-test="remove-btn"
+      :icon="['fas', 'trash']"
+    />
   </article>
 </template>
 
@@ -98,7 +104,7 @@ export default {
     },
   },
   methods: {
-    ...mapMutations('cart', ['changeQuantity', 'toggleIsCheck']),
+    ...mapMutations('cart', ['changeQuantity', 'toggleIsCheck', 'removeItem']),
     addComma(number) {
       return number.toLocaleString('ko-kr');
     },
@@ -119,6 +125,7 @@ export default {
 
 <style scoped>
 article {
+  position: relative;
   width: 100%;
   height: 100px;
   margin-bottom: 20px;
@@ -178,5 +185,11 @@ img {
   line-height: 14px;
   text-decoration-line: line-through;
   color: var(--lightgray);
+}
+
+.removeBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 </style>
