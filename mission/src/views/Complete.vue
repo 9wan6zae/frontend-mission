@@ -2,16 +2,16 @@
   <div id="complete-page" class="flex-center">
     <font-awesome-icon
       :icon="['fas', 'check']"
-      data-test="method-icon"
+      data-test="check-icon"
       size="lg"
       :style="{
         color: 'var(--emphasis)',
         margin: '10px'
       }"
     />
-    <p data-test="complete-comment">{{ completeMessage }}</p>
+    <p data-test="complete-message">{{ completeMessage }}</p>
     <router-link to="/">
-      <button>홈으로</button>
+      <button data-test="home-btn">홈으로</button>
     </router-link>
   </div>
 </template>
