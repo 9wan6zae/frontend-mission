@@ -5,6 +5,7 @@ import WishListPage from '@/views/WishList.vue';
 import CartPage from '@/views/Cart.vue';
 import InfoPage from '@/views/Info.vue';
 import OrderPage from '@/views/Order.vue';
+import CompletePage from '@/views/Complete.vue';
 
 const routes = [
   {
@@ -37,6 +38,11 @@ const routes = [
     path: '/order',
     name: 'Order',
     component: OrderPage,
+  },
+  {
+    path: '/complete',
+    name: 'Complete',
+    component: CompletePage,
   },
   {
     path: '/about',
