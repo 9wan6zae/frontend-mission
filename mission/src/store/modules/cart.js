@@ -32,7 +32,7 @@ const cart = {
       for (let i = 0; i < state.items.length; i += 1) {
         const sameProductNo = state.items[i].product_no === item.product_no;
         if (sameProductNo) {
-          state.items[i].quantity += 1;
+          if (state.items[i].quantity < 5) state.items[i].quantity += 1;
           return;
         }
       }
