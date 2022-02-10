@@ -28,7 +28,7 @@ const cart = {
         item.is_check = !boolean;
       }
     },
-    addCart: (state, item) => {
+    addItem: (state, item) => {
       for (let i = 0; i < state.items.length; i += 1) {
         const sameProductNo = state.items[i].product_no === item.product_no;
         if (sameProductNo) {

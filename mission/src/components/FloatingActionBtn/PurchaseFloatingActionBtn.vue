@@ -39,10 +39,10 @@ export default {
     },
   },
   methods: {
-    ...mapMutations('cart', ['addCart']),
+    ...mapMutations('cart', ['addItem']),
     addCartAction() {
       const item = JSON.parse(window.sessionStorage.getItem('item'));
-      this.addCart(item);
+      this.addItem(item);
       this.isClick = true;
     },
     goCart() {
