@@ -120,7 +120,6 @@ describe('CartItem', () => {
         plugins: [store],
         stubs: { FontAwesomeIcon },
       },
-      props: { ...props },
     });
     const wrapper = mount(CartItem, {
       global: {
