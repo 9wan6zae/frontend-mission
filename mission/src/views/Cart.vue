@@ -12,7 +12,7 @@
       />
       <p>전체선택</p>
     </section>
-    <section class="pa0-20 item-wrapper">
+    <section class="pa0-20 item-wrapper" v-if="this.items?.length">
       <cart-item
         v-for="(item, index) in items"
         :key="item.product_no"
@@ -20,6 +20,9 @@
         :index="index"
         data-test="cart-item"
       />
+    </section>
+    <section class="pa0-20 item-wrapper" v-else>
+      <p>{{ emptyCartMessage }}</p>
     </section>
   </layout>
   <router-link to="/order">
@@ -35,6 +38,7 @@
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
+import message from '@/data/message';
 import Layout from '../components/Layouts/Layout.vue';
 import CartItem from '../components/Cart/CartItem.vue';
 import FloatingActionBtn from '../components/FloatingActionBtn/FloatingActionBtn.vue';
@@ -69,6 +73,9 @@ export default {
     },
     btnText() {
       return `${this.totalPrice.toLocaleString('ko-kr')}원 구매`;
+    },
+    emptyCartMessage() {
+      return message.emptyCart;
     },
   },
   methods: {
