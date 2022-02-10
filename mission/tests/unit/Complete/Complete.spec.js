@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import App from '@/App.vue';
 import CompletePage from '@/views/Complete.vue';
-import ItemInfoPage from '@/views/ItemInfo.vue';
+import ItemListPage from '@/views/ItemList.vue';
 import message from '@/data/message';
 
 library.add(fas, far);
@@ -18,7 +18,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      component: ItemInfoPage,
+      component: ItemListPage,
     },
     {
       path: '/complete',
@@ -51,7 +51,7 @@ describe('CompletePage', () => {
     await wrapper.find('[data-test="home-btn"]').trigger('click');
     await flushPromises();
 
-    expect(wrapper.find('#item-info-page').exists()).toBeTruthy();
+    expect(wrapper.find('#item-list-page').exists()).toBeTruthy();
   });
   it('필요한 요소들을 렌더링하는지', () => {
     const wrapper = mount(CompletePage, {
