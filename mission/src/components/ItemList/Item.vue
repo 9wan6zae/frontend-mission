@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="link">
+  <router-link :to="link" @click="setStorage">
     <article class="item-list-item" data-test="link">
       <figure>
         <img :src="image" data-test="item-img" />
@@ -77,6 +77,21 @@ export default {
   computed: {
     link() {
       return `/item/${this.product_no}`;
+    },
+  },
+  methods: {
+    setStorage() {
+      const item = {
+        product_no: this.product_no,
+        is_check: false,
+        quantity: 1,
+        name: this.name,
+        image: this.image,
+        price: this.price,
+        description: this.description,
+      };
+      if (this.original_price) item.original_price = this.original_price;
+      window.sessionStorage.setItem('item', JSON.stringify(item));
     },
   },
 };
