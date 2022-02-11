@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapActions } from 'vuex';
 import usePrice from '@/composables/usePrice';
 import FloatingActionBtn from '@/components/FloatingActionBtn/FloatingActionBtn.vue';
 
@@ -39,10 +39,10 @@ export default {
     },
   },
   methods: {
-    ...mapMutations('cart', ['addItem']),
+    ...mapActions('cart', ['addCartItem']),
     addCartAction() {
       const item = JSON.parse(window.sessionStorage.getItem('item'));
-      this.addItem(item);
+      this.addCartItem(item);
       this.isClick = true;
     },
     goCart() {

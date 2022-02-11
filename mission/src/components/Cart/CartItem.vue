@@ -39,7 +39,7 @@
       </section>
     </section>
     <font-awesome-icon
-      @click="removeItem(this.product_no)"
+      @click="removeCartItem(this.product_no)"
       class="removeBtn"
       data-test="remove-btn"
       :icon="['fas', 'trash']"
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'CartItem',
@@ -97,14 +97,14 @@ export default {
   },
   watch: {
     thisQuantity(val) {
-      this.changeQuantity({
+      this.setQuatntity({
         index: this.index,
         quantity: +val,
       });
     },
   },
   methods: {
-    ...mapMutations('cart', ['changeQuantity', 'toggleIsCheck', 'removeItem']),
+    ...mapActions('cart', ['setQuatntity', 'toggleIsCheck', 'removeCartItem']),
     addComma(number) {
       return number.toLocaleString('ko-kr');
     },

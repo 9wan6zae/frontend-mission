@@ -8,7 +8,7 @@
         data-test="all-checkbox"
         :class="iconClass"
         :icon="['fas', 'check-square']"
-        @click="allCheck(isAllCheck)"
+        @click="setCheckAll(isAllCheck)"
       />
       <p>전체선택</p>
     </section>
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations } from 'vuex';
+import { mapState, mapGetters, mapActions } from 'vuex';
 import message from '@/data/message';
 import Layout from '../components/Layouts/Layout.vue';
 import CartItem from '../components/Cart/CartItem.vue';
@@ -74,7 +74,7 @@ export default {
     },
   },
   methods: {
-    ...mapMutations('cart', ['allCheck']),
+    ...mapActions('cart', ['setCheckAll']),
   },
   created() {
 

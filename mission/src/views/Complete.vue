@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapActions } from 'vuex';
 import message from '@/data/message';
 
 export default {
@@ -28,10 +28,10 @@ export default {
     },
   },
   methods: {
-    ...mapMutations('cart', ['allRemoveItem']),
+    ...mapActions('cart', ['clearCartItems']),
   },
   created() {
-    this.allRemoveItem();
+    this.clearCartItems();
   },
 };
 </script>

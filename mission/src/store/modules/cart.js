@@ -16,19 +16,19 @@ const cart = {
       })),
   },
   mutations: {
-    changeQuantity: (state, { index, quantity }) => {
+    SET_QUATNTITY(state, { index, quantity }) {
       state.cart_items[index].quantity = quantity;
     },
-    toggleIsCheck: (state, index) => {
+    TOGGLE_IS_CHECK(state, index) {
       state.cart_items[index].is_check = !state.cart_items[index].is_check;
     },
-    allCheck: (state, boolean) => {
+    SET_CHECK_ALL(state, boolean) {
       for (let i = 0; i < state.cart_items.length; i += 1) {
         const item = state.cart_items[i];
         item.is_check = !boolean;
       }
     },
-    addItem: (state, item) => {
+    ADD_CART_ITEM(state, item) {
       for (let i = 0; i < state.cart_items.length; i += 1) {
         const sameProductNo = state.cart_items[i].product_no === item.product_no;
         if (sameProductNo) {
@@ -38,15 +38,32 @@ const cart = {
       }
       state.cart_items.push(item);
     },
-    removeItem: (state, productNo) => {
+    REMOVE_CART_ITEM(state, productNo) {
       state.cart_items = state.cart_items.filter((item) => item.product_no !== productNo);
     },
-    allRemoveItem: (state) => {
+    CLEAR_CART_ITEMS(state) {
       state.cart_items = [];
     },
   },
   actions: {
-
+    addCartItem({ commit }, item) {
+      commit('ADD_CART_ITEM', item);
+    },
+    removeCartItem({ commit }, productNo) {
+      commit('REMOVE_CART_ITEM', productNo);
+    },
+    clearCartItems({ commit }) {
+      commit('CLEAR_CART_ITEMS');
+    },
+    setCheckAll({ commit }, boolean) {
+      commit('SET_CHECK_ALL', boolean);
+    },
+    setQuatntity({ commit }, { index, quantity }) {
+      commit('SET_QUATNTITY', { index, quantity });
+    },
+    toggleIsCheck({ commit }, index) {
+      commit('TOGGLE_IS_CHECK', index);
+    },
   },
 };
 
