@@ -38,8 +38,8 @@ const cart = {
       }
       state.cart_items.push(item);
     },
-    REMOVE_CART_ITEM(state, productNo) {
-      state.cart_items = state.cart_items.filter((item) => item.product_no !== productNo);
+    REMOVE_CART_ITEM(state, index) {
+      state.cart_items.splice(index, 1);
     },
     CLEAR_CART_ITEMS(state) {
       state.cart_items = [];
@@ -49,8 +49,8 @@ const cart = {
     addCartItem({ commit }, item) {
       commit('ADD_CART_ITEM', item);
     },
-    removeCartItem({ commit }, productNo) {
-      commit('REMOVE_CART_ITEM', productNo);
+    removeCartItem({ commit }, index) {
+      commit('REMOVE_CART_ITEM', index);
     },
     clearCartItems({ commit }) {
       commit('CLEAR_CART_ITEMS');

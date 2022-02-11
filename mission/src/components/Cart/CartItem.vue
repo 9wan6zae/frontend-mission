@@ -39,7 +39,7 @@
       </section>
     </section>
     <font-awesome-icon
-      @click="removeCartItem(this.product_no)"
+      @click="removeCartItem(this.index)"
       class="removeBtn"
       data-test="remove-btn"
       :icon="['fas', 'trash']"
