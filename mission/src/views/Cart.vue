@@ -50,11 +50,6 @@ export default {
     CartItem,
     FloatingActionBtn,
   },
-  data() {
-    return {
-      cartItems: [],
-    };
-  },
   computed: {
     ...mapState('cart', ['items']),
     ...mapGetters('cart', ['totalPrice']),
