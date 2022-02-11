@@ -12,9 +12,9 @@
       />
       <p>전체선택</p>
     </section>
-    <section class="pa0-20 item-wrapper" v-if="this.items?.length">
+    <section class="pa0-20 item-wrapper" v-if="this.cart_items?.length">
       <cart-item
-        v-for="(item, index) in items"
+        v-for="(item, index) in cart_items"
         :key="item.product_no"
         v-bind="item"
         :index="index"
@@ -51,15 +51,15 @@ export default {
     FloatingActionBtn,
   },
   computed: {
-    ...mapState('cart', ['items']),
+    ...mapState('cart', ['cart_items']),
     ...mapGetters('cart', ['totalPrice']),
     iconClass() {
       return `checkbox ${this.isAllCheck ? 'checked' : 'unchecked'}`;
     },
     isAllCheck() {
-      if (!this.items.length) return false;
-      for (let i = 0; i < this.items.length; i += 1) {
-        const item = this.items[i];
+      if (!this.cart_items.length) return false;
+      for (let i = 0; i < this.cart_items.length; i += 1) {
+        const item = this.cart_items[i];
         if (!item.is_check) {
           return false;
         }

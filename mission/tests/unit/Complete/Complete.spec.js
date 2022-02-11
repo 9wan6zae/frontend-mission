@@ -44,7 +44,7 @@ const items = [
 ];
 
 const customCart = { ...cart };
-customCart.state.items = items;
+customCart.state.cart_items = items;
 
 const store = createStore({
   modules: {

@@ -74,30 +74,24 @@ const methodSelect = [
   },
 ];
 
-const items = [
-  {
-    product_no: 'asdf1235',
-    is_check: true,
-    quantity: 2,
-    name: '핏이 좋은 수트',
-    image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
-    price: 3000,
-    original_price: 4000,
-    description: '아주 잘 맞는 수트',
-  },
-];
-
 const customCart = { ...cart };
-customCart.state.items = items;
-
-const store = createStore({
-  modules: {
-    cart: customCart,
-  },
-});
-
 describe('OrderPage', () => {
   it('renders OrderPage', () => {
+    customCart.state.cart_items = [{
+      product_no: 'asdf1235',
+      is_check: true,
+      quantity: 2,
+      name: '핏이 좋은 수트',
+      image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
+      price: 3000,
+      original_price: 4000,
+      description: '아주 잘 맞는 수트',
+    }];
+    const store = createStore({
+      modules: {
+        cart: customCart,
+      },
+    });
     const wrapper = mount(OrderPage, {
       global: {
         plugins: [store, router],
@@ -108,6 +102,21 @@ describe('OrderPage', () => {
     expect(wrapper.find('#order-page').exists()).toBeTruthy();
   });
   it('결제 버튼을 눌렀을 때 complete page로 이동하는지', async () => {
+    customCart.state.cart_items = [{
+      product_no: 'asdf1235',
+      is_check: true,
+      quantity: 2,
+      name: '핏이 좋은 수트',
+      image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
+      price: 3000,
+      original_price: 4000,
+      description: '아주 잘 맞는 수트',
+    }];
+    const store = createStore({
+      modules: {
+        cart: customCart,
+      },
+    });
     router.push('/order');
     await router.isReady();
 
@@ -125,7 +134,24 @@ describe('OrderPage', () => {
 
   describe('필요한 요소들을 렌더링하는지', () => {
     let wrapper;
+    let items;
     beforeEach(() => {
+      items = [{
+        product_no: 'asdf1235',
+        is_check: true,
+        quantity: 2,
+        name: '핏이 좋은 수트',
+        image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
+        price: 3000,
+        original_price: 4000,
+        description: '아주 잘 맞는 수트',
+      }];
+      customCart.state.cart_items = items;
+      const store = createStore({
+        modules: {
+          cart: customCart,
+        },
+      });
       wrapper = mount(OrderPage, {
         global: {
           plugins: [store, router],
@@ -162,7 +188,24 @@ describe('OrderPage', () => {
 
   describe('vuex 또는 data로 선언된 값들이 보여지는지', () => {
     let wrapper;
+    let items;
     beforeEach(() => {
+      items = [{
+        product_no: 'asdf1235',
+        is_check: true,
+        quantity: 2,
+        name: '핏이 좋은 수트',
+        image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
+        price: 3000,
+        original_price: 4000,
+        description: '아주 잘 맞는 수트',
+      }];
+      customCart.state.cart_items = items;
+      const store = createStore({
+        modules: {
+          cart: customCart,
+        },
+      });
       wrapper = mount(OrderPage, {
         global: {
           plugins: [store, router],
@@ -228,6 +271,21 @@ describe('OrderPage', () => {
   describe('정보를 다 입력하면 결제 버튼이 보이는지', () => {
     let wrapper;
     beforeEach(() => {
+      customCart.state.cart_items = [{
+        product_no: 'asdf1235',
+        is_check: true,
+        quantity: 2,
+        name: '핏이 좋은 수트',
+        image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
+        price: 3000,
+        original_price: 4000,
+        description: '아주 잘 맞는 수트',
+      }];
+      const store = createStore({
+        modules: {
+          cart: customCart,
+        },
+      });
       wrapper = mount(OrderPage, {
         global: {
           plugins: [store, router],

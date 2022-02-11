@@ -30,40 +30,38 @@ const router = createRouter({
   ],
 });
 
-const items = [
-  {
-    product_no: 'asdf1234',
-    is_check: false,
-    quantity: 2,
-    name: '핏이 좋은 수트',
-    image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
-    price: 1000,
-    original_price: 298000,
-    description: '아주 잘 맞는 수트',
-  },
-  {
-    product_no: 'asdf1235',
-    is_check: false,
-    quantity: 1,
-    name: '핏이 좋은 수트',
-    image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
-    price: 198000,
-    original_price: 298000,
-    description: '아주 잘 맞는 수트',
-  },
-];
-
 const customCart = { ...cart };
-customCart.state.items = items;
-
-const store = createStore({
-  modules: {
-    cart: customCart,
-  },
-});
 
 describe('CartPage', () => {
   it('renders CartPage', () => {
+    const items = [
+      {
+        product_no: 'asdf1234',
+        is_check: false,
+        quantity: 2,
+        name: '핏이 좋은 수트',
+        image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
+        price: 1000,
+        original_price: 298000,
+        description: '아주 잘 맞는 수트',
+      },
+      {
+        product_no: 'asdf1235',
+        is_check: false,
+        quantity: 1,
+        name: '핏이 좋은 수트',
+        image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
+        price: 198000,
+        original_price: 298000,
+        description: '아주 잘 맞는 수트',
+      },
+    ];
+    customCart.state.cart_items = items;
+    const store = createStore({
+      modules: {
+        cart: customCart,
+      },
+    });
     const wrapper = mount(CartPage, {
       global: {
         plugins: [store],
@@ -76,8 +74,37 @@ describe('CartPage', () => {
 
   describe('렌더링', () => {
     let wrapper;
+    let items;
 
     beforeEach(() => {
+      items = [
+        {
+          product_no: 'asdf1234',
+          is_check: false,
+          quantity: 2,
+          name: '핏이 좋은 수트',
+          image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
+          price: 1000,
+          original_price: 298000,
+          description: '아주 잘 맞는 수트',
+        },
+        {
+          product_no: 'asdf1235',
+          is_check: false,
+          quantity: 1,
+          name: '핏이 좋은 수트',
+          image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
+          price: 198000,
+          original_price: 298000,
+          description: '아주 잘 맞는 수트',
+        },
+      ];
+      customCart.state.cart_items = items;
+      const store = createStore({
+        modules: {
+          cart: customCart,
+        },
+      });
       wrapper = mount(CartPage, {
         global: {
           plugins: [store],
@@ -108,8 +135,37 @@ describe('CartPage', () => {
 
   describe('선택 기능', () => {
     let wrapper;
+    let items;
 
     beforeEach(async () => {
+      items = [
+        {
+          product_no: 'asdf1234',
+          is_check: false,
+          quantity: 2,
+          name: '핏이 좋은 수트',
+          image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
+          price: 1000,
+          original_price: 298000,
+          description: '아주 잘 맞는 수트',
+        },
+        {
+          product_no: 'asdf1235',
+          is_check: false,
+          quantity: 1,
+          name: '핏이 좋은 수트',
+          image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
+          price: 198000,
+          original_price: 298000,
+          description: '아주 잘 맞는 수트',
+        },
+      ];
+      customCart.state.cart_items = items;
+      const store = createStore({
+        modules: {
+          cart: customCart,
+        },
+      });
       wrapper = mount(CartPage, {
         global: {
           plugins: [store],
@@ -181,6 +237,34 @@ describe('CartPage', () => {
     router.push('/cart');
     await router.isReady();
 
+    const items = [
+      {
+        product_no: 'asdf1234',
+        is_check: false,
+        quantity: 2,
+        name: '핏이 좋은 수트',
+        image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
+        price: 1000,
+        original_price: 298000,
+        description: '아주 잘 맞는 수트',
+      },
+      {
+        product_no: 'asdf1235',
+        is_check: false,
+        quantity: 1,
+        name: '핏이 좋은 수트',
+        image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
+        price: 198000,
+        original_price: 298000,
+        description: '아주 잘 맞는 수트',
+      },
+    ];
+    customCart.state.cart_items = items;
+    const store = createStore({
+      modules: {
+        cart: customCart,
+      },
+    });
     const wrapper = mount(App, {
       global: {
         plugins: [router, store],
@@ -193,24 +277,24 @@ describe('CartPage', () => {
     expect(wrapper.find('#order-page').exists()).toBeTruthy();
   });
   it('장바구니가 비었을 때 적절한 메시지를 보여주는지', () => {
-    customCart.state.items = [];
+    customCart.state.cart_items = [];
 
-    const emptyStore = createStore({
+    const store = createStore({
       modules: {
         cart: customCart,
       },
     });
-    const emptyWrapper = mount(CartPage, {
+    const wrapper = mount(CartPage, {
       global: {
-        plugins: [emptyStore],
+        plugins: [store],
         stubs: { FontAwesomeIcon },
       },
     });
 
-    expect(emptyWrapper.html()).toContain(message.emptyCart);
+    expect(wrapper.html()).toContain(message.emptyCart);
   });
   it('장바구니의 상품의 삭제버튼을 클릭했을 때 지워지는지', async () => {
-    customCart.state.items = [
+    customCart.state.cart_items = [
       {
         product_no: 'asdf1234',
         is_check: false,
@@ -223,14 +307,14 @@ describe('CartPage', () => {
       },
     ];
 
-    const oneItemStore = createStore({
+    const store = createStore({
       modules: {
         cart: customCart,
       },
     });
     const wrapper = mount(CartPage, {
       global: {
-        plugins: [oneItemStore],
+        plugins: [store],
         stubs: { FontAwesomeIcon },
       },
     });
