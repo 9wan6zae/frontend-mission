@@ -27,7 +27,7 @@
   </layout>
   <router-link to="/order">
     <floating-action-btn
-      v-show="totalPrice"
+      v-show="getTotalPrice"
       style="bottom: 100px"
       data-test="floating-action-btn"
     >
@@ -52,7 +52,7 @@ export default {
   },
   computed: {
     ...mapState('cart', ['cart_items']),
-    ...mapGetters('cart', ['totalPrice']),
+    ...mapGetters('cart', ['getTotalPrice']),
     iconClass() {
       return `checkbox ${this.isAllCheck ? 'checked' : 'unchecked'}`;
     },
@@ -67,7 +67,7 @@ export default {
       return true;
     },
     btnText() {
-      return `${this.totalPrice.toLocaleString('ko-kr')}원 구매`;
+      return `${this.getTotalPrice.toLocaleString('ko-kr')}원 구매`;
     },
     emptyCartMessage() {
       return message.emptyCart;

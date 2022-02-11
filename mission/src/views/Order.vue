@@ -28,7 +28,7 @@
         <article
           class="summary-wrapper box-shadow flex-space-between"
           data-test="summary-info"
-          v-for="item in summary"
+          v-for="item in getSummary"
           :key="item.product_no"
         >
           <p data-test="summary-name" class="summary-name">{{ item.name }}</p>
@@ -128,7 +128,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('cart', ['summary', 'totalPrice']),
+    ...mapGetters('cart', ['getSummary', 'getTotalPrice']),
     isAllFill() {
       if (!this.pay || !this.shipping) {
         return false;
@@ -142,7 +142,7 @@ export default {
       return true;
     },
     btnText() {
-      return `${this.totalPrice.toLocaleString('ko-kr')}원 결제`;
+      return `${this.getTotalPrice.toLocaleString('ko-kr')}원 결제`;
     },
   },
   methods: {

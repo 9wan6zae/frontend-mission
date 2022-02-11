@@ -4,9 +4,9 @@ const cart = {
     cart_items: [],
   },
   getters: {
-    totalPrice: (state) => state.cart_items
+    getTotalPrice: (state) => state.cart_items
       .reduce((acc, cur) => (cur.is_check ? acc + cur.price * cur.quantity : acc), 0),
-    summary: (state) => state.cart_items
+    getSummary: (state) => state.cart_items
       .filter((item) => item.is_check)
       .map((item) => ({
         product_no: item.product_no,
