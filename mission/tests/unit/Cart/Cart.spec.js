@@ -172,17 +172,6 @@ describe('CartPage', () => {
           stubs: { FontAwesomeIcon },
         },
       });
-
-      const allCheckbox = wrapper.find('[data-test="all-checkbox"]');
-
-      // 전체 선택이 checked 상태면, 한 번 눌러 unchecked 상태로
-      // unchecked 상태면, 하나라도 선택되어 있을 수 있으니 두 번 누름
-      if (allCheckbox.classes().includes('checked')) {
-        await allCheckbox.trigger('click');
-      } else {
-        await allCheckbox.trigger('click');
-        await allCheckbox.trigger('click');
-      }
     });
     it('모든 상품이 체크가 안 된 상태에서 전체 체크박스를 클릭하면 모든 상품이 체크로 되는지', async () => {
       const allCheckbox = wrapper.find('[data-test="all-checkbox"]');
