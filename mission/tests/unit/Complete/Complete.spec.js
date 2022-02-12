@@ -32,6 +32,16 @@ const items = [
     original_price: 298000,
     description: '아주 잘 맞는 수트',
   },
+  {
+    product_no: 'asdf1234',
+    is_check: true,
+    quantity: 2,
+    name: '핏이 좋은 수트',
+    image: 'https://projectlion-vue.s3.ap-northeast-2.amazonaws.com/items/suit-1.png',
+    price: 1000,
+    original_price: 298000,
+    description: '아주 잘 맞는 수트',
+  },
 ];
 
 const customCart = { ...cart };
@@ -54,15 +64,22 @@ describe('CompletePage', () => {
 
     expect(wrapper.find('#complete-page').exists()).toBeTruthy();
   });
-  it('컴포넌트 렌더링 시 장바구니 상품을 삭제하는지', () => {
+  it('컴포넌트 렌더링 시 선택한 장바구니 상품을 삭제하는지', () => {
     const cartWrapper = mount(CartPage, {
       global: {
         plugins: [router, store],
         stubs: { FontAwesomeIcon },
       },
     });
+    const checkboxs = cartWrapper.findAll('[data-test="cart-item-checkbox"]');
 
-    expect(cartWrapper.findAll('[data-test="cart-item"]')).toHaveLength(0);
+    // state에 is_check가 true인 것과 false인 것이 각 1개씩 총 2개인데, true인 것이 제거되어 한 개가 됨
+    expect(cartWrapper.findAll('[data-test="cart-item"]')).toHaveLength(1);
+    // 남은 cart_item의 is_checked는 false임
+    for (let i = 0; i < checkboxs.length; i += 1) {
+      const checkbox = checkboxs[i];
+      expect(checkbox.classes()).toContain('unchecked');
+    }
   });
   it('홈으로 버튼을 클릭했을 때 / 으로 이동하는지', async () => {
     router.push('/complete');
