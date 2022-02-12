@@ -7,9 +7,9 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
+import { ItemList, Complete } from '@/router/routes';
 import App from '@/App.vue';
 import CompletePage from '@/views/Complete.vue';
-import ItemListPage from '@/views/ItemList.vue';
 import CartPage from '@/views/Cart.vue';
 import message from '@/data/message';
 import cart from '@/store/modules/cart';
@@ -17,17 +17,8 @@ import cart from '@/store/modules/cart';
 library.add(fas, far);
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes: [
-    {
-      path: '/',
-      component: ItemListPage,
-    },
-    {
-      path: '/complete',
-      component: CompletePage,
-    },
-  ],
+  history: createWebHistory(process.env.BASE_URL),
+  routes: [].concat(ItemList, Complete),
 });
 
 const items = [

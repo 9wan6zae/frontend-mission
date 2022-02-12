@@ -1,24 +1,14 @@
 import { mount, flushPromises } from '@vue/test-utils';
 import { createRouter, createWebHistory } from 'vue-router';
 import App from '@/App.vue';
+import { ItemList, ItemInfo } from '@/router/routes';
 import ListLayout from '@/components/Layouts/ListLayout.vue';
 import LoadingItem from '@/components/Loading/LoadingItem.vue';
-import ItemListPage from '@/views/ItemList.vue';
-import ItemInfoPage from '@/views/ItemInfo.vue';
 import itemAPI from '@/repositories/ItemRepository';
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes: [
-    {
-      path: '/',
-      component: ItemListPage,
-    },
-    {
-      path: '/item/:product_no',
-      component: ItemInfoPage,
-    },
-  ],
+  history: createWebHistory(process.env.BASE_URL),
+  routes: [].concat(ItemList, ItemInfo),
 });
 
 describe('ListLayout', () => {

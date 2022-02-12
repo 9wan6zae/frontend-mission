@@ -8,24 +8,15 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import cart from '@/store/modules/cart';
 
+import { Order, Complete } from '@/router/routes';
 import App from '@/App.vue';
 import OrderPage from '@/views/Order.vue';
-import CompletePage from '@/views/Complete.vue';
 
 library.add(fas, far);
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes: [
-    {
-      path: '/order',
-      component: OrderPage,
-    },
-    {
-      path: '/complete',
-      component: CompletePage,
-    },
-  ],
+  history: createWebHistory(process.env.BASE_URL),
+  routes: [Order, Complete],
 });
 
 const customer = [

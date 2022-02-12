@@ -8,8 +8,8 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import cart from '@/store/modules/cart';
 
+import { Cart, Order } from '@/router/routes';
 import App from '@/App.vue';
-import OrderPage from '@/views/Order.vue';
 import CartPage from '@/views/Cart.vue';
 import CartItem from '@/components/Cart/CartItem.vue';
 import message from '@/data/message';
@@ -17,17 +17,8 @@ import message from '@/data/message';
 library.add(fas, far);
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes: [
-    {
-      path: '/cart',
-      component: CartPage,
-    },
-    {
-      path: '/order',
-      component: OrderPage,
-    },
-  ],
+  history: createWebHistory(process.env.BASE_URL),
+  routes: [].concat(Cart, Order),
 });
 
 const customCart = { ...cart };
