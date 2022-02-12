@@ -4,6 +4,7 @@ const cart = {
     cart_items: [],
   },
   getters: {
+    isEmptyCartItems: (state) => state.cart_items.length === 0,
     getTotalPrice: (state) => state.cart_items
       .reduce((acc, cur) => (cur.is_check ? acc + cur.price * cur.quantity : acc), 0),
     getSummary: (state) => state.cart_items

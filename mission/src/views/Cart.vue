@@ -12,7 +12,7 @@
       />
       <p>전체선택</p>
     </section>
-    <section class="pa0-20 item-wrapper" v-if="this.cart_items?.length">
+    <section class="pa0-20 item-wrapper" v-if="!this.isEmptyCartItems">
       <cart-item
         v-for="(item, index) in cart_items"
         :key="item.product_no"
@@ -52,7 +52,7 @@ export default {
   },
   computed: {
     ...mapState('cart', ['cart_items']),
-    ...mapGetters('cart', ['getTotalPrice']),
+    ...mapGetters('cart', ['getTotalPrice', 'isEmptyCartItems']),
     iconClass() {
       return `checkbox ${this.isAllCheck ? 'checked' : 'unchecked'}`;
     },
