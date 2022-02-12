@@ -28,10 +28,10 @@ export default {
     },
   },
   methods: {
-    ...mapActions('cart', ['clearCartItems']),
+    ...mapActions('cart', ['removeCheckedCartItem']),
   },
   created() {
-    this.clearCartItems();
+    this.removeCheckedCartItem();
   },
 };
 </script>

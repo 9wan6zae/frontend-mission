@@ -42,8 +42,8 @@ const cart = {
     REMOVE_CART_ITEM(state, index) {
       state.cart_items.splice(index, 1);
     },
-    CLEAR_CART_ITEMS(state) {
-      state.cart_items = [];
+    REMOVE_CHECKED_CART_ITEM(state) {
+      state.cart_items = state.cart_items.filter((item) => !item.is_check);
     },
   },
   actions: {
@@ -53,8 +53,8 @@ const cart = {
     removeCartItem({ commit }, index) {
       commit('REMOVE_CART_ITEM', index);
     },
-    clearCartItems({ commit }) {
-      commit('CLEAR_CART_ITEMS');
+    removeCheckedCartItem({ commit }) {
+      commit('REMOVE_CHECKED_CART_ITEM');
     },
     setCheckAll({ commit }, boolean) {
       commit('SET_CHECK_ALL', boolean);
