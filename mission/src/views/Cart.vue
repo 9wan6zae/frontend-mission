@@ -65,9 +65,6 @@ export default {
   methods: {
     ...mapActions('cart', ['setCheckAll']),
   },
-  created() {
-
-  },
 };
 </script>
 
