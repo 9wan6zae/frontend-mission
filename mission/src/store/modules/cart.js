@@ -4,6 +4,7 @@ const cart = {
     cart_items: [],
   },
   getters: {
+    getCartItems: (state) => state.cart_items,
     isEmptyCartItems: (state) => state.cart_items.length === 0,
     getTotalPrice: (state) => state.cart_items
       .reduce((acc, cur) => (cur.is_check ? acc + cur.price * cur.quantity : acc), 0),
@@ -15,6 +16,16 @@ const cart = {
         quantity: `${item.quantity}개`,
         price: `${(item.price * item.quantity).toLocaleString('ko-KR')}원`,
       })),
+    isAllCheck: (state) => {
+      if (!state.cart_items.length) return false;
+      for (let i = 0; i < state.cart_items.length; i += 1) {
+        const item = state.cart_items[i];
+        if (!item.is_check) {
+          return false;
+        }
+      }
+      return true;
+    },
   },
   mutations: {
     SET_QUATNTITY(state, { index, quantity }) {
@@ -56,8 +67,8 @@ const cart = {
     removeCheckedCartItem({ commit }) {
       commit('REMOVE_CHECKED_CART_ITEM');
     },
-    setCheckAll({ commit }, boolean) {
-      commit('SET_CHECK_ALL', boolean);
+    setCheckAll({ commit, getters }) {
+      commit('SET_CHECK_ALL', getters.isAllCheck);
     },
     setQuatntity({ commit }, { index, quantity }) {
       commit('SET_QUATNTITY', { index, quantity });
