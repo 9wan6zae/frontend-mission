@@ -256,7 +256,7 @@ describe('CartPage', () => {
 
     expect(wrapper.find('#order-page').exists()).toBeTruthy();
   });
-  it('체크한 상품이 없을 때에는 구매 버튼을 클릭했을 때에는 order 페이지로 이동 안하는가', async () => {
+  it('체크한 상품이 없을 때에는 구매 버튼을 클릭했을 때 order 페이지로 이동 안하는가', async () => {
     router.push('/cart');
     await router.isReady();
 
