@@ -6,25 +6,15 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
+import { ItemList, WishList } from '@/router/routes';
 import App from '@/App.vue';
 import NavBar from '@/components/NavBar.vue';
-import ItemListPage from '@/views/ItemList.vue';
-import WishListPage from '@/views/WishList.vue';
 
 library.add(fas, far);
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes: [
-    {
-      path: '/',
-      component: ItemListPage,
-    },
-    {
-      path: '/wish',
-      component: WishListPage,
-    },
-  ],
+  history: createWebHistory(process.env.BASE_URL),
+  routes: [].concat(ItemList, WishList),
 });
 
 describe('NavBar', () => {

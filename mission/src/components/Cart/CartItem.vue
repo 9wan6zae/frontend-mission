@@ -1,6 +1,7 @@
 <template>
-  <article class="box-shadow" data-test="cart-item" @click="toggleCheck">
+  <article class="box-shadow item-wrapper" data-test="cart-item">
     <font-awesome-icon
+      @click="toggleIsCheck(this.index)"
       :class="iconClass"
       :icon="['fas', 'check-square']"
       data-test="cart-item-checkbox"
@@ -19,25 +20,48 @@
           {{ description }}
         </p>
       </div>
-      <div id="price-wrapper">
-        <p id="price" data-test="cart-item-price">{{ salesPrice }}</p>
-        <p
-          v-if="original_price"
-          id="original_price"
-          data-test="cart-item-original-price"
-        >
-          {{ originalPrice }}
-        </p>
-      </div>
+      <section class="flex-space-between">
+        <div id="price-wrapper">
+          <p id="price" data-test="cart-item-price">{{ salesPrice }}</p>
+          <p
+            v-if="original_price"
+            id="original_price"
+            data-test="cart-item-original-price"
+          >
+            {{ originalPrice }}
+          </p>
+        </div>
+        <select v-model="thisQuantity" data-test="cart-item-quantity">
+          <option v-for="i in 5" :key="i">
+            {{i}}
+          </option>
+        </select>
+      </section>
     </section>
+    <font-awesome-icon
+      @click="removeCartItem(this.index)"
+      class="removeBtn"
+      data-test="remove-btn"
+      :icon="['fas', 'trash']"
+    />
   </article>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'CartItem',
   props: {
-    isCheck: {
+    index: {
+      type: Number,
+      default: 0,
+    },
+    quantity: {
+      type: Number,
+      default: 1,
+    },
+    is_check: {
       type: Boolean,
       default: false,
     },
@@ -66,12 +90,23 @@ export default {
       default: '',
     },
   },
+  data() {
+    return {
+      thisQuantity: this.quantity,
+    };
+  },
+  watch: {
+    thisQuantity(val) {
+      this.setQuatntity({
+        index: this.index,
+        quantity: +val,
+      });
+    },
+  },
   methods: {
+    ...mapActions('cart', ['setQuatntity', 'toggleIsCheck', 'removeCartItem']),
     addComma(number) {
       return number.toLocaleString('ko-kr');
-    },
-    toggleCheck() {
-      this.$emit('checkedProductNo', this.product_no);
     },
   },
   computed: {
@@ -82,7 +117,7 @@ export default {
       return `${this.addComma(this.price)}원`;
     },
     iconClass() {
-      return `checkbox ${this.isCheck ? 'checked' : 'unchecked'}`;
+      return `checkbox ${this.is_check ? 'checked' : 'unchecked'}`;
     },
   },
 };
@@ -90,6 +125,7 @@ export default {
 
 <style scoped>
 article {
+  position: relative;
   width: 100%;
   height: 100px;
   margin-bottom: 20px;
@@ -149,5 +185,11 @@ img {
   line-height: 14px;
   text-decoration-line: line-through;
   color: var(--lightgray);
+}
+
+.removeBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 </style>

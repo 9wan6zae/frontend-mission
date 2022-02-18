@@ -33,17 +33,8 @@ export default {
       this.loading = false;
     },
   },
-  async created() {
+  created() {
     this.getItem();
   },
 };
 </script>
-
-<style scoped>
-.item-list {
-  padding: 20px;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 300px));
-  gap: 20px;
-}
-</style>
